@@ -15,11 +15,8 @@ let project = Project(
             sources: ["Sources/**"],
             resources: ["Resources/**"],
             dependencies: [
-                .project(
-                    target: "ThirdPartyLib",
-                    path: .relativeToRoot("Projects/Modules/ThirdPartyLib"),
-                    condition: .none
-                ),
+                .Module.flowKit,
+                .Module.flowService,
                 .target(name: "FlowWidgetExtension", condition: .none)
             ]
         ),
@@ -32,11 +29,8 @@ let project = Project(
             sources: ["Widget/Sources/**"],
             resources: ["Widget/Resources/**"],
             dependencies: [
-                .project(
-                    target: "ThirdPartyLib",
-                    path: .relativeToRoot("Projects/Modules/ThirdPartyLib"),
-                    condition: .none
-                )
+                .Module.flowKit,
+                .Module.flowService
             ]
         )
     ]

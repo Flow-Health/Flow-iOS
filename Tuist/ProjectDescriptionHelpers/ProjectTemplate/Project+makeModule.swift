@@ -3,7 +3,7 @@ import ProjectDescription
 public extension Project {
     static func makeModule(
         name: String,
-        product: Product = .staticFramework,
+        product: Product = .framework,
         resources: ResourceFileElements? = nil,
         dependencies: [TargetDependency]
     ) -> Project {

@@ -1,4 +1,5 @@
 import SwiftUI
+import FlowKit
 
 struct TimeCheckWidgetHeaderView: View {
     let contentText: String
@@ -6,11 +7,11 @@ struct TimeCheckWidgetHeaderView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             Text("마지막 복용시간")
-//                .font(.captionC1SemiBold)
+                .font(.captionC1SemiBold)
                 .foregroundStyle(.black)
             Text(contentText)
-//                .font(.headerH3Bold)
-//                .foregroundStyle(.blue1)
+                .font(.headerH3Bold)
+                .foregroundStyle(.blue1)
         }
     }
 }

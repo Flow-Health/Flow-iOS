@@ -1,5 +1,6 @@
 import SwiftUI
 import WidgetKit
+import FlowKit
 
 struct MedicineCheckWidgetEntryView: View {
 
@@ -39,12 +40,12 @@ struct SmallMedicineCheckWidgetView: View {
                 VStack(alignment: .center, spacing: 0) {
                     Rectangle().frame(height: 0)
                     Text("기록하기")
-//                        .font(.captionC1SemiBold)
+                        .font(.captionC1SemiBold)
                         .foregroundStyle(.white)
                 }
             }
             .tint(.clear)
-//            .background(.blue3)
+            .background(.blue3)
             .cornerRadius(10)
         }
         .padding(EdgeInsets(top: 15, leading: 14, bottom: 15, trailing: 14))
@@ -64,13 +65,13 @@ struct MediumMedicineCheckWidgetView: View {
                 Toggle(isOn: true, intent: RecordMedicineIntent(recordData: entry.targetMedicine)) {
                     VStack(alignment: .center) {
                         Text("기록하기")
-//                            .font(.captionC1SemiBold)
+                            .font(.captionC1SemiBold)
                             .foregroundStyle(.white)
                     }
                     .frame(width: 82)
                 }
                 .tint(.clear)
-//                .background(.blue3)
+                .background(.blue3)
                 .cornerRadius(10)
             }
         }

@@ -1,4 +1,5 @@
 import SwiftUI
+import FlowKit
 
 struct MedicineCheckHeaderView: View {
     let contentText: String
@@ -6,11 +7,11 @@ struct MedicineCheckHeaderView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
             Text("복용할 약 💊")
-//                .font(.bodyB2SemiBold)
+                .font(.bodyB2SemiBold)
                 .foregroundStyle(.black)
             Text(contentText)
-//                .font(.bodyB3Medium)
-//                .foregroundStyle(.blue1)
+                .font(.bodyB3Medium)
+                .foregroundStyle(.blue1)
         }
     }
 }

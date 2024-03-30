@@ -6,13 +6,16 @@
 //
 
 import UIKit
+import SnapKit
+import Then
+import FlowKit
 
 class MainViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = .red
+        view.backgroundColor = .blue1
     }
 
 }

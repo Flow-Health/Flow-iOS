@@ -27,7 +27,6 @@ let project = Project(
             bundleId: "\(flowOrganizationName).flowApp.flowWidgetExtension",
             infoPlist: .extendingDefault(with: widgetPlist),
             sources: ["Widget/Sources/**"],
-            resources: ["Widget/Resources/**"],
             dependencies: [
                 .Module.flowKit,
                 .Module.flowService

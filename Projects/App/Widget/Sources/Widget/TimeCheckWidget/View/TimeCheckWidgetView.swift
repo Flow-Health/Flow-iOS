@@ -1,5 +1,6 @@
 import SwiftUI
 import WidgetKit
+import FlowKit
 
 struct TimeCheckWidgetEntryView: View {
     @Environment(\.widgetFamily) var widgetFamily

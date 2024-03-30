@@ -1,4 +1,5 @@
 import SwiftUI
+import FlowKit
 
 struct MedicineListCell: View {
     let content: String
@@ -7,14 +8,14 @@ struct MedicineListCell: View {
         HStack {
             Spacer().frame(width: 9)
             Text(content)
-//                .font(.captionC2Medium)
-//                .foregroundStyle(.blue1)
+                .font(.captionC2Medium)
+                .foregroundStyle(.blue1)
         }
         .overlay {
             HStack {
                 RoundedRectangle(cornerRadius: 2)
                     .frame(width: 4)
-//                    .foregroundStyle(.blue2)
+                    .foregroundStyle(.blue2)
                 Spacer()
             }
         }

@@ -1,4 +1,5 @@
 import SwiftUI
+import FlowKit
 
 struct MedicineListView: View {
     let headerText: String
@@ -7,7 +8,7 @@ struct MedicineListView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
             Text(headerText)
-//                .font(.captionC1SemiBold)
+                .font(.captionC1SemiBold)
                 .foregroundStyle(.black)
             ForEach(medicineList, id: \.self) { name in
                 MedicineListCell(content: name)

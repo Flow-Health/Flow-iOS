@@ -20,7 +20,9 @@ let project = Project(
                 .SPM.RxCocoa,
                 .SPM.RxFlow,
                 .SPM.KeychainSwift,
-                .SPM.Kingfisher
+                .SPM.Kingfisher,
+                .SPM.Realm,
+                .SPM.RealmSwift
             ]
         )
     ]

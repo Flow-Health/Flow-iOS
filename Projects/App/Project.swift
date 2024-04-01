@@ -32,5 +32,6 @@ let project = Project(
                 .Module.flowService
             ]
         )
-    ]
+    ],
+    fileHeaderTemplate: "___COPYRIGHT___"
 )

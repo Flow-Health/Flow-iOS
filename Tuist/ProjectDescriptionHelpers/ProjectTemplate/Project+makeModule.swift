@@ -23,7 +23,8 @@ public extension Project {
         return .init(
             name: name,
             organizationName: flowOrganizationName,
-            targets: [target]
+            targets: [target],
+            fileHeaderTemplate: "___COPYRIGHT___"
         )
     }
 }

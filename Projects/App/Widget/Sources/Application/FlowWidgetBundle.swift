@@ -1,10 +1,3 @@
-//
-//  FlowWidgetBundle.swift
-//  FlowWidget
-//
-//  Created by 조병진 on 3/13/24.
-//
-
 import WidgetKit
 import SwiftUI
 

@@ -1,6 +1,6 @@
 import ProjectDescription
 
-let name: Template.Attribute = .required("name")
+fileprivate let name: Template.Attribute = .required("name")
 
 let moduleTemplate = Template(
     description: "Template for module",
@@ -22,7 +22,7 @@ enum ModuleTemplate: CaseIterable {
     }
 }
 
-extension String {
+fileprivate extension String {
     static var basePath: Self {
         return "Projects/Modules/\(name)"
     }

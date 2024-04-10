@@ -1,7 +1,7 @@
 import WidgetKit
+import Model
 
 struct MedicineCheckEntry: TimelineEntry {
     var date: Date
-
-    var targetMedicine: String
+    var targetMedicine: BookMarkMedicineAppEntity
 }

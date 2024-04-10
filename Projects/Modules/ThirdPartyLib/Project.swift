@@ -21,8 +21,7 @@ let project = Project(
                 .SPM.RxFlow,
                 .SPM.KeychainSwift,
                 .SPM.Kingfisher,
-                .SPM.Realm,
-                .SPM.RealmSwift
+                .SPM.SQLite
             ]
         )
     ]

@@ -9,14 +9,13 @@ import PackageDescription
             "Moya": .framework,
             "RxMoya": .framework,
             "RxSwift": .framework,
+            "RxCocoa": .framework,
             "SnapKit": .framework,
             "Then": .framework,
-            "RxCocoa": .framework,
             "KeychainSwift": .framework,
             "RxFlow": .framework,
             "Kingfisher": .framework,
-            "Realm": .framework,
-            "RealmSwift": .framework
+            "SQLite": .framework
         ]
     )
 #endif
@@ -31,6 +30,6 @@ let package = Package(
         .package(url: "https://github.com/evgenyneu/keychain-swift.git", from: "20.0.0"),
         .package(url: "https://github.com/RxSwiftCommunity/RxFlow.git", from: "2.13.0"),
         .package(url: "https://github.com/onevcat/Kingfisher.git", from: "7.4.1"),
-        .package(url: "https://github.com/realm/realm-swift.git", from: "10.49.1")
+        .package(url: "https://github.com/stephencelis/SQLite.swift.git", from: "0.15.0")
     ]
 )

@@ -14,4 +14,5 @@ public extension TargetDependency.SPM {
     static let KeychainSwift = TargetDependency.external(name: "KeychainSwift", condition: .none)
     static let RxFlow = TargetDependency.external(name: "RxFlow", condition: .none)
     static let Kingfisher = TargetDependency.external(name: "Kingfisher", condition: .none)
+    static let SQLite = TargetDependency.external(name: "SQLite", condition: .none)
 }

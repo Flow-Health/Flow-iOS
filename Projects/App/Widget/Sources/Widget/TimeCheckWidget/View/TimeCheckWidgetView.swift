@@ -36,12 +36,12 @@ struct SmallTimeCheckWidgetView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             Rectangle().frame(height: 0)
-            TimeCheckWidgetHeaderView(contentText: "17:45 AM")
+            TimeCheckWidgetHeaderView(contentText: entry.lastEatingTime?.description ?? "--:--")
             Spacer().frame(height: 10)
             MedicineListView(
                 headerText: "복용약",
-                medicineList: [
-                    entry.lastEatingMedicine ?? "복용한 약이 없습니다."
+                medicineList: entry.lastEatingMedicine ?? [
+                    (name: "복용한 약이 없습니다.", id: "")
                 ]
             )
             Spacer()
@@ -56,12 +56,12 @@ struct MediumTimeCheckWidgetView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             Rectangle().frame(height: 0)
-            TimeCheckWidgetHeaderView(contentText: "17:45 AM")
+            TimeCheckWidgetHeaderView(contentText: entry.lastEatingTime?.description ?? "--:--")
             Spacer()
             MedicineListView(
                 headerText: "복용약",
-                medicineList: [
-                    entry.lastEatingMedicine ?? "복용한 약이 없습니다."
+                medicineList: entry.lastEatingMedicine ?? [
+                    (name: "복용한 약이 없습니다.", id: "")
                 ]
             )
             Spacer()

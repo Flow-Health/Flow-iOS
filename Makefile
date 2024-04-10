@@ -20,6 +20,9 @@ graph:
 module:
 	${MIS} scaffold Module --name ${name}
 
+moduleWithTest:
+	${MIS} scaffold ModuleWithTest --name ${name}
+
 # 사용법: make moduleAndEdit name=모듈이름
 moduleAndEdit:
 	${MIS} scaffold Module --name ${name}

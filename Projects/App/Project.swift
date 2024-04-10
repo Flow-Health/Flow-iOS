@@ -12,7 +12,10 @@ let project = Project(
             bundleId: "\(flowOrganizationName).flowApp",
             deploymentTargets: .iOS("17.0"),
             infoPlist: .extendingDefault(with: uiKitPlist),
-            sources: ["Sources/**"],
+            sources: [
+                "Sources/**",
+                "Intent/Sources/**"
+            ],
             resources: ["Resources/**"],
             dependencies: [
                 .Module.flowKit,
@@ -26,11 +29,15 @@ let project = Project(
             product: .appExtension,
             bundleId: "\(flowOrganizationName).flowApp.flowWidgetExtension",
             infoPlist: .extendingDefault(with: widgetPlist),
-            sources: ["Widget/Sources/**"],
+            sources: [
+                "Widget/Sources/**",
+                "Intent/Sources/**"
+            ],
             dependencies: [
                 .Module.flowKit,
                 .Module.flowService
             ]
         )
-    ]
+    ],
+    fileHeaderTemplate: "___COPYRIGHT___"
 )

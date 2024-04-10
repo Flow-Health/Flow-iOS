@@ -34,19 +34,12 @@ struct SmallMedicineCheckWidgetView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            MedicineCheckHeaderView(contentText: entry.targetMedicine)
+            MedicineCheckHeaderView(contentText: entry.targetMedicine.id)
             Spacer()
-            Toggle(isOn: true, intent: RecordMedicineIntent(recordData: entry.targetMedicine)) {
-                VStack(alignment: .center, spacing: 0) {
-                    Rectangle().frame(height: 0)
-                    Text("기록하기")
-                        .font(.captionC1SemiBold)
-                        .foregroundStyle(.white)
-                }
-            }
-            .tint(.clear)
-            .background(.blue3)
-            .cornerRadius(10)
+            RecodeToggleBttton(
+                isDisabled: entry.targetMedicine.itemCode == nil,
+                itemCode: entry.targetMedicine.itemCode
+            )
         }
         .padding(EdgeInsets(top: 15, leading: 14, bottom: 15, trailing: 14))
     }
@@ -57,22 +50,16 @@ struct MediumMedicineCheckWidgetView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            MedicineCheckHeaderView(contentText: entry.targetMedicine)
+            MedicineCheckHeaderView(contentText: entry.targetMedicine.id)
             Spacer()
             HStack(alignment: .bottom) {
                 LastMedicineTimeView(lastTakenDate: Date())
                 Spacer()
-                Toggle(isOn: true, intent: RecordMedicineIntent(recordData: entry.targetMedicine)) {
-                    VStack(alignment: .center) {
-                        Text("기록하기")
-                            .font(.captionC1SemiBold)
-                            .foregroundStyle(.white)
-                    }
-                    .frame(width: 82)
-                }
-                .tint(.clear)
-                .background(.blue3)
-                .cornerRadius(10)
+                RecodeToggleBttton(
+                    isDisabled: entry.targetMedicine.itemCode == nil,
+                    itemCode: entry.targetMedicine.itemCode
+                )
+                .frame(width: 86)
             }
         }
         .padding(EdgeInsets(top: 15, leading: 14, bottom: 15, trailing: 14))

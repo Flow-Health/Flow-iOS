@@ -1,0 +1,97 @@
+// Copyright © 2024 com.flow-health. All rights reserved.
+
+import Foundation
+import SQLite
+
+protocol DataBaseTable {
+    static var table: Table { get set }
+}
+
+struct BookMarkMedicineTable: DataBaseTable {
+    static var table = Table("book_mark_medicine")
+
+    static let itemCode = Expression<String>("itemCode")
+    static let imageURL = Expression<String>("imageURL")
+    static let medicineName = Expression<String>("medicineName")
+    static let companyName = Expression<String>("companyName")
+    static let efficacy = Expression<String>("efficacy")
+    static let howToUse = Expression<String>("howToUse")
+    static let cautionWarning = Expression<String>("cautionWarning")
+    static let caution = Expression<String>("caution")
+    static let interaction = Expression<String>("interaction")
+    static let sideEffect = Expression<String>("sideEffect")
+    static let storageMethod = Expression<String>("storageMethod")
+    static let updateDate = Expression<Date>("updateDate")
+}
+
+struct TakenMedicineTable: DataBaseTable {
+    static var table = Table("taken_medicine")
+
+    static let medicineTakenTime =  Expression<Date>("medicineTakenTime")
+    static let itemCode = Expression<String>("medicineCode")
+}
+
+final class DataBaseManager {
+    static let shared = DataBaseManager()
+    private(set) var db: Connection?
+
+    private init() {
+        do {
+            let fileSystem = FileManager.default
+            let fileURL = fileSystem.urls(for: .documentDirectory, in: .userDomainMask)[0]
+                .appending(path: "SQlite", directoryHint: .isDirectory)
+            try? fileSystem.createDirectory(at: fileURL, withIntermediateDirectories: false)
+            let dbURL = fileURL.appending(path: "db.sqlite3")
+
+            db = try Connection(dbURL.absoluteString)
+            guard let db else { fatalError("fail to connect DataBase.") }
+            debugPrint("[succes connet DB] Path: \(dbURL.absoluteString)")
+
+            let bookMarkTable = BookMarkMedicineTable.table
+            let takenMedicineTable = TakenMedicineTable.table
+
+            try db.run(bookMarkTable.create(ifNotExists: true) {
+                $0.column(BookMarkMedicineTable.itemCode, primaryKey: true)
+                $0.column(BookMarkMedicineTable.imageURL)
+                $0.column(BookMarkMedicineTable.medicineName)
+                $0.column(BookMarkMedicineTable.companyName)
+                $0.column(BookMarkMedicineTable.efficacy)
+                $0.column(BookMarkMedicineTable.howToUse)
+                $0.column(BookMarkMedicineTable.cautionWarning)
+                $0.column(BookMarkMedicineTable.caution)
+                $0.column(BookMarkMedicineTable.interaction)
+                $0.column(BookMarkMedicineTable.sideEffect)
+                $0.column(BookMarkMedicineTable.storageMethod)
+                $0.column(BookMarkMedicineTable.updateDate)
+            })
+
+            try db.run(takenMedicineTable.create(ifNotExists: true) {
+                $0.column(TakenMedicineTable.medicineTakenTime)
+                $0.column(TakenMedicineTable.itemCode)
+                $0.foreignKey(
+                    TakenMedicineTable.itemCode,
+                    references: bookMarkTable,
+                    BookMarkMedicineTable.itemCode,
+                    delete: .cascade
+                )
+            })
+
+            try db.run(bookMarkTable.insert(
+                BookMarkMedicineTable.itemCode <- "312343213",
+                BookMarkMedicineTable.imageURL <- "ㅁㄴㅇㄹㅁㄴ",
+                BookMarkMedicineTable.medicineName <- "스톡프로틱스",
+                BookMarkMedicineTable.companyName <- "",
+                BookMarkMedicineTable.efficacy <- "ㅁㄴㅇㄹ",
+                BookMarkMedicineTable.howToUse <- "ㅁㄴㄹ",
+                BookMarkMedicineTable.cautionWarning <- "",
+                BookMarkMedicineTable.caution <- "",
+                BookMarkMedicineTable.interaction <- "",
+                BookMarkMedicineTable.sideEffect <- "",
+                BookMarkMedicineTable.storageMethod <- "",
+                BookMarkMedicineTable.updateDate <- Date()
+            ))
+        } catch {
+            print("[DataBaseManager] \(error)")
+        }
+    }
+}

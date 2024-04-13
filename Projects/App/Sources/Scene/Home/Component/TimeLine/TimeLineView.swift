@@ -7,17 +7,17 @@ import Model
 import SnapKit
 import Then
 
-class BookMarkMedicineView: BaseView {
+class TimeLineView: BaseView {
 
-    let headerButton = HeaderNavigationButton()
-    private let medicineVStack = VStack(spacing: 10)
+    private let headerView = HeaderNavigationButton()
+    private let timeLineVStack = VStack()
 
     init(isNavigatAble: Bool = false) {
         super.init(frame: .zero)
         layer.cornerRadius = 20
         backgroundColor = .white
-        headerButton.setHeader("자주 먹는 약")
-        headerButton.isEnabled = isNavigatAble
+        headerView.isEnabled = isNavigatAble
+        headerView.setHeader("타임라인")
     }
 
     required init?(coder: NSCoder) {
@@ -26,47 +26,47 @@ class BookMarkMedicineView: BaseView {
 
     override func addView() {
         addSubViews(
-            headerButton,
-            medicineVStack
+            headerView,
+            timeLineVStack
         )
     }
 
     override func setLayout() {
-        headerButton.snp.makeConstraints {
+        headerView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(17)
             $0.leading.equalToSuperview().inset(20)
             $0.trailing.equalToSuperview().inset(24)
         }
-        medicineVStack.snp.makeConstraints {
-            $0.top.equalTo(headerButton.snp.bottom).offset(9)
+        timeLineVStack.snp.makeConstraints {
+            $0.top.equalTo(headerView.snp.bottom).offset(9)
             $0.leading.trailing.equalToSuperview().inset(20)
         }
         self.snp.makeConstraints {
-            $0.bottom.equalTo(medicineVStack).offset(20)
+            $0.bottom.equalTo(timeLineVStack).offset(20)
         }
     }
 }
 
-extension BookMarkMedicineView {
-    func addBookMarkMedicine(_ entity: [MedicineInfoEntity]) {
-        let subViews = medicineVStack.subviews
-        subViews.forEach(medicineVStack.removeArrangedSubview(_:))
+extension TimeLineView {
+    func addTimeLine(_ entity: [MedicineTakenEntity]) {
+        let subViews = timeLineVStack.subviews
+        subViews.forEach(timeLineVStack.removeArrangedSubview(_:))
         subViews.forEach { $0.removeFromSuperview() }
 
-        let colorSet: [UIColor] = [.blue1, .blue2, .blue3, .blue4]
-        let bookMarkCells = entity.enumerated().map {
-            let cell = BookMarkContentCell(
-                guardLineColor: colorSet[$0.offset % 4],
-                companyName: $0.element.companyName,
-                medicineName: $0.element.medicineName
+        let timeLineCells = entity.enumerated().map {
+            let cell = TimeLineCell(
+                isFirst: $0.offset == 0,
+                isLast: $0.offset == entity.count - 1,
+                time: $0.element.takenTime.description,
+                medicineName: $0.element.medicineInfo.medicineName
             )
             cell.alpha = 0
             return cell
         }
-        self.medicineVStack.addArrangedSubviews(bookMarkCells)
+        self.timeLineVStack.addArrangedSubviews(timeLineCells)
         self.layoutIfNeeded()
 
-        bookMarkCells.forEach { view in
+        timeLineCells.forEach { view in
             view.transform = .init(translationX: 0, y: -5)
             UIView.animate(withDuration: 0.3, animations: {
                 view.alpha = 1

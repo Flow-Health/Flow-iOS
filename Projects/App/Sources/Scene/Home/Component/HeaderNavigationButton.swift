@@ -11,6 +11,7 @@ class HeaderNavigationButton: BaseButton {
     private let buttonHStack = HStack().then {
         $0.distribution = .equalSpacing
         $0.alignment = .center
+        $0.isUserInteractionEnabled = false
     }
 
     private let headerLabel = UILabel().then {

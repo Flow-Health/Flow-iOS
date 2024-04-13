@@ -16,6 +16,7 @@ class HomeViewController: BaseVC<HomeViewModel> {
     private let LastTakenBannerView = LastTakenTimeView()
     private let searchButtonView = SearchButtonView()
     private let bookMarkMedicineView = BookMarkMedicineView(isNavigatAble: true)
+    private let timeLineView = TimeLineView()
 
     override func attridute() {
         view.backgroundColor = .blue5
@@ -29,7 +30,8 @@ class HomeViewController: BaseVC<HomeViewModel> {
         homeVStaek.addArrangedSubviews(
             LastTakenBannerView,
             searchButtonView,
-            bookMarkMedicineView
+            bookMarkMedicineView,
+            timeLineView
         )
     }
 

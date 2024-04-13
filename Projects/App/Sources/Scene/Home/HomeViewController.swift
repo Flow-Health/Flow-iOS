@@ -11,6 +11,7 @@ import RxCocoa
 class HomeViewController: BaseVC<HomeViewModel> {
 
     private let homeVStaek = VStack(spacing: 10)
+    private let scrollView = VScrollView()
 
     private let headerView = HomeHeaderView()
     private let LastTakenBannerView = LastTakenTimeView()
@@ -23,7 +24,8 @@ class HomeViewController: BaseVC<HomeViewModel> {
     }
 
     override func addView() {
-        view.addSubViews(
+        view.addSubview(scrollView)
+        scrollView.contentView.addSubViews(
             headerView,
             homeVStaek
         )
@@ -36,8 +38,16 @@ class HomeViewController: BaseVC<HomeViewModel> {
     }
 
     override func setLayout() {
-        headerView.snp.makeConstraints {
+        scrollView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(20)
+            $0.bottom.trailing.leading.equalToSuperview()
+        }
+        scrollView.contentView.snp.makeConstraints {
+            $0.top.bottom.width.equalToSuperview()
+            $0.bottom.equalTo(homeVStaek)
+        }
+        headerView.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(20)
             $0.leading.equalToSuperview().inset(25)
         }
         homeVStaek.snp.makeConstraints {

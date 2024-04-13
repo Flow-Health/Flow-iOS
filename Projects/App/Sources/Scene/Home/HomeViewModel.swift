@@ -9,7 +9,9 @@ import RxCocoa
 class HomeViewModel: ViewModelType {
     var disposeBag: DisposeBag = .init()
 
-    struct Input { }
+    struct Input { 
+        let viewWillAppear: Observable<Void>
+    }
     
     struct Output { }
 

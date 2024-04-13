@@ -46,8 +46,3 @@ struct TimeCheckWidgetProvider: TimelineProvider {
             .disposed(by: disposeBag)
     }
 }
-/*
- 스
- 아
- 스
- */

@@ -57,7 +57,7 @@ extension TimeLineView {
             let cell = TimeLineCell(
                 isFirst: $0.offset == 0,
                 isLast: $0.offset == entity.count - 1,
-                time: $0.element.takenTime.description,
+                time: $0.element.takenTime.toString(.nomal),
                 medicineName: $0.element.medicineInfo.medicineName
             )
             cell.alpha = 0

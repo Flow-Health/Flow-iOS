@@ -7,21 +7,21 @@ import SnapKit
 import Then
 
 class LastTakenTimeView: BaseView {
-    let lastTakenTitleLabel = UILabel().then {
+    private let lastTakenTitleLabel = UILabel().then {
         $0.customLabel("마지막 복용시간", font: .captionC1Medium, textColor: .black)
     }
 
-    let lastTakenTimeLabel = UILabel().then {
+    private let lastTakenTimeLabel = UILabel().then {
         $0.text = "--:--"
         $0.font = .headerH1Bold
         $0.textColor = .blue1
     }
 
-    let imageClipView = UIView().then {
+    private let imageClipView = UIView().then {
         $0.clipsToBounds = true
         $0.layer.cornerRadius = 16
     }
-    let logoImageView = UIImageView(image: UIImage(named: "PointLogo"))
+    private let logoImageView = UIImageView(image: UIImage(named: "PointLogo"))
 
     init() {
         super.init(frame: .zero)
@@ -62,5 +62,11 @@ class LastTakenTimeView: BaseView {
         self.snp.makeConstraints {
             $0.bottom.equalTo(lastTakenTimeLabel.snp.bottom).offset(25)
         }
+    }
+}
+
+extension LastTakenTimeView {
+    func setLastTime(_ time: Date) {
+        lastTakenTimeLabel.text = time.toString(.nomal)
     }
 }

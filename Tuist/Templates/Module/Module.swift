@@ -3,7 +3,7 @@ import ProjectDescription
 fileprivate let name: Template.Attribute = .required("name")
 
 let moduleTemplate = Template(
-    description: "Template for module",
+    description: "Template for module.",
     attributes: [name],
     items: ModuleTemplate.allCases.map { $0.item }
 )

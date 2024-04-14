@@ -75,21 +75,6 @@ final class DataBaseManager {
                     delete: .cascade
                 )
             })
-
-            try db.run(bookMarkTable.insert(
-                BookMarkMedicineTable.itemCode <- "312343213",
-                BookMarkMedicineTable.imageURL <- "ㅁㄴㅇㄹㅁㄴ",
-                BookMarkMedicineTable.medicineName <- "스톡프로틱스",
-                BookMarkMedicineTable.companyName <- "",
-                BookMarkMedicineTable.efficacy <- "ㅁㄴㅇㄹ",
-                BookMarkMedicineTable.howToUse <- "ㅁㄴㄹ",
-                BookMarkMedicineTable.cautionWarning <- "",
-                BookMarkMedicineTable.caution <- "",
-                BookMarkMedicineTable.interaction <- "",
-                BookMarkMedicineTable.sideEffect <- "",
-                BookMarkMedicineTable.storageMethod <- "",
-                BookMarkMedicineTable.updateDate <- Date()
-            ))
         } catch {
             print("[DataBaseManager] \(error)")
         }

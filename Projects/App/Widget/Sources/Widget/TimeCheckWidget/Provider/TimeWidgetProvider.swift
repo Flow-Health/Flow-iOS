@@ -4,8 +4,6 @@ import FlowService
 
 import RxSwift
 
-var checkNum = 0
-
 struct TimeCheckWidgetProvider: TimelineProvider {
     func placeholder(in context: Context) -> TimeCheckWidgetEntry {
         TimeCheckWidgetEntry(date: Date(), lastEatingTime: Date(), lastEatingMedicine: [])

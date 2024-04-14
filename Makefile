@@ -27,3 +27,7 @@ moduleWithTest:
 moduleAndEdit:
 	${MIS} scaffold Module --name ${name}
 	${MIS} edit
+
+# 사용법: make presentation name=모듈이름(파스칼)
+presentation:
+	${MIS} scaffold Presentation --name ${name}

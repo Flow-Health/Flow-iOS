@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "BannerLeftArrow.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

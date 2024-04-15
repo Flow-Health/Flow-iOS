@@ -20,7 +20,8 @@ final class HomeFlow: Flow {
         switch step {
         case .homeIsRequired:
             return navigateToHomeVC()
-
+        case .searchIsRequired:
+            return navigateToSearchVC()
         default:
             return .none
         }
@@ -32,6 +33,17 @@ final class HomeFlow: Flow {
         return .one(flowContributor: .contribute(
             withNextPresentable: homeVC,
             withNextStepper: homeVC.viewModel
+        ))
+    }
+
+    private func navigateToSearchVC() -> FlowContributors {
+        let searchFlow = SearchFlow(appDI: appDI)
+        Flows.use(searchFlow, when: .created) { [weak self] root in
+            self?.presentable.pushViewController(root, animated: true)
+        }
+        return .one(flowContributor: .contribute(
+            withNextPresentable: searchFlow,
+            withNextStepper: OneStepper(withSingleStep: FlowStep.searchIsRequired)
         ))
     }
 }

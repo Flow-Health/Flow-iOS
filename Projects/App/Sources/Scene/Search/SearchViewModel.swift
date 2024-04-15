@@ -5,8 +5,11 @@ import Core
 
 import RxSwift
 import RxCocoa
+import RxFlow
 
-class SearchViewModel: ViewModelType {
+class SearchViewModel: ViewModelType, Stepper {
+    var steps: PublishRelay<Step> = .init()
+
     var disposeBag: DisposeBag = .init()
 
     struct Input { }

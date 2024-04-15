@@ -48,7 +48,7 @@ public class BookMarkMedicineDataSourceImpl: BookMarkMedicineDataSource {
             do {
                 try dbManager.db?.run(targetRow.delete())
                 completable(.completed)
-            } catch { completable(.error(error))}
+            } catch { completable(.error(error)) }
             return Disposables.create()
         }
     }

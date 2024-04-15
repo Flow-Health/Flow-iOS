@@ -2,5 +2,29 @@ import Foundation
 import FlowService
 import Model
 
-// TODO: - ViewModel만들면 의존성 주입하기
-struct AppDI { }
+struct AppDI {
+    let homeViewModel: HomeViewModel
+    let searchViewModel: SearchViewModel
+    let medicineDetailViewModel: MedicineDetailViewModel
+}
+
+extension AppDI {
+    static func resolve() -> AppDI {
+        let serviceDI = ServiceDI.resolve()
+
+        let homeViewModelInject = HomeViewModel(
+            fetchMedicineRecodeUseCase: serviceDI.fetchMedicineRecodeUseCase,
+            fetchTakenMedicineListUseCase: serviceDI.fetchTakenMedicineListUseCase,
+            fetchBookMarkMedicineListUseCase: serviceDI.fetchBookMarkMedicineListUseCase
+        )
+
+        let searchViewModelInject = SearchViewModel()
+        let medicineDetailViewModelInject = MedicineDetailViewModel()
+
+        return .init(
+            homeViewModel: homeViewModelInject,
+            searchViewModel: searchViewModelInject,
+            medicineDetailViewModel: medicineDetailViewModelInject
+        )
+    }
+}

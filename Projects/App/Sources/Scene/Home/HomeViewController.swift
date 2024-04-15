@@ -21,6 +21,7 @@ class HomeViewController: BaseVC<HomeViewModel> {
 
     override func attridute() {
         view.backgroundColor = .blue5
+        navigationController?.navigationBar.isHidden = true
     }
 
     override func addView() {
@@ -39,7 +40,7 @@ class HomeViewController: BaseVC<HomeViewModel> {
 
     override func setLayout() {
         scrollView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(20)
+            $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.bottom.trailing.leading.equalToSuperview()
         }
         scrollView.contentView.snp.makeConstraints {

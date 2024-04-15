@@ -1,12 +1,14 @@
 // Copyright © 2024 com.flow-health. All rights reserved.
 
 import UIKit
+import Core
 
 import RxSwift
 import RxCocoa
-import Core
+
 
 open class BaseVC<ViewModel: ViewModelType>: UIViewController {
+
     public let viewModel: ViewModel
     public let disposeBag = DisposeBag()
 

@@ -3,11 +3,12 @@
 import Foundation
 
 public enum DateForm {
-    case nomal
+    case nomal, fullDate
 
     var form: String {
         switch self {
         case .nomal: return "h:mm a"
+        case .fullDate: return "yyyy-MM-dd"
         }
     }
 }

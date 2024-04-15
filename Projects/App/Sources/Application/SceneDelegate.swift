@@ -13,8 +13,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         let navigate = UINavigationController()
         window?.rootViewController = navigate
-        navigate.pushViewController(SearchViewController(viewModel: SearchViewModel()), animated: true)
-        
+        navigate.pushViewController(MedicineDetailViewController(viewModel: MedicineDetailViewModel()), animated: true)
+
         window?.makeKeyAndVisible()
     }
 

@@ -17,6 +17,7 @@ class SearchViewController: BaseVC<SearchViewModel> {
 
     override func attridute() {
         navigationItem.searchController = searchBar
+        navigationItem.hidesSearchBarWhenScrolling = false
         navigationItem.title = "약 검색"
         resultTableView.delegate = self
         resultTableView.dataSource = self

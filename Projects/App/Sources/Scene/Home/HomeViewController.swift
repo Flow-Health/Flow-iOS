@@ -21,7 +21,16 @@ class HomeViewController: BaseVC<HomeViewModel> {
 
     override func attridute() {
         view.backgroundColor = .blue5
-        navigationController?.navigationBar.isHidden = true
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
     }
 
     override func addView() {
@@ -55,5 +64,26 @@ class HomeViewController: BaseVC<HomeViewModel> {
             $0.top.equalTo(headerView.snp.bottom).offset(15)
             $0.leading.trailing.equalToSuperview().inset(25)
         }
+    }
+
+    override func bind() {
+        let input = HomeViewModel.Input(
+            viewWillAppear: viewWillAppearRelay.asObservable(),
+            tapSearchButton: searchButtonView.rx.tap.asObservable(),
+            tapBookMarkNavigationButton: bookMarkMedicineView.headerButton.rx.tap.asObservable()
+        )
+        let output = viewModel.transform(input: input)
+
+        output.bookMarkList
+            .drive(onNext: bookMarkMedicineView.addBookMarkMedicine(_:))
+            .disposed(by: disposeBag)
+
+        output.timeLineList
+            .drive(onNext: timeLineView.addTimeLine(_:))
+            .disposed(by: disposeBag)
+
+        output.lastTakenTime
+            .drive(onNext: LastTakenBannerView.setLastTime(_:))
+            .disposed(by: disposeBag)
     }
 }

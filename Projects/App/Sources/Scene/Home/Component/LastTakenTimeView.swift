@@ -66,7 +66,8 @@ class LastTakenTimeView: BaseView {
 }
 
 extension LastTakenTimeView {
-    func setLastTime(_ time: Date) {
+    func setLastTime(_ time: Date?) {
+        guard let time else { return }
         lastTakenTimeLabel.text = time.toString(.nomal)
     }
 }

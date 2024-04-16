@@ -36,33 +36,24 @@ extension RecordMedicineIntent {
 
         await withCheckedContinuation { continuation in
             service.insertTakenMedicineUseCase.execute(with: itemCode, at: recodeDate)
-                .subscribe(onCompleted: { continuation.resume() })
-                .disposed(by: disposeBag)
-        }
-
-        await withCheckedContinuation { continuation in
-            service.findBookMarkMedicineUseCase.execute(with: itemCode)
-                .subscribe(onSuccess: {
-                    if let info = $0 {
-                        LocalNotificationHelper.shared.pushNotification(
-                            title: "약 기록하기 📝",
-                            body: "\(info.medicineName)을 기록하였습니다. (\(recodeDate.description))", // TODO: fix date format
-                            seconds: 1,
-                            identifier: "COMPLITED_RECODE"
-                        )
-                    } else {
-                        LocalNotificationHelper.shared.pushNotification(
-                            title: "⚠️ ERROR",
-                            body: "복용약 기록을 실패하였습니다.",
-                            seconds: 1,
-                            identifier: "COMPLITED_RECODE"
-                        )
-                    }
+                .subscribe(onCompleted: {
+                    LocalNotificationHelper.shared.pushNotification(
+                        title: "약 기록하기 📝",
+                        body: "약을 기록하였습니다. (\(recodeDate.toString(.fullDate)))",
+                        seconds: 0.5,
+                        identifier: "COMPLITED_RECODE"
+                    )
+                    continuation.resume()
+                }, onError: {
+                    LocalNotificationHelper.shared.pushNotification(
+                        title: "⚠️ ERROR",
+                        body: "복용약 기록을 실패하였습니다. (error: \($0.localizedDescription)",
+                        seconds: 1,
+                        identifier: "COMPLITED_RECODE_ERROR"
+                    )
                     continuation.resume()
                 })
                 .disposed(by: disposeBag)
         }
-
-        
     }
 }

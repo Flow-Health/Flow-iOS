@@ -6,6 +6,5 @@ struct FlowWidgetBundle: WidgetBundle {
     var body: some Widget {
         TimeCheckWidget()
         MedicineCheckWidget()
-//        FlowWidgetLiveActivity()
     }
 }

@@ -10,7 +10,6 @@ import RxCocoa
 class HomeViewModel: ViewModelType, Stepper {
 
     var steps: PublishRelay<Step> = .init()
-
     var disposeBag: DisposeBag = .init()
 
     private let fetchMedicineRecodeUseCase: FetchMedicineRecodeUseCase
@@ -24,7 +23,7 @@ class HomeViewModel: ViewModelType, Stepper {
     }
 
     struct Output {
-        let lastTakenTime: Driver<String?>
+        let lastTakenTime: Driver<Date?>
         let bookMarkList: Driver<[MedicineInfoEntity]>
         let timeLineList: Driver<[MedicineTakenEntity]>
     }
@@ -42,7 +41,7 @@ class HomeViewModel: ViewModelType, Stepper {
     func transform(input: Input) -> Output {
         let timeLineList = BehaviorRelay<[MedicineTakenEntity]>(value: [])
         let bookMarkList = BehaviorRelay<[MedicineInfoEntity]>(value: [])
-        let lastTakenTime = BehaviorRelay<String?>(value: nil)
+        let lastTakenTime = BehaviorRelay<Date?>(value: nil)
 
         input.viewWillAppear
             .flatMap { self.fetchTakenMedicineListUseCase.execute() }
@@ -51,13 +50,24 @@ class HomeViewModel: ViewModelType, Stepper {
 
         input.viewWillAppear
             .flatMap { self.fetchBookMarkMedicineListUseCase.execute() }
-            .bind(to: bookMarkList)
+            .map { Array($0.prefix(4)) }
+            .bind(to: bookMarkList )
             .disposed(by: disposeBag)
 
         input.viewWillAppear
             .flatMap { self.fetchMedicineRecodeUseCase.execute() }
-            .map { $0?.lastTakenTime.toString(.nomal) }
+            .map { $0?.lastTakenTime }
             .bind(to: lastTakenTime)
+            .disposed(by: disposeBag)
+
+        input.tapSearchButton
+            .map { FlowStep.searchIsRequired }
+            .bind(to: steps)
+            .disposed(by: disposeBag)
+
+        input.tapBookMarkNavigationButton
+            .map { FlowStep.bookMarkIsRequired }
+            .bind(to: steps)
             .disposed(by: disposeBag)
 
         return Output(

@@ -50,7 +50,8 @@ class HomeViewModel: ViewModelType, Stepper {
 
         input.viewWillAppear
             .flatMap { self.fetchBookMarkMedicineListUseCase.execute() }
-            .bind(to: bookMarkList)
+            .map { Array($0.prefix(4)) }
+            .bind(to: bookMarkList )
             .disposed(by: disposeBag)
 
         input.viewWillAppear

@@ -4,12 +4,13 @@ import ProjectDescriptionHelpers
 let project = Project(
     name: "FlowApp",
     organizationName: flowOrganizationName,
+    settings: .settings(base: .codeSign),
     targets: [
         .target(
             name: "FlowApp",
             destinations: .iOS,
             product: .app,
-            bundleId: "\(flowOrganizationName).flowApp",
+            bundleId: "\(flowOrganizationName).flow-App",
             deploymentTargets: .iOS("17.0"),
             infoPlist: .extendingDefault(with: uiKitPlist),
             sources: [
@@ -17,6 +18,7 @@ let project = Project(
                 "Intent/Sources/**"
             ],
             resources: ["Resources/**"],
+            entitlements: .file(path: "Entitlements/FlowApp.entitlements"),
             dependencies: [
                 .Module.flowKit,
                 .Module.flowService,
@@ -27,12 +29,14 @@ let project = Project(
             name: "FlowWidgetExtension",
             destinations: .iOS,
             product: .appExtension,
-            bundleId: "\(flowOrganizationName).flowApp.flowWidgetExtension",
+            bundleId: "\(flowOrganizationName).flow-App.flowWidget-Extension",
+            deploymentTargets: .iOS("17.0"),
             infoPlist: .extendingDefault(with: widgetPlist),
             sources: [
                 "Widget/Sources/**",
                 "Intent/Sources/**"
             ],
+            entitlements: .file(path: "Widget/Entitlements/FlowWidgetExtension.entitlements"),
             dependencies: [
                 .Module.flowKit,
                 .Module.flowService

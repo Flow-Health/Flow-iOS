@@ -38,8 +38,10 @@ final class DataBaseManager {
     private init() {
         do {
             let fileSystem = FileManager.default
-            let fileURL = fileSystem.urls(for: .documentDirectory, in: .userDomainMask)[0]
-                .appending(path: "SQlite", directoryHint: .isDirectory)
+            guard let fileURL = fileSystem.containerURL(forSecurityApplicationGroupIdentifier: "group.com.flow-health.flowApp")?
+                .appending(path: "SQlite", directoryHint: .isDirectory) else {
+                fatalError("fail to fileURL")
+            }
             try? fileSystem.createDirectory(at: fileURL, withIntermediateDirectories: false)
             let dbURL = fileURL.appending(path: "db.sqlite3")
 

@@ -8,7 +8,7 @@ import Model
 
 import RxSwift
 
-public class FetchMedicineRecodeUseCaseImpl: FetchMedicineRecodeUseCase {
+class FetchMedicineRecodeUseCaseImpl: FetchMedicineRecodeUseCase {
     public var repository: FetchMedicineRecodeRepository
 
     init(repository: FetchMedicineRecodeRepository) {

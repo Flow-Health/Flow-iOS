@@ -6,8 +6,8 @@ import Model
 
 import RxSwift
 
-public class FetchMedicineRecodeRepositoryImpl: FetchMedicineRecodeRepository {
-    public var dataBase: TakenMedicineDataSource
+class FetchMedicineRecodeRepositoryImpl: FetchMedicineRecodeRepository {
+    var dataBase: TakenMedicineDataSource
 
     init(dataBase: TakenMedicineDataSource) {
         self.dataBase = dataBase

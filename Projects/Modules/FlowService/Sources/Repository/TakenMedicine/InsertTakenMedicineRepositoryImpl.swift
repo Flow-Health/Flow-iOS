@@ -5,8 +5,8 @@ import LocalService
 
 import RxSwift
 
-public class InsertTakenMedicineRepositoryImpl: InsertTakenMedicineRepository {
-    public var dataBase: TakenMedicineDataSource
+class InsertTakenMedicineRepositoryImpl: InsertTakenMedicineRepository {
+    var dataBase: TakenMedicineDataSource
 
     init(dataBase: TakenMedicineDataSource) {
         self.dataBase = dataBase

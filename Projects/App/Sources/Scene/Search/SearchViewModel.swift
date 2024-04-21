@@ -12,9 +12,11 @@ class SearchViewModel: ViewModelType, Stepper {
     var disposeBag: DisposeBag = .init()
 
     private let searchMedicineUseCase: SearchMedicineUseCase
+    private var searchResultList: [MedicineInfoEntity] = []
 
     struct Input {
         let searchInputText: Observable<String>
+        let selectedItemIndex: Observable<IndexPath>
     }
     
     struct Output { 
@@ -38,7 +40,13 @@ class SearchViewModel: ViewModelType, Stepper {
                         return .just([])
                     }
             }
+            .do(onNext: { [weak self] in self?.searchResultList = $0 })
             .bind(to: searchMedicine)
+            .disposed(by: disposeBag)
+
+        input.selectedItemIndex
+            .map { FlowStep.madicineDetailIsRequired(with: self.searchResultList[$0.item]) }
+            .bind(to: steps)
             .disposed(by: disposeBag)
             
         return Output(resultMedicine: searchMedicine.asSignal())

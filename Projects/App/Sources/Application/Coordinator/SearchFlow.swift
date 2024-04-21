@@ -1,6 +1,7 @@
 // Copyright © 2024 com.flow-health. All rights reserved.
 
 import UIKit
+import Model
 
 import RxFlow
 
@@ -21,8 +22,8 @@ final class SearchFlow: Flow {
         switch step {
         case .searchIsRequired:
             return reqiredSearchVC()
-        case .madicineDetailIsRequired:
-            return navigateToMedicineDetailVC()
+        case .madicineDetailIsRequired(let medicineInfo):
+            return navigateToMedicineDetailVC(medicineInfo)
         default:
             return .none
         }
@@ -35,9 +36,9 @@ final class SearchFlow: Flow {
         ))
     }
 
-    // TODO: itemCode 넣는 로직 만들기
-    private func navigateToMedicineDetailVC() -> FlowContributors {
+    private func navigateToMedicineDetailVC(_ entity: MedicineInfoEntity) -> FlowContributors {
         let medicineDetailVC = MedicineDetailViewController(viewModel: appDI.medicineDetailViewModel)
+        medicineDetailVC.setUp(with: entity)
         presentable.navigationController?.pushViewController(medicineDetailVC, animated: true)
         return .one(flowContributor: .contribute(
             withNextPresentable: medicineDetailVC,

@@ -49,7 +49,8 @@ class SearchViewController: BaseVC<SearchViewModel> {
 
     override func bind() {
         let input = SearchViewModel.Input(
-            searchInputText: searchController.searchBar.searchTextField.rx.text.orEmpty.asObservable()
+            searchInputText: searchController.searchBar.searchTextField.rx.text.orEmpty.asObservable(),
+            selectedItemIndex: resultTableView.rx.itemSelected.asObservable()
         )
         let output = viewModel.transform(input: input)
 

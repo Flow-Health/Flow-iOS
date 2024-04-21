@@ -1,6 +1,7 @@
 import UIKit
 import FlowKit
 import Core
+import Model
 
 import Kingfisher
 import SnapKit
@@ -9,6 +10,7 @@ import RxSwift
 import RxCocoa
 
 class MedicineDetailViewController: BaseVC<MedicineDetailViewModel> {
+    private var itemCode = ""
     private let scrollView = VScrollView(showsVerticalScrollIndicator: true)
     private let medicineImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
@@ -40,7 +42,6 @@ class MedicineDetailViewController: BaseVC<MedicineDetailViewModel> {
     override func attridute() {
         navigationItem.title = "상세정보"
         navigationItem.rightBarButtonItem = bookMarkButton
-        mockUpSetting()
     }
 
     override func addView() {
@@ -97,15 +98,27 @@ class MedicineDetailViewController: BaseVC<MedicineDetailViewModel> {
             $0.leading.trailing.equalToSuperview().inset(20)
         }
     }
+}
 
-    // TODO: - Delete Mockup
-    private func mockUpSetting() {
-        medicineImageView.kf.setImage(with: URL(string: "https://nedrug.mfds.go.kr/pbp/cmn/itemImageDownload/151335245510200022"))
-        companyNameLabel.text = "뉴스피린(주)"
-        medicineNameLabel.text = "뉴스피린장용정100밀리그램"
-        efficacyExplain.explain = "다른 비스테로이드성 소염진통제 및 살리실산 제제, 일주일 동안 메토트렉세이트 15밀리그람(15mg/주) 이상의 용량은 이 약과 병용 투여 시 출혈이 증가되거나 신기능이 감소될 수 있으므로 함께 사용하지 않습니다.\n\n항응고제, 이부프로펜, 나프록센 등 일부 비스테로이드성 소염진통제, 혈전용해제, 다른 혈소판응집억제제, 지혈제, 당뇨병치료제(인슐린제제, 톨부타미드 등), 요산배설촉진제(벤즈브로마론, 프로베네시드), 티아지드계 이뇨제, 리튬제제, 선택적 세포토닌 재흡수 억제제, 디곡신, 전신 작용 부신피질호르몬 제제(애디슨병 대체요법용 히드로코티손 제외), 안지오텐신 전환 효소 억제제, 발프로산 제제를 복용하는 사람은 의사 또는 약사와 상의하십시오.\n\n알칼리제제(예: 탄산수소나트륨, 탄산마그네슘) 또는 습기가 차기 쉬운 제제와 함께 섞지 마십시오.\n\n알코올과 병용 투여 시 위장관 점막 손상이 증가하고, 이 약과 알코올의 상승효과로 인해 출혈시간이 연장될 수 있습니다.\n"
-        cautionExplain.explain = "습기를 피해 실온에서 보관하십시오.\n\n어린이의 손이 닿지 않는 곳에 보관하십시오.\n"
-        updateAtLabel.contentText = "마지막 업데이트: 2024-01-11"
-        medicineCodeLabel.contentText = "20010024"
+extension MedicineDetailViewController {
+    func setUp(with entity: MedicineInfoEntity) {
+        medicineImageView.kf.setImage(
+            with: URL(string: entity.imageURL),
+            placeholder: FlowKitAsset.defaultImage.image
+        )
+        companyNameLabel.text = entity.companyName
+        medicineNameLabel.text = entity.medicineName
+
+        efficacyExplain.explain = entity.efficacy
+        howToUseExplain.explain = entity.howToUse
+        cautionWarningExplain.explain = entity.cautionWarning
+        cautionExplain.explain = entity.caution
+        interactionExplain.explain = entity.interaction
+        sideEffectExplain.explain = entity.sideEffect
+        storageMethodExplain.explain = entity.storageMethod
+
+        updateAtLabel.contentText = "마지막 업데이트: \(entity.updateDate)"
+        medicineCodeLabel.contentText = entity.itemCode
+        itemCode = entity.itemCode
     }
 }

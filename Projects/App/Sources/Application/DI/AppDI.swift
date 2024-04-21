@@ -18,7 +18,9 @@ extension AppDI {
             fetchBookMarkMedicineListUseCase: serviceDI.fetchBookMarkMedicineListUseCase
         )
 
-        let searchViewModelInject = SearchViewModel()
+        let searchViewModelInject = SearchViewModel(
+            searchMedicineUseCase: serviceDI.searchMedicineUseCase
+        )
         let medicineDetailViewModelInject = MedicineDetailViewModel()
 
         return .init(

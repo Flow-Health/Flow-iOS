@@ -14,11 +14,14 @@ public struct ServiceDI {
     public let insertTakenMedicineUseCase: InsertTakenMedicineUseCase
     public let fetchTakenMedicineListUseCase: FetchTakenMedicineListUseCase
     public let fetchMedicineRecodeUseCase: FetchMedicineRecodeUseCase
+
+    public let searchMedicineUseCase: SearchMedicineUseCase
 }
 
 public extension ServiceDI {
     static func resolve() -> ServiceDI {
         // DataSource
+        let medicineContentDataSource: MedicineContentDataSource = MedicineContentDataSourceImpl()
         let bookMakrDataSource: BookMarkMedicineDataSource = BookMarkMedicineDataSourceImpl()
         let takenMedicineDataSource: TakenMedicineDataSource = TakenMedicineDataSourceImpl()
 
@@ -44,6 +47,9 @@ public extension ServiceDI {
         let fetchMedicineRecodeRepository = FetchMedicineRecodeRepositoryImpl(
             dataBase: takenMedicineDataSource
         )
+        let searchMedicineRepository = SearchMedicineRepositoryImpl(
+            dataSource: medicineContentDataSource
+        )
 
         // UseCase
         let insertBookMarkMedicineUseCaseImpl = InsertBookMarkMedicineUseCaseImpl(
@@ -67,6 +73,9 @@ public extension ServiceDI {
         let fetchMedicineRecodeUseCase = FetchMedicineRecodeUseCaseImpl(
             repository: fetchMedicineRecodeRepository
         )
+        let searchMedicineUseCase = SearchMedicineUseCaseImpl(
+            repository: searchMedicineRepository
+        )
 
         return .init(
             insertBookMarkMedicineUseCase: insertBookMarkMedicineUseCaseImpl,
@@ -75,7 +84,8 @@ public extension ServiceDI {
             findBookMarkMedicineUseCase: findBookMarkMedicineUseCaseImpl,
             insertTakenMedicineUseCase: insertTakenMedicineUseCase,
             fetchTakenMedicineListUseCase: fetchTakenMedicineListUseCase,
-            fetchMedicineRecodeUseCase: fetchMedicineRecodeUseCase
+            fetchMedicineRecodeUseCase: fetchMedicineRecodeUseCase,
+            searchMedicineUseCase: searchMedicineUseCase
         )
     }
 }

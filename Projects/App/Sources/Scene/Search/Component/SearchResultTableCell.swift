@@ -74,6 +74,6 @@ extension SearchResultTableCell {
         medicineImageView.kf.setImage(with: URL(string: entity.imageURL))
         medicineNameLabel.text = entity.medicineName
         companyNameLabel.text = entity.companyName
-        updateAtLabel.contentText = entity.updateDate.toString(.fullDate)
+        updateAtLabel.contentText = entity.updateDate
     }
 }

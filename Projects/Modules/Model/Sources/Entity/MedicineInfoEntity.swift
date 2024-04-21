@@ -14,7 +14,7 @@ public struct MedicineInfoEntity {
     public let interaction: String      // 상호작용
     public let sideEffect: String       // 부작용
     public let storageMethod: String    // 보관법
-    public let updateDate: Date       // 수정일자
+    public let updateDate: String       // 수정일자
 
     public init(
         imageURL: String,
@@ -28,7 +28,7 @@ public struct MedicineInfoEntity {
         interaction: String,
         sideEffect: String,
         storageMethod: String,
-        updateDate: Date
+        updateDate: String
     ) {
         self.imageURL = imageURL
         self.medicineName = medicineName

@@ -6,7 +6,7 @@ import Model
 
 import RxSwift
 
-public class FetchTakenMedicineListUseCaseImpl: FetchTakenMedicineListUseCase {
+class FetchTakenMedicineListUseCaseImpl: FetchTakenMedicineListUseCase {
     public var repository: FetchTakenMedicineListRepository
 
     init(repository: FetchTakenMedicineListRepository) {

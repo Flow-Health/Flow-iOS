@@ -5,7 +5,7 @@ import LocalService
 
 import RxSwift
 
-public class InsertTakenMedicineUseCaseImpl: InsertTakenMedicineUseCase {
+class InsertTakenMedicineUseCaseImpl: InsertTakenMedicineUseCase {
     public var repository: InsertTakenMedicineRepository
 
     init(repository: InsertTakenMedicineRepository) {

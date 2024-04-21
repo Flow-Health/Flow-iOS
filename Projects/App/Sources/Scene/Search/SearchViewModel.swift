@@ -9,16 +9,38 @@ import RxFlow
 
 class SearchViewModel: ViewModelType, Stepper {
     var steps: PublishRelay<Step> = .init()
-
     var disposeBag: DisposeBag = .init()
 
-    struct Input { }
-    
-    struct Output { }
+    private let searchMedicineUseCase: SearchMedicineUseCase
 
-    init() {}
+    struct Input {
+        let searchInputText: Observable<String>
+    }
+    
+    struct Output { 
+        let resultMedicine: Signal<[MedicineInfoEntity]>
+    }
+
+    init(searchMedicineUseCase: SearchMedicineUseCase) {
+        self.searchMedicineUseCase = searchMedicineUseCase
+    }
 
     func transform(input: Input) -> Output {
-        return Output()
+        let searchMedicine = PublishRelay<[MedicineInfoEntity]>()
+
+        input.searchInputText
+            .filter { !$0.isEmpty }
+            .debounce(.milliseconds(600), scheduler: MainScheduler.asyncInstance)
+            .flatMap {
+                self.searchMedicineUseCase.execute(with: $0)
+                    .catch {
+                        debugPrint($0.localizedDescription)
+                        return .just([])
+                    }
+            }
+            .bind(to: searchMedicine)
+            .disposed(by: disposeBag)
+            
+        return Output(resultMedicine: searchMedicine.asSignal())
     }
 }

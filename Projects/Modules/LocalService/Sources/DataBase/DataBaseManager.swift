@@ -21,7 +21,7 @@ struct BookMarkMedicineTable: DataBaseTable {
     static let interaction = Expression<String>("interaction")
     static let sideEffect = Expression<String>("sideEffect")
     static let storageMethod = Expression<String>("storageMethod")
-    static let updateDate = Expression<Date>("updateDate")
+    static let updateDate = Expression<String>("updateDate")
 }
 
 struct TakenMedicineTable: DataBaseTable {

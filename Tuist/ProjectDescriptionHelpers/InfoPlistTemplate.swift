@@ -2,6 +2,7 @@ import ProjectDescription
 
 // MARK: - UIkit의 Delegate를 사용하기 위한 설정
 public let uiKitPlist: [String: Plist.Value] = [
+    "UIUserInterfaceStyle": "Light",
     "UILaunchStoryboardName": "LaunchScreen.storyboard",
     "UIApplicationSceneManifest": [
         "UIApplicationSupportsMultipleScenes": false,

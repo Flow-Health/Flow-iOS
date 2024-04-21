@@ -20,6 +20,7 @@ class SearchViewController: BaseVC<SearchViewModel> {
         $0.textAlignment = .center
         $0.numberOfLines = 0
         $0.isHidden = true
+        $0.isUserInteractionEnabled = false
     }
     private let searchController = SearchBarController()
 
@@ -64,7 +65,10 @@ class SearchViewController: BaseVC<SearchViewModel> {
 
         searchController.searchBar.rx.text.asObservable()
             .do(onNext: { [weak self] _ in self?.notFoundLabel.isHidden = true })
-            .map { "\"\($0 ?? "수상한 약")\"이 들어간 약을 찾을 수 없습니다." }
+            .map {
+                guard let name = $0, !name.isEmpty else { return "" }
+                return "\"\(name)\"이 들어간 약을 찾을 수 없습니다."
+            }
             .bind(to: notFoundLabel.rx.text)
             .disposed(by: disposeBag)
     }

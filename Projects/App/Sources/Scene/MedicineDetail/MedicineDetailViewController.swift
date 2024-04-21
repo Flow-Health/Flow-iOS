@@ -102,7 +102,10 @@ class MedicineDetailViewController: BaseVC<MedicineDetailViewModel> {
 
 extension MedicineDetailViewController {
     func setUp(with entity: MedicineInfoEntity) {
-        medicineImageView.kf.setImage(with: URL(string: entity.imageURL))
+        medicineImageView.kf.setImage(
+            with: URL(string: entity.imageURL),
+            placeholder: FlowKitAsset.defaultImage.image
+        )
         companyNameLabel.text = entity.companyName
         medicineNameLabel.text = entity.medicineName
 

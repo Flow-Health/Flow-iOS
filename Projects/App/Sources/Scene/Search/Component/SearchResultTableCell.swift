@@ -71,7 +71,10 @@ class SearchResultTableCell: UITableViewCell {
 
 extension SearchResultTableCell {
     func setup(_ entity: MedicineInfoEntity) {
-        medicineImageView.kf.setImage(with: URL(string: entity.imageURL))
+        medicineImageView.kf.setImage(
+            with: URL(string: entity.imageURL),
+            placeholder: FlowKitAsset.defaultImage.image
+        )
         medicineNameLabel.text = entity.medicineName
         companyNameLabel.text = entity.companyName
         updateAtLabel.contentText = entity.updateDate

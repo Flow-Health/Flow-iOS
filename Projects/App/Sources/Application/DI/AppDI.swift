@@ -21,7 +21,11 @@ extension AppDI {
         let searchViewModelInject = SearchViewModel(
             searchMedicineUseCase: serviceDI.searchMedicineUseCase
         )
-        let medicineDetailViewModelInject = MedicineDetailViewModel()
+        let medicineDetailViewModelInject = MedicineDetailViewModel(
+            findBookMarkMedicineUseCase: serviceDI.findBookMarkMedicineUseCase,
+            deleteBookMarkMedicineUseCase: serviceDI.deleteBookMarkMedicineUseCase,
+            insertBookMarkMedicineUseCase: serviceDI.insertBookMarkMedicineUseCase
+        )
 
         return .init(
             homeViewModel: homeViewModelInject,

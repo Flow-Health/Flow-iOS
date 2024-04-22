@@ -10,7 +10,12 @@ import RxSwift
 import RxCocoa
 
 class MedicineDetailViewController: BaseVC<MedicineDetailViewModel> {
-    private var itemCode = ""
+
+    private let findItemRelay = PublishRelay<String>()
+    private let insetBookMarkRelay = PublishRelay<MedicineInfoEntity?>()
+    private let deleteBookMarkRelay = PublishRelay<MedicineInfoEntity?>()
+
+    private var item: MedicineInfoEntity?
     private let scrollView = VScrollView(showsVerticalScrollIndicator: true)
     private let medicineImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
@@ -26,10 +31,7 @@ class MedicineDetailViewController: BaseVC<MedicineDetailViewModel> {
         $0.numberOfLines = 0
     }
     private let medicineCodeLabel = PaddingLableView()
-    private let bookMarkButton = UIBarButtonItem().then {
-        $0.tintColor = .blue1
-        $0.image = UIImage(systemName: "bookmark.fill")
-    }
+    private let bookMarkButton = BookMarkToggleButton()
     private let explainVStack = VStack(spacing: 20)
     private let efficacyExplain = ExplainFormView(title: "효능")
     private let howToUseExplain = ExplainFormView(title: "사용법")
@@ -42,6 +44,7 @@ class MedicineDetailViewController: BaseVC<MedicineDetailViewModel> {
     override func attridute() {
         navigationItem.title = "상세정보"
         navigationItem.rightBarButtonItem = bookMarkButton
+        findItemRelay.accept(item?.itemCode ?? "")
     }
 
     override func addView() {
@@ -98,6 +101,29 @@ class MedicineDetailViewController: BaseVC<MedicineDetailViewModel> {
             $0.leading.trailing.equalToSuperview().inset(20)
         }
     }
+
+    override func bind() {
+        let input = MedicineDetailViewModel.Input(
+            itemCode: findItemRelay.asObservable(),
+            insetBookMarkItem: insetBookMarkRelay.asObservable(),
+            deleteBookMarkItem: deleteBookMarkRelay.asObservable()
+        )
+        let output = viewModel.transform(input: input)
+
+        output.isBookMarked.asObservable()
+            .bind(to: bookMarkButton.rx.isBookMarked)
+            .disposed(by: disposeBag)
+
+        bookMarkButton.rx.tap
+            .map { self.item }
+            .subscribe(onNext: { [weak self] item in
+                guard let self else { return }
+                bookMarkButton.isBookMarked ?
+                deleteBookMarkRelay.accept(item) :
+                insetBookMarkRelay.accept(item)
+            })
+            .disposed(by: disposeBag)
+    }
 }
 
 extension MedicineDetailViewController {
@@ -119,6 +145,6 @@ extension MedicineDetailViewController {
 
         updateAtLabel.contentText = "마지막 업데이트: \(entity.updateDate)"
         medicineCodeLabel.contentText = entity.itemCode
-        itemCode = entity.itemCode
+        item = entity
     }
 }

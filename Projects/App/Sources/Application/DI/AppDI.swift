@@ -6,6 +6,7 @@ struct AppDI {
     let homeViewModel: HomeViewModel
     let searchViewModel: SearchViewModel
     let medicineDetailViewModel: MedicineDetailViewModel
+    let bookMarkDetailViewModel: BookMarkDetailViewModel
 }
 
 extension AppDI {
@@ -26,11 +27,15 @@ extension AppDI {
             deleteBookMarkMedicineUseCase: serviceDI.deleteBookMarkMedicineUseCase,
             insertBookMarkMedicineUseCase: serviceDI.insertBookMarkMedicineUseCase
         )
+        let bookMarkDetailViewModelInject = BookMarkDetailViewModel(
+            fetchBookMarkMedicineListUseCase: serviceDI.fetchBookMarkMedicineListUseCase
+        )
 
         return .init(
             homeViewModel: homeViewModelInject,
             searchViewModel: searchViewModelInject,
-            medicineDetailViewModel: medicineDetailViewModelInject
+            medicineDetailViewModel: medicineDetailViewModelInject,
+            bookMarkDetailViewModel: bookMarkDetailViewModelInject
         )
     }
 }

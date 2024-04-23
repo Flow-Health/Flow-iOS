@@ -22,6 +22,8 @@ final class HomeFlow: Flow {
             return navigateToHomeVC()
         case .searchIsRequired:
             return navigateToSearchVC()
+        case .bookMarkIsRequired:
+            return navigateToBookMarkVC()
         default:
             return .none
         }
@@ -44,6 +46,17 @@ final class HomeFlow: Flow {
         return .one(flowContributor: .contribute(
             withNextPresentable: searchFlow,
             withNextStepper: OneStepper(withSingleStep: FlowStep.searchIsRequired)
+        ))
+    }
+
+    private func navigateToBookMarkVC() -> FlowContributors {
+        let bookMarkFlow = BookMarkFlow(appDI: appDI)
+        Flows.use(bookMarkFlow, when: .created) { [weak self] root in
+            self?.presentable.pushViewController(root, animated: true)
+        }
+        return .one(flowContributor: .contribute(
+            withNextPresentable: bookMarkFlow,
+            withNextStepper: OneStepper(withSingleStep: FlowStep.bookMarkIsRequired)
         ))
     }
 }

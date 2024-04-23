@@ -14,6 +14,15 @@ open class BaseButton: UIButton {
         setLayout()
     }
 
+    override open var isHighlighted: Bool {
+        willSet {
+            UIView.animate(withDuration: 0.08) { [self] in
+                transform = newValue ? CGAffineTransform(scaleX: 0.97, y: 0.97) : .identity
+                layer.opacity = newValue ? 0.7 : 1
+            }
+        }
+    }
+
     open func addView() {}
     open func setLayout() {}
 }

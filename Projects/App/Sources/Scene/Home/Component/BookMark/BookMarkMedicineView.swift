@@ -11,6 +11,11 @@ class BookMarkMedicineView: BaseView {
 
     let headerButton = HeaderNavigationButton()
     private let medicineVStack = VStack(spacing: 10)
+    private let bookMarkEmptyView = EmptyStatusView(
+        icon: FlowKitAsset.readingGlassesWithCloud.image,
+        title: "등록된 약이 없습니다",
+        subTitle: "약을 검색하여 자주 먹는\n약을 등록해보세요"
+    )
 
     init(isNavigatAble: Bool = false) {
         super.init(frame: .zero)
@@ -52,6 +57,11 @@ extension BookMarkMedicineView {
         let subViews = medicineVStack.subviews
         subViews.forEach(medicineVStack.removeArrangedSubview(_:))
         subViews.forEach { $0.removeFromSuperview() }
+
+        guard !entity.isEmpty else {
+            medicineVStack.addArrangedSubview(bookMarkEmptyView)
+            return
+        }
 
         let colorSet: [UIColor] = [.blue1, .blue2, .blue3, .blue4]
         let bookMarkCells = entity.enumerated().map {

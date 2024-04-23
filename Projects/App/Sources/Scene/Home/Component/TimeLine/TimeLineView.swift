@@ -11,6 +11,11 @@ class TimeLineView: BaseView {
 
     private let headerView = HeaderNavigationButton()
     private let timeLineVStack = VStack()
+    private let timeLineEmptyView = EmptyStatusView(
+        icon: FlowKitAsset.pageWithCloud.image,
+        title: "기록된 정보가 없습니다",
+        subTitle: "복용한 약을 기록하여\n타임라인을 만들어 보세요"
+    )
 
     init(isNavigatAble: Bool = false) {
         super.init(frame: .zero)
@@ -52,6 +57,11 @@ extension TimeLineView {
         let subViews = timeLineVStack.subviews
         subViews.forEach(timeLineVStack.removeArrangedSubview(_:))
         subViews.forEach { $0.removeFromSuperview() }
+
+        guard !entity.isEmpty else {
+            timeLineVStack.addArrangedSubview(timeLineEmptyView)
+            return
+        }
 
         let timeLineCells = entity.enumerated().map {
             let cell = TimeLineCell(

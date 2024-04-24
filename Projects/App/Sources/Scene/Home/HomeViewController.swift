@@ -19,10 +19,6 @@ class HomeViewController: BaseVC<HomeViewModel> {
     private let bookMarkMedicineView = BookMarkMedicineView(isNavigatAble: true)
     private let timeLineView = TimeLineView()
 
-    override func attridute() {
-        view.backgroundColor = .blue5
-    }
-
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
@@ -31,6 +27,10 @@ class HomeViewController: BaseVC<HomeViewModel> {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+
+    override func attridute() {
+        view.backgroundColor = .blue5
     }
 
     override func addView() {

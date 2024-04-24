@@ -3,11 +3,12 @@
 import UIKit
 
 import RxFlow
+import FlowKit
 
 final class HomeFlow: Flow {
 
     let appDI: AppDI
-    let presentable = UINavigationController()
+    let presentable = BaseNavigationController()
 
     var root: Presentable { presentable }
 

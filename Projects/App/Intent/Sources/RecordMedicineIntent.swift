@@ -39,7 +39,7 @@ extension RecordMedicineIntent {
                 .subscribe(onCompleted: {
                     LocalNotificationHelper.shared.pushNotification(
                         title: "약 기록하기 📝",
-                        body: "약을 기록하였습니다. (\(recodeDate.toString(.fullDate)))",
+                        body: "약을 기록하였습니다. (\(recodeDate.toString(.nomal)))",
                         seconds: 0.5,
                         identifier: "COMPLITED_RECODE"
                     )

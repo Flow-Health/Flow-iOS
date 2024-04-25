@@ -27,6 +27,12 @@ class LastTakenTimeView: BaseView {
         super.init(frame: .zero)
         backgroundColor = .white
         layer.cornerRadius = 20
+        setShadow(
+            color: .black,
+            opacity: 0.05,
+            radius: 10,
+            offset: .init(width: 0, height: 4)
+        )
     }
 
     required init?(coder: NSCoder) {

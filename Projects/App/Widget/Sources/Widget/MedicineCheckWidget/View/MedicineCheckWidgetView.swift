@@ -53,7 +53,7 @@ struct MediumMedicineCheckWidgetView: View {
             MedicineCheckHeaderView(contentText: entry.targetMedicine.id)
             Spacer()
             HStack(alignment: .bottom) {
-                LastMedicineTimeView(lastTakenDate: Date())
+                LastMedicineTimeView(lastTakenDate: entry.date)
                 Spacer()
                 RecodeToggleBttton(
                     isDisabled: entry.targetMedicine.itemCode == nil,

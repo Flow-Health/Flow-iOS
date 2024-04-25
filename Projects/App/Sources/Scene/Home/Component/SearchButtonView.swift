@@ -25,6 +25,12 @@ class SearchButtonView: BaseButton {
         super.init(frame: .zero)
         layer.cornerRadius = 20
         backgroundColor = .white
+        setShadow(
+            color: .black,
+            opacity: 0.05,
+            radius: 10,
+            offset: .init(width: 0, height: 4)
+        )
     }
     
     required init?(coder: NSCoder) {

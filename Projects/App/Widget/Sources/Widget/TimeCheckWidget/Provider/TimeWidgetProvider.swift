@@ -6,7 +6,7 @@ import RxSwift
 
 struct TimeCheckWidgetProvider: TimelineProvider {
     func placeholder(in context: Context) -> TimeCheckWidgetEntry {
-        TimeCheckWidgetEntry(date: Date(), lastEatingTime: Date(), lastEatingMedicine: [])
+        TimeCheckWidgetEntry(date: Date(), lastTakenTime: Date(), lastEatingMedicine: [])
     }
     
     func getSnapshot(in context: Context, completion: @escaping (TimeCheckWidgetEntry) -> Void) {
@@ -17,7 +17,7 @@ struct TimeCheckWidgetProvider: TimelineProvider {
             .map {
                 TimeCheckWidgetEntry(
                     date: Date(),
-                    lastEatingTime: $0?.lastTakenTime,
+                    lastTakenTime: $0?.lastTakenTime,
                     lastEatingMedicine: $0?.recentMedicineNameList
                 )
             }
@@ -36,7 +36,7 @@ struct TimeCheckWidgetProvider: TimelineProvider {
             .map {
                 [TimeCheckWidgetEntry(
                     date: entryDate,
-                    lastEatingTime: $0?.lastTakenTime,
+                    lastTakenTime: $0?.lastTakenTime,
                     lastEatingMedicine: $0?.recentMedicineNameList
                 )]
             }

@@ -13,7 +13,7 @@ class FetchTakenMedicineListUseCaseImpl: FetchTakenMedicineListUseCase {
         self.repository = repository
     }
 
-    public func execute() -> Single<[MedicineTakenEntity]> {
-        repository.fetchTakenMedicineList()
+    public func execute(at date: Date) -> Single<[MedicineTakenEntity]> {
+        repository.fetchTakenMedicineList(at: date)
     }
 }

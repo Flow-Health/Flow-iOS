@@ -32,8 +32,9 @@ public class TakenMedicineDataSourceImpl: TakenMedicineDataSource {
         }
     }
     
-    public func fetchTakenMedicineList() -> Single<[MedicineTakenEntity]> {
+    public func fetchTakenMedicineList(at filter: Date) -> Single<[MedicineTakenEntity]> {
         let query = takenMedicineTable
+            .filter(takenMedicineTable[TakenMedicineTable.medicineTakenTime].date == filter.date)
             .join(
                 bookMarkTable,
                 on: takenMedicineTable[TakenMedicineTable.itemCode] == bookMarkTable[BookMarkMedicineTable.itemCode]

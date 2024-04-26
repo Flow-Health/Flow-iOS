@@ -9,5 +9,5 @@ import RxSwift
 public protocol FetchTakenMedicineListRepository {
     var dataBase: TakenMedicineDataSource { get set }
 
-    func fetchTakenMedicineList() -> Single<[MedicineTakenEntity]>
+    func fetchTakenMedicineList(at date: Date) -> Single<[MedicineTakenEntity]>
 }

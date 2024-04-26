@@ -44,7 +44,7 @@ class HomeViewModel: ViewModelType, Stepper {
         let lastTakenTime = BehaviorRelay<Date?>(value: nil)
 
         input.viewWillAppear
-            .flatMap { self.fetchTakenMedicineListUseCase.execute() }
+            .flatMap { self.fetchTakenMedicineListUseCase.execute(at: Date()) }
             .bind(to: timeLineList)
             .disposed(by: disposeBag)
 

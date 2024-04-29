@@ -11,7 +11,10 @@ import RxCocoa
 class HomeViewController: BaseVC<HomeViewModel> {
 
     private let homeVStaek = VStack(spacing: 10)
-    private let scrollView = VScrollView()
+    private lazy var scrollView = VScrollView(
+        isRefreshAble: true,
+        refreshAction: { self.viewWillAppearRelay.accept(()) }
+    )
 
     private let headerView = HomeHeaderView()
     private let LastTakenBannerView = LastTakenTimeView()

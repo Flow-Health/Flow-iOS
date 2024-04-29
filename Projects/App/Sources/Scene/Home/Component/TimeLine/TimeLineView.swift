@@ -9,7 +9,7 @@ import Then
 
 class TimeLineView: BaseView {
 
-    private let headerView = HeaderNavigationButton()
+    let headerView = HeaderNavigationButton()
     private let timeLineVStack = VStack()
     private let timeLineEmptyView = EmptyStatusView(
         icon: FlowKitAsset.pageWithCloud.image,
@@ -17,7 +17,7 @@ class TimeLineView: BaseView {
         subTitle: "복용한 약을 기록하여\n타임라인을 만들어 보세요"
     )
 
-    init(isNavigatAble: Bool = false) {
+    init(isNavigatAble: Bool = true) {
         super.init(frame: .zero)
         layer.cornerRadius = 20
         backgroundColor = .white

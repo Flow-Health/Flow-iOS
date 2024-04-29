@@ -21,8 +21,7 @@ class SearchButtonView: BaseButton {
         $0.tintColor = .black3
     }
 
-    init() {
-        super.init(frame: .zero)
+    override func attribute() {
         layer.cornerRadius = 20
         backgroundColor = .white
         setShadow(
@@ -31,10 +30,6 @@ class SearchButtonView: BaseButton {
             radius: 10,
             offset: .init(width: 0, height: 4)
         )
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 
     override func addView() {

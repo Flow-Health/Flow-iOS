@@ -25,6 +25,8 @@ final class HomeFlow: Flow {
             return navigateToSearchVC()
         case .bookMarkIsRequired:
             return navigateToBookMarkVC()
+        case .timeLineDetailIsRequired:
+            return navigateToTimeLineVC()
         default:
             return .none
         }
@@ -58,6 +60,17 @@ final class HomeFlow: Flow {
         return .one(flowContributor: .contribute(
             withNextPresentable: bookMarkFlow,
             withNextStepper: OneStepper(withSingleStep: FlowStep.bookMarkIsRequired)
+        ))
+    }
+
+    private func navigateToTimeLineVC() -> FlowContributors {
+        let timeLineFlow = TimeLineFlow(appDI: appDI)
+        Flows.use(timeLineFlow, when: .created) { [weak self] root in
+            self?.presentable.pushViewController(root, animated: true)
+        }
+        return .one(flowContributor: .contribute(
+            withNextPresentable: timeLineFlow,
+            withNextStepper: OneStepper(withSingleStep: FlowStep.timeLineDetailIsRequired)
         ))
     }
 }

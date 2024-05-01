@@ -24,7 +24,7 @@ extension TimeLineHeaderLabel {
             text = "복용한 약이 없어요"
             return
         }
-        let fullText = "\(number)개의 약을 복용하였어요"
+        let fullText = "\(number)개의 약을 복용했어요"
         let attributeString = NSMutableAttributedString(string: fullText)
         attributeString.addAttribute(.foregroundColor, value: UIColor.blue1, range: (fullText as NSString).range(of: "\(number)개"))
         attributeString.addAttribute(.font, value: UIFont.headerH2Bold, range: (fullText as NSString).range(of: "\(number)개"))

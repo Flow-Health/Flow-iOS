@@ -33,7 +33,7 @@ public class VScrollView: UIScrollView {
 
     @objc private func refreshHandler() {
         guard let refreshAction else { return }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             refreshAction()
             self.refreshController.endRefreshing()
         }

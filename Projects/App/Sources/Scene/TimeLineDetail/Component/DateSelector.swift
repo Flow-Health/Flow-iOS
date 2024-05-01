@@ -11,7 +11,6 @@ import Then
 class DateSelector: BaseView {
 
     let selectDate = BehaviorRelay<Date>(value: Date())
-
     private let disposeBag = DisposeBag()
 
     private let decreaseDateButton = UIButton().then {
@@ -22,15 +21,17 @@ class DateSelector: BaseView {
         $0.setImage(FlowKitAsset.rightFillArrow.image, for: .normal)
     }
 
-    private let dateDisplayLable = UILabel().then {
-        $0.customLabel("-년 -월 -일", font: .headerH3SemiBold, textColor: .black)
+    let dateDisplayButton = UIButton(type: .system).then {
+        $0.setTitle("-년 -월 -일", for: .normal)
+        $0.setTitleColor(.black, for: .normal)
+        $0.titleLabel?.font = .headerH3SemiBold
     }
 
     override func addView() {
         addSubViews(
             decreaseDateButton,
             increaseDateButton,
-            dateDisplayLable
+            dateDisplayButton
         )
     }
 
@@ -40,9 +41,9 @@ class DateSelector: BaseView {
         }
         increaseDateButton.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.leading.equalTo(dateDisplayLable.snp.trailing).offset(8)
+            $0.leading.equalTo(dateDisplayButton.snp.trailing).offset(8)
         }
-        dateDisplayLable.snp.makeConstraints {
+        dateDisplayButton.snp.makeConstraints {
             $0.leading.equalTo(decreaseDateButton.snp.trailing).offset(8)
             $0.centerY.equalToSuperview()
         }
@@ -63,7 +64,7 @@ class DateSelector: BaseView {
                     .fullDateWithCharacter
                 )
             }
-            .bind(to: dateDisplayLable.rx.text)
+            .bind(onNext: setLabelTitle(_:))
             .disposed(by: disposeBag)
 
         decreaseDateButton.rx.tap
@@ -81,5 +82,14 @@ class DateSelector: BaseView {
             }
             .bind(to: selectDate)
             .disposed(by: disposeBag)
+    }
+}
+
+extension DateSelector {
+    func setLabelTitle(_ title: String?) {
+        UIView.setAnimationsEnabled(false)
+        dateDisplayButton.setTitle(title, for: .normal)
+        dateDisplayButton.layoutIfNeeded()
+        UIView.setAnimationsEnabled(true)
     }
 }

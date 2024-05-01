@@ -11,15 +11,12 @@ open class BaseView: UIView {
     public override init(frame: CGRect) {
         super.init(frame: frame)
         bind()
+        addView()
+        setLayout()
     }
 
     required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    override open func layoutSubviews() {
-        addView()
-        setLayout()
     }
 
     open func bind() {}

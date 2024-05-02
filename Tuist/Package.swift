@@ -10,6 +10,7 @@ import PackageDescription
             "RxMoya": .framework,
             "RxSwift": .framework,
             "RxCocoa": .framework,
+            "RxGesture": .framework,
             "SnapKit": .framework,
             "Then": .framework,
             "KeychainSwift": .framework,
@@ -30,6 +31,7 @@ let package = Package(
         .package(url: "https://github.com/evgenyneu/keychain-swift.git", from: "20.0.0"),
         .package(url: "https://github.com/RxSwiftCommunity/RxFlow.git", from: "2.13.0"),
         .package(url: "https://github.com/onevcat/Kingfisher.git", from: "7.4.1"),
-        .package(url: "https://github.com/stephencelis/SQLite.swift.git", from: "0.15.0")
+        .package(url: "https://github.com/stephencelis/SQLite.swift.git", from: "0.15.0"),
+        .package(url: "https://github.com/RxSwiftCommunity/RxGesture.git", from: "4.0.4")
     ]
 )

@@ -47,7 +47,7 @@ class DatePickerViewController: UIViewController {
         presentWithAnimation()
     }
 
-    override func touchesEstimatedPropertiesUpdated(_ touches: Set<UITouch>) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         dismissWithAnimation()
     }
 

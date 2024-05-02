@@ -4,6 +4,7 @@ import Core
 
 import SnapKit
 import Then
+import RxGesture
 import RxSwift
 import RxCocoa
 
@@ -74,14 +75,29 @@ class TimeLineDetailViewController: BaseVC<TimeLineDetailViewModel> {
             })
             .subscribe(onNext: timeLineDetailListView.setTimeLineList(with:))
             .disposed(by: disposeBag)
-        
+
+        view.rx.swipeGesture([.right, .left])
+            .skip(2)
+            .map {
+                let currentSelectDate = self.dateSelector.selectDate.value
+                let addDate = $0.direction == .right ? -1 : 1
+                return Calendar.current.date(byAdding: .day, value: addDate, to: currentSelectDate)!
+            }
+            .filter {
+                let overDate = Calendar.current.date(byAdding: .day, value: 1, to: Date())!
+                return $0.toString(.fullDate) != overDate.toString(.fullDate)
+            }
+            .bind(to: dateSelector.selectDate)
+            .disposed(by: disposeBag)
+
         resetButton.rx.tap
             .map { Date() }
             .bind(to: dateSelector.selectDate)
             .disposed(by: disposeBag)
         
-        dateSelector.dateDisplayButton.rx.tap
-            .subscribe(onNext: { [weak self] in
+        dateSelector.dateDisplayLabel.rx.tapGesture()
+            .when(.recognized)
+            .subscribe(onNext: { [weak self] _ in
                 guard let self else { return }
                 let dateVC = DatePickerViewController(complition: {
                     guard let selectedDate = $0,

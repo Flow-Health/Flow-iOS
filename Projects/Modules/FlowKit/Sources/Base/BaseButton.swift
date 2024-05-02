@@ -4,10 +4,16 @@
 import UIKit
 import Core
 
+import RxSwift
+import RxCocoa
+import RxGesture
 import SnapKit
 import Then
 
+
 open class BaseButton: UIButton {
+
+    let disposBag = DisposeBag()
 
     public override init(frame: CGRect) {
         super.init(frame: frame)

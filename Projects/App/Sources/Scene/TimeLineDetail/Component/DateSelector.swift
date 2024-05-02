@@ -21,17 +21,16 @@ class DateSelector: BaseView {
         $0.setImage(FlowKitAsset.rightFillArrow.image, for: .normal)
     }
 
-    let dateDisplayButton = UIButton(type: .system).then {
-        $0.setTitle("-년 -월 -일", for: .normal)
-        $0.setTitleColor(.black, for: .normal)
-        $0.titleLabel?.font = .headerH3SemiBold
+    let dateDisplayLabel = UILabel().then {
+        $0.customLabel(font: .headerH3SemiBold, textColor: .black)
+        $0.clipsToBounds = true
     }
 
     override func addView() {
         addSubViews(
             decreaseDateButton,
             increaseDateButton,
-            dateDisplayButton
+            dateDisplayLabel
         )
     }
 
@@ -41,9 +40,9 @@ class DateSelector: BaseView {
         }
         increaseDateButton.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.leading.equalTo(dateDisplayButton.snp.trailing).offset(8)
+            $0.leading.equalTo(dateDisplayLabel.snp.trailing).offset(8)
         }
-        dateDisplayButton.snp.makeConstraints {
+        dateDisplayLabel.snp.makeConstraints {
             $0.leading.equalTo(decreaseDateButton.snp.trailing).offset(8)
             $0.centerY.equalToSuperview()
         }
@@ -55,7 +54,8 @@ class DateSelector: BaseView {
 
     override func bind() {
         selectDate
-            .map { 
+            .do(onNext: buttonHandling(_:))
+            .map {
                 let currentDate = Calendar.current.dateComponents([.year], from: Date())
                 let selectedDate = Calendar.current.dateComponents([.year], from: $0)
                 return $0.toString(
@@ -64,7 +64,7 @@ class DateSelector: BaseView {
                     .fullDateWithCharacter
                 )
             }
-            .bind(onNext: setLabelTitle(_:))
+            .bind(onNext: changeDateWithAnimation(_:))
             .disposed(by: disposeBag)
 
         decreaseDateButton.rx.tap
@@ -86,10 +86,16 @@ class DateSelector: BaseView {
 }
 
 extension DateSelector {
-    func setLabelTitle(_ title: String?) {
-        UIView.setAnimationsEnabled(false)
-        dateDisplayButton.setTitle(title, for: .normal)
-        dateDisplayButton.layoutIfNeeded()
-        UIView.setAnimationsEnabled(true)
+    private func buttonHandling(_ date: Date) {
+        increaseDateButton.isEnabled = !(date.toString(.fullDate) == Date().toString(.fullDate))
+    }
+
+    private func changeDateWithAnimation(_ content: String) {
+        dateDisplayLabel.text = content
+        let transition = CATransition()
+        transition.duration = 0.2
+        transition.timingFunction = .init(name: .default)
+        transition.type = .fade
+        dateDisplayLabel.layer.add(transition, forKey: CATransitionType.fade.rawValue)
     }
 }

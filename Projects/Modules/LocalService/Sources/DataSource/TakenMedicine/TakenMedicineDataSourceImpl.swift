@@ -32,8 +32,9 @@ public class TakenMedicineDataSourceImpl: TakenMedicineDataSource {
         }
     }
     
-    public func fetchTakenMedicineList() -> Single<[MedicineTakenEntity]> {
+    public func fetchTakenMedicineList(at filter: Date) -> Single<[MedicineTakenEntity]> {
         let query = takenMedicineTable
+            .filter(takenMedicineTable[TakenMedicineTable.medicineTakenTime].date == filter.date)
             .join(
                 bookMarkTable,
                 on: takenMedicineTable[TakenMedicineTable.itemCode] == bookMarkTable[BookMarkMedicineTable.itemCode]
@@ -68,6 +69,7 @@ public class TakenMedicineDataSourceImpl: TakenMedicineDataSource {
     
     public func fetchMedicineRecode() -> Single<MedicineRecodeEntity?> {
         let query = takenMedicineTable
+            .filter(takenMedicineTable[TakenMedicineTable.medicineTakenTime].date == Date().date)
             .join(
                 bookMarkTable,
                 on: takenMedicineTable[TakenMedicineTable.itemCode] == bookMarkTable[BookMarkMedicineTable.itemCode]
@@ -85,6 +87,7 @@ public class TakenMedicineDataSourceImpl: TakenMedicineDataSource {
                 }
                 let nameList = recodeData?.map { (name: $0.name, id: $0.itemCode) }
 
+                // 뽑아온 3개의 데이터중 첫번째 데이터의 복용 시간을 마지막 복용 시간으로 지정
                 guard let lastTime = recodeData?.first?.date,
                       let nameList = nameList else {
                     single(.success(nil))

@@ -13,7 +13,7 @@ class FetchTakenMedicineListRepositoryImpl: FetchTakenMedicineListRepository {
         self.dataBase = dataBase
     }
 
-    public func fetchTakenMedicineList() -> Single<[MedicineTakenEntity]> {
-        dataBase.fetchTakenMedicineList()
+    public func fetchTakenMedicineList(at date: Date) -> Single<[MedicineTakenEntity]> {
+        dataBase.fetchTakenMedicineList(at: date)
     }
 }

@@ -19,6 +19,7 @@ let project = Project(
                 .SPM.Then,
                 .SPM.RxCocoa,
                 .SPM.RxFlow,
+                .SPM.RxGesture,
                 .SPM.KeychainSwift,
                 .SPM.Kingfisher,
                 .SPM.SQLite

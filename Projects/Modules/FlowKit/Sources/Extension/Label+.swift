@@ -4,7 +4,7 @@ import UIKit
 
 public extension UILabel {
     func customLabel(
-        _ text: String?,
+        _ text: String? = nil,
         font: UIFont,
         textColor: UIColor = .black
     ) {

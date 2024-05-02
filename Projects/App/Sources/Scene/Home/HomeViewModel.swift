@@ -20,6 +20,7 @@ class HomeViewModel: ViewModelType, Stepper {
         let viewWillAppear: Observable<Void>
         let tapSearchButton: Observable<Void>
         let tapBookMarkNavigationButton: Observable<Void>
+        let tapTimeLineNavigationButton: Observable<Void>
     }
 
     struct Output {
@@ -44,7 +45,7 @@ class HomeViewModel: ViewModelType, Stepper {
         let lastTakenTime = BehaviorRelay<Date?>(value: nil)
 
         input.viewWillAppear
-            .flatMap { self.fetchTakenMedicineListUseCase.execute() }
+            .flatMap { self.fetchTakenMedicineListUseCase.execute(at: Date()) }
             .bind(to: timeLineList)
             .disposed(by: disposeBag)
 
@@ -67,6 +68,11 @@ class HomeViewModel: ViewModelType, Stepper {
 
         input.tapBookMarkNavigationButton
             .map { FlowStep.bookMarkIsRequired }
+            .bind(to: steps)
+            .disposed(by: disposeBag)
+        
+        input.tapTimeLineNavigationButton
+            .map { FlowStep.timeLineDetailIsRequired }
             .bind(to: steps)
             .disposed(by: disposeBag)
 

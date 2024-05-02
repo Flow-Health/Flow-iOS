@@ -17,7 +17,7 @@ class BookMarkMedicineView: BaseView {
         subTitle: "약을 검색하여 자주 먹는\n약을 등록해보세요"
     )
 
-    init(isNavigatAble: Bool = false) {
+    init(isNavigatAble: Bool = true) {
         super.init(frame: .zero)
         layer.cornerRadius = 20
         backgroundColor = .white

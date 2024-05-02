@@ -19,7 +19,7 @@ class HomeViewController: BaseVC<HomeViewModel> {
     private let headerView = HomeHeaderView()
     private let LastTakenBannerView = LastTakenTimeView()
     private let searchButtonView = SearchButtonView()
-    private let bookMarkMedicineView = BookMarkMedicineView(isNavigatAble: true)
+    private let bookMarkMedicineView = BookMarkMedicineView()
     private let timeLineView = TimeLineView()
 
     override func viewWillAppear(_ animated: Bool) {
@@ -73,7 +73,8 @@ class HomeViewController: BaseVC<HomeViewModel> {
         let input = HomeViewModel.Input(
             viewWillAppear: viewWillAppearRelay.asObservable(),
             tapSearchButton: searchButtonView.rx.tap.asObservable(),
-            tapBookMarkNavigationButton: bookMarkMedicineView.headerButton.rx.tap.asObservable()
+            tapBookMarkNavigationButton: bookMarkMedicineView.headerButton.rx.tap.asObservable(),
+            tapTimeLineNavigationButton: timeLineView.headerView.rx.tap.asObservable()
         )
         let output = viewModel.transform(input: input)
 

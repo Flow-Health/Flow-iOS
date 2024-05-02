@@ -4,10 +4,25 @@
 import UIKit
 import Core
 
+import RxSwift
+import RxCocoa
+import RxGesture
 import SnapKit
 import Then
 
+
 open class BaseButton: UIButton {
+
+    let disposBag = DisposeBag()
+
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        attribute()
+    }
+
+    required public init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override open func layoutSubviews() {
         addView()
@@ -23,6 +38,7 @@ open class BaseButton: UIButton {
         }
     }
 
+    open func attribute() {}
     open func addView() {}
     open func setLayout() {}
 }

@@ -8,7 +8,7 @@ enum MedicineAPI {
 }
 
 extension MedicineAPI: TargetType {
-    var baseURL: URL { .init(string: "http://localhost:8080")! }
+    var baseURL: URL { .init(string: "http://172.30.1.87:8080")! }
 
     var path: String { "" }
 

@@ -8,5 +8,5 @@ import RxSwift
 public protocol FetchTakenMedicineListUseCase {
     var repository: FetchTakenMedicineListRepository { get set }
 
-    func execute() -> Single<[MedicineTakenEntity]>
+    func execute(at date: Date) -> Single<[MedicineTakenEntity]>
 }

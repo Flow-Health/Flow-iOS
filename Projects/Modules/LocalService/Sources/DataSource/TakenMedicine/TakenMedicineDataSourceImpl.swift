@@ -32,13 +32,13 @@ public class TakenMedicineDataSourceImpl: TakenMedicineDataSource {
         }
     }
     
-    public func fetchTakenMedicineList(at filter: Date) -> Single<[MedicineTakenEntity]> {
+    public func fetchTakenMedicineList() -> Single<[MedicineTakenEntity]> {
         let query = takenMedicineTable
-            .filter(takenMedicineTable[TakenMedicineTable.medicineTakenTime].date == filter.date)
             .join(
                 bookMarkTable,
                 on: takenMedicineTable[TakenMedicineTable.itemCode] == bookMarkTable[BookMarkMedicineTable.itemCode]
             )
+
         return Single.create { [weak self] single in
             guard let self else { return Disposables.create() }
             do {

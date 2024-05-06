@@ -10,6 +10,7 @@ public struct ServiceDI {
     public let deleteBookMarkMedicineUseCase: DeleteBookMarkMedicineUseCase
     public let fetchBookMarkMedicineListUseCase: FetchBookMarkMedicineListUseCase
     public let findBookMarkMedicineUseCase: FindBookMarkMedicineUseCase
+    public let updateBookMarkMedicineUseCase: UpdateBookMarkMedicineUseCase
 
     public let insertTakenMedicineUseCase: InsertTakenMedicineUseCase
     public let fetchTakenMedicineListUseCase: FetchTakenMedicineListUseCase
@@ -26,7 +27,7 @@ public extension ServiceDI {
         let takenMedicineDataSource: TakenMedicineDataSource = TakenMedicineDataSourceImpl()
 
         // Repository
-        let insertBookMarkMedicineRepository = InsertBookMarkMedicineRepositoryImpl(
+        let insertBookMarkMedicineRepositoryImpl = InsertBookMarkMedicineRepositoryImpl(
             dataSource: bookMakrDataSource
         )
         let deleteBookMarkMedicineRepositoryImpl = DeleteBookMarkMedicineRepositoryImpl(
@@ -38,22 +39,25 @@ public extension ServiceDI {
         let findBookMarkMedicineRepositoryImpl = FindBookMarkMedicineRepositoryImpl(
             dataSource: bookMakrDataSource
         )
-        let insertTakenMedicineRepository = InsertTakenMedicineRepositoryImpl(
+        let updateBookMarkMedicineRepositoryImpl = UpdateBookMarkMedicineRepositoryImpl(
+            dataSource: bookMakrDataSource
+        )
+        let insertTakenMedicineRepositoryImpl = InsertTakenMedicineRepositoryImpl(
             dataBase: takenMedicineDataSource
         )
-        let fetchTakenMedicineListRepository = FetchTakenMedicineListRepositoryImpl(
+        let fetchTakenMedicineListRepositoryImpl = FetchTakenMedicineListRepositoryImpl(
             dataBase: takenMedicineDataSource
         )
-        let fetchMedicineRecodeRepository = FetchMedicineRecodeRepositoryImpl(
+        let fetchMedicineRecodeRepositoryImpl = FetchMedicineRecodeRepositoryImpl(
             dataBase: takenMedicineDataSource
         )
-        let searchMedicineRepository = SearchMedicineRepositoryImpl(
+        let searchMedicineRepositoryImpl = SearchMedicineRepositoryImpl(
             dataSource: medicineContentDataSource
         )
 
         // UseCase
         let insertBookMarkMedicineUseCaseImpl = InsertBookMarkMedicineUseCaseImpl(
-            repository: insertBookMarkMedicineRepository
+            repository: insertBookMarkMedicineRepositoryImpl
         )
         let deleteBookMarkMedicineUseCaseImpl = DeleteBookMarkMedicineUseCaseImpl(
             repository: deleteBookMarkMedicineRepositoryImpl
@@ -64,17 +68,20 @@ public extension ServiceDI {
         let findBookMarkMedicineUseCaseImpl = FindBookMarkMedicineUseCaseImpl(
             repository: findBookMarkMedicineRepositoryImpl
         )
-        let insertTakenMedicineUseCase = InsertTakenMedicineUseCaseImpl(
-            repository: insertTakenMedicineRepository
+        let updateBookMarkMedicineUseCaseImpl = UpdateBookMarkMedicineUseCaseImpl(
+            repository: updateBookMarkMedicineRepositoryImpl
         )
-        let fetchTakenMedicineListUseCase = FetchTakenMedicineListUseCaseImpl(
-            repository: fetchTakenMedicineListRepository
+        let insertTakenMedicineUseCaseImpl = InsertTakenMedicineUseCaseImpl(
+            repository: insertTakenMedicineRepositoryImpl
         )
-        let fetchMedicineRecodeUseCase = FetchMedicineRecodeUseCaseImpl(
-            repository: fetchMedicineRecodeRepository
+        let fetchTakenMedicineListUseCaseImpl = FetchTakenMedicineListUseCaseImpl(
+            repository: fetchTakenMedicineListRepositoryImpl
         )
-        let searchMedicineUseCase = SearchMedicineUseCaseImpl(
-            repository: searchMedicineRepository
+        let fetchMedicineRecodeUseCaseImpl = FetchMedicineRecodeUseCaseImpl(
+            repository: fetchMedicineRecodeRepositoryImpl
+        )
+        let searchMedicineUseCaseImpl = SearchMedicineUseCaseImpl(
+            repository: searchMedicineRepositoryImpl
         )
 
         return .init(
@@ -82,10 +89,11 @@ public extension ServiceDI {
             deleteBookMarkMedicineUseCase: deleteBookMarkMedicineUseCaseImpl,
             fetchBookMarkMedicineListUseCase: fetchBookMarkMedicineListUseCaseImpl,
             findBookMarkMedicineUseCase: findBookMarkMedicineUseCaseImpl,
-            insertTakenMedicineUseCase: insertTakenMedicineUseCase,
-            fetchTakenMedicineListUseCase: fetchTakenMedicineListUseCase,
-            fetchMedicineRecodeUseCase: fetchMedicineRecodeUseCase,
-            searchMedicineUseCase: searchMedicineUseCase
+            updateBookMarkMedicineUseCase: updateBookMarkMedicineUseCaseImpl,
+            insertTakenMedicineUseCase: insertTakenMedicineUseCaseImpl,
+            fetchTakenMedicineListUseCase: fetchTakenMedicineListUseCaseImpl,
+            fetchMedicineRecodeUseCase: fetchMedicineRecodeUseCaseImpl,
+            searchMedicineUseCase: searchMedicineUseCaseImpl
         )
     }
 }

@@ -10,4 +10,5 @@ public protocol BookMarkMedicineDataSource {
     func deleteBookMarkMedicine(with itemCode: String) -> Completable
     func fetchBookMarkMedicineList() -> Single<[MedicineInfoEntity]>
     func findBookMarkMedicine(with itemCode: String) -> Single<MedicineInfoEntity?>
+    func updateBookMarkMedicine(to entity: MedicineInfoEntity, at itemCode: String) -> Completable
 }

@@ -22,6 +22,7 @@ struct BookMarkMedicineTable: DataBaseTable {
     static let sideEffect = Expression<String>("sideEffect")
     static let storageMethod = Expression<String>("storageMethod")
     static let updateDate = Expression<String>("updateDate")
+    static let tagHexColorCode = Expression<String?>("tagHexColorCode")
 }
 
 struct TakenMedicineTable: DataBaseTable {
@@ -65,6 +66,7 @@ final class DataBaseManager {
                 $0.column(BookMarkMedicineTable.sideEffect)
                 $0.column(BookMarkMedicineTable.storageMethod)
                 $0.column(BookMarkMedicineTable.updateDate)
+                $0.column(BookMarkMedicineTable.tagHexColorCode, defaultValue: nil)
             })
 
             try db.run(takenMedicineTable.create(ifNotExists: true) {

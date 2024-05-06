@@ -26,7 +26,8 @@ extension AppDI {
         let medicineDetailViewModelInject = MedicineDetailViewModel(
             findBookMarkMedicineUseCase: serviceDI.findBookMarkMedicineUseCase,
             deleteBookMarkMedicineUseCase: serviceDI.deleteBookMarkMedicineUseCase,
-            insertBookMarkMedicineUseCase: serviceDI.insertBookMarkMedicineUseCase
+            insertBookMarkMedicineUseCase: serviceDI.insertBookMarkMedicineUseCase,
+            updateBookMarkMedicineUseCase: serviceDI.updateBookMarkMedicineUseCase
         )
         let bookMarkDetailViewModelInject = BookMarkDetailViewModel(
             fetchBookMarkMedicineListUseCase: serviceDI.fetchBookMarkMedicineListUseCase

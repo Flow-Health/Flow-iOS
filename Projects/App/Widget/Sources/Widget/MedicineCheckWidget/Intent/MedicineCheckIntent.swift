@@ -7,6 +7,7 @@ import RxSwift
 struct BookMarkMedicineAppEntity: AppEntity {
     var id: String
     var itemCode: String?
+    var itemHexCode: String?
     
     static var typeDisplayRepresentation: TypeDisplayRepresentation = "북마크한 약"
     static var defaultQuery = BookMarkMedicineQuery()
@@ -45,7 +46,7 @@ extension BookMarkMedicineQuery {
         let service = ServiceDI.resolve()
 
         service.fetchBookMarkMedicineListUseCase.execute()
-            .map { $0.map { BookMarkMedicineAppEntity(id: $0.medicineName, itemCode: $0.itemCode) }}
+            .map { $0.map { BookMarkMedicineAppEntity(id: $0.medicineName, itemCode: $0.itemCode, itemHexCode: $0.tagHexColorCode) }}
             .subscribe(onSuccess: complitionHeader)
             .disposed(by: disposeBag)
      }

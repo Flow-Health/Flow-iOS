@@ -32,7 +32,8 @@ public class BookMarkMedicineDataSourceImpl: BookMarkMedicineDataSource {
                         BookMarkMedicineTable.interaction <- entity.interaction,
                         BookMarkMedicineTable.sideEffect <- entity.sideEffect,
                         BookMarkMedicineTable.storageMethod <- entity.storageMethod,
-                        BookMarkMedicineTable.updateDate <- entity.updateDate
+                        BookMarkMedicineTable.updateDate <- entity.updateDate,
+                        BookMarkMedicineTable.tagHexColorCode <- entity.tagHexColorCode
                     )
                 )
                 completable(.completed)
@@ -70,7 +71,8 @@ public class BookMarkMedicineDataSourceImpl: BookMarkMedicineDataSource {
                         interaction: $0[BookMarkMedicineTable.interaction],
                         sideEffect: $0[BookMarkMedicineTable.sideEffect],
                         storageMethod: $0[BookMarkMedicineTable.storageMethod],
-                        updateDate: $0[BookMarkMedicineTable.updateDate]
+                        updateDate: $0[BookMarkMedicineTable.updateDate],
+                        tagHexColorCode: $0[BookMarkMedicineTable.tagHexColorCode]
                     )
                 }
                 single(.success(resultEntity ?? []))
@@ -97,11 +99,38 @@ public class BookMarkMedicineDataSourceImpl: BookMarkMedicineDataSource {
                         interaction: $0[BookMarkMedicineTable.interaction],
                         sideEffect: $0[BookMarkMedicineTable.sideEffect],
                         storageMethod: $0[BookMarkMedicineTable.storageMethod],
-                        updateDate: $0[BookMarkMedicineTable.updateDate]
+                        updateDate: $0[BookMarkMedicineTable.updateDate],
+                        tagHexColorCode: $0[BookMarkMedicineTable.tagHexColorCode]
                     )
                 }
                 single(.success(resultEntity?.first))
             } catch { single(.failure(error)) }
+            return Disposables.create()
+        }
+    }
+
+    public func updateBookMarkMedicine(to entity: MedicineInfoEntity, at itemCode: String) -> Completable {
+        return Completable.create { [weak self] completable in
+            guard let self else { return Disposables.create() }
+            let targetRow = bookMarkTable.filter(BookMarkMedicineTable.itemCode == itemCode)
+            do {
+                try dbManager.db?.run(targetRow.update(
+                    BookMarkMedicineTable.itemCode <- entity.itemCode,
+                    BookMarkMedicineTable.imageURL <- entity.imageURL,
+                    BookMarkMedicineTable.medicineName <- entity.medicineName,
+                    BookMarkMedicineTable.companyName <- entity.companyName,
+                    BookMarkMedicineTable.efficacy <- entity.efficacy,
+                    BookMarkMedicineTable.howToUse <- entity.howToUse,
+                    BookMarkMedicineTable.cautionWarning <- entity.cautionWarning,
+                    BookMarkMedicineTable.caution <- entity.caution,
+                    BookMarkMedicineTable.interaction <- entity.interaction,
+                    BookMarkMedicineTable.sideEffect <- entity.sideEffect,
+                    BookMarkMedicineTable.storageMethod <- entity.storageMethod,
+                    BookMarkMedicineTable.updateDate <- entity.updateDate,
+                    BookMarkMedicineTable.tagHexColorCode <- entity.tagHexColorCode
+                ))
+                completable(.completed)
+            } catch { completable(.error(error)) }
             return Disposables.create()
         }
     }

@@ -15,6 +15,7 @@ public struct MedicineInfoEntity {
     public let sideEffect: String       // 부작용
     public let storageMethod: String    // 보관법
     public let updateDate: String       // 수정일자
+    public let tagHexColorCode: String? // 태그색상 헥스 코드
 
     public init(
         imageURL: String,
@@ -28,7 +29,8 @@ public struct MedicineInfoEntity {
         interaction: String,
         sideEffect: String,
         storageMethod: String,
-        updateDate: String
+        updateDate: String,
+        tagHexColorCode: String? = nil
     ) {
         self.imageURL = imageURL
         self.medicineName = medicineName
@@ -42,5 +44,6 @@ public struct MedicineInfoEntity {
         self.sideEffect = sideEffect
         self.storageMethod = storageMethod
         self.updateDate = updateDate
+        self.tagHexColorCode = tagHexColorCode
     }
 }

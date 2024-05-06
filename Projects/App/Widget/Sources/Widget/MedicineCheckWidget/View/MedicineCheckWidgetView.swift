@@ -42,6 +42,10 @@ struct SmallMedicineCheckWidgetView: View {
             )
         }
         .padding(EdgeInsets(top: 15, leading: 14, bottom: 15, trailing: 14))
+        .overlay {
+            RoundedRectangle(cornerRadius: 22)
+                .stroke(Color(hex: entry.targetMedicine.itemHexCode ?? "#FFFFFF") ?? .clear, lineWidth: 12)
+        }
     }
 }
 
@@ -63,6 +67,10 @@ struct MediumMedicineCheckWidgetView: View {
             }
         }
         .padding(EdgeInsets(top: 15, leading: 14, bottom: 15, trailing: 14))
+        .overlay {
+            RoundedRectangle(cornerRadius: 22)
+                .stroke(Color(hex: entry.targetMedicine.itemHexCode ?? "#FFFFFF") ?? .clear, lineWidth: 12)
+        }
     }
 }
 

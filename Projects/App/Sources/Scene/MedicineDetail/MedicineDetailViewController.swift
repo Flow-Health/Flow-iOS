@@ -14,8 +14,9 @@ class MedicineDetailViewController: BaseVC<MedicineDetailViewModel> {
     private let findItemRelay = PublishRelay<String>()
     private let insetBookMarkRelay = PublishRelay<MedicineInfoEntity?>()
     private let deleteBookMarkRelay = PublishRelay<MedicineInfoEntity?>()
-
+    private let updateBookMarkRelay = PublishRelay<MedicineInfoEntity?>()
     private var item: MedicineInfoEntity?
+
     private let scrollView = VScrollView(showsVerticalScrollIndicator: true)
     private let medicineImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
@@ -30,6 +31,11 @@ class MedicineDetailViewController: BaseVC<MedicineDetailViewModel> {
         $0.textColor = .blue1
         $0.numberOfLines = 0
     }
+    private let colorPickerController = UIColorPickerViewController().then {
+        $0.title = "약 태그 색상"
+        $0.supportsAlpha = false
+    }
+    private let colorTagButton = ColorTagButton()
     private let medicineCodeLabel = PaddingLableView()
     private let bookMarkButton = BookMarkToggleButton()
     private let explainVStack = VStack(spacing: 20)
@@ -43,8 +49,9 @@ class MedicineDetailViewController: BaseVC<MedicineDetailViewModel> {
 
     override func attridute() {
         navigationItem.title = "상세정보"
-        navigationItem.rightBarButtonItem = bookMarkButton
+        navigationItem.rightBarButtonItems = [bookMarkButton, colorTagButton]
         findItemRelay.accept(item?.itemCode ?? "")
+        colorPickerController.delegate = self
     }
 
     override func addView() {
@@ -106,12 +113,22 @@ class MedicineDetailViewController: BaseVC<MedicineDetailViewModel> {
         let input = MedicineDetailViewModel.Input(
             itemCode: findItemRelay.asObservable(),
             insetBookMarkItem: insetBookMarkRelay.asObservable(),
-            deleteBookMarkItem: deleteBookMarkRelay.asObservable()
+            deleteBookMarkItem: deleteBookMarkRelay.asObservable(),
+            updateBookMarkItem: updateBookMarkRelay.asObservable()
         )
         let output = viewModel.transform(input: input)
 
         output.isBookMarked.asObservable()
+            .do(onNext: { [weak self] in self?.colorTagButton.isHidden = !$0 })
             .bind(to: bookMarkButton.rx.isBookMarked)
+            .disposed(by: disposeBag)
+
+        output.tagColorHexCode.asObservable()
+            .map {
+                guard let hexCode = $0 else { return nil }
+                return UIColor(hex: hexCode)
+            }
+            .bind(to: colorTagButton.rx.tagColor)
             .disposed(by: disposeBag)
 
         bookMarkButton.rx.tap
@@ -122,6 +139,10 @@ class MedicineDetailViewController: BaseVC<MedicineDetailViewModel> {
                 deleteBookMarkRelay.accept(item) :
                 insetBookMarkRelay.accept(item)
             })
+            .disposed(by: disposeBag)
+
+        colorTagButton.rx.tap
+            .subscribe(onNext: { [weak self] in self?.presentColorPicker() })
             .disposed(by: disposeBag)
     }
 }
@@ -146,5 +167,32 @@ extension MedicineDetailViewController {
         updateAtLabel.contentText = "마지막 업데이트: \(entity.updateDate)"
         medicineCodeLabel.contentText = entity.itemCode
         item = entity
+    }
+}
+
+extension MedicineDetailViewController: UIColorPickerViewControllerDelegate {
+    private func presentColorPicker() {
+        present(colorPickerController, animated: true)
+    }
+    
+    func colorPickerViewControllerDidFinish(_ viewController: UIColorPickerViewController) {
+        guard let item else { return }
+        let changedEntity: MedicineInfoEntity = .init(
+            imageURL: item.imageURL,
+            medicineName: item.medicineName,
+            companyName: item.companyName,
+            itemCode: item.itemCode,
+            efficacy: item.efficacy,
+            howToUse: item.howToUse,
+            cautionWarning: item.cautionWarning,
+            caution: item.caution,
+            interaction: item.interaction,
+            sideEffect: item.sideEffect,
+            storageMethod: item.storageMethod,
+            updateDate: item.updateDate,
+            tagHexColorCode: viewController.selectedColor.toHexString()
+        )
+        colorTagButton.tagColor = viewController.selectedColor
+        updateBookMarkRelay.accept(changedEntity)
     }
 }

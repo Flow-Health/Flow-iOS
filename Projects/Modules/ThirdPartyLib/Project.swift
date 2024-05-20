@@ -3,6 +3,7 @@ import ProjectDescriptionHelpers
 
 let project = Project(
     name: "ThirdPartyLib",
+    settings: .settings(base: .codeSign),
     targets: [
         .target(
             name: "ThirdPartyLib",

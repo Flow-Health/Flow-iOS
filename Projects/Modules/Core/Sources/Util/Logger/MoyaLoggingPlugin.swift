@@ -7,6 +7,7 @@ public final class MoyaLoggingPlugin: PluginType {
 
     public init() { }
 
+    #if DEBUG
     public func willSend(_ request: RequestType, target: TargetType) {
         guard let httpRequest = request.request else {
             print("--> 유효하지 않은 요청")
@@ -64,4 +65,5 @@ public final class MoyaLoggingPlugin: PluginType {
         log.append("<-- END HTTP")
         print(log)
     }
+    #endif
 }

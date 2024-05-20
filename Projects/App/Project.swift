@@ -4,7 +4,13 @@ import ProjectDescriptionHelpers
 let project = Project(
     name: "FlowApp",
     organizationName: flowOrganizationName,
-    settings: .settings(base: .codeSign),
+    settings: .settings(
+        base: .codeSign,
+        configurations: [
+            .debug(name: .debug),
+            .release(name: .release)
+        ]
+    ),
     targets: [
         .target(
             name: "FlowApp",

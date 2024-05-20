@@ -4,16 +4,20 @@ public extension Project {
     static func makeModule(
         name: String,
         product: Product = .framework,
+        infoPlist: InfoPlist = .default,
         isTestAble: Bool = false,
         resources: ResourceFileElements? = nil,
+        configurations: [Configuration] = [.debug(name: .debug), .release(name: .release)],
         dependencies: [TargetDependency]
     ) -> Project {
         return .init(
             name: name,
             organizationName: flowOrganizationName,
+            settings: .settings(base: .codeSign, configurations: configurations),
             targets: makeTarget(
                 name: name,
                 product: product,
+                infoPlist: infoPlist,
                 isTestAble: isTestAble,
                 resources: resources,
                 dependencies: dependencies
@@ -25,6 +29,7 @@ public extension Project {
     private static func makeTarget(
         name: String,
         product: Product = .framework,
+        infoPlist: InfoPlist,
         isTestAble: Bool = false,
         resources: ResourceFileElements?,
         dependencies: [TargetDependency]
@@ -36,7 +41,7 @@ public extension Project {
             product: product,
             bundleId: "\(flowOrganizationName).\(name)",
             deploymentTargets: .iOS("17.0"),
-            infoPlist: .default,
+            infoPlist: infoPlist,
             sources: ["Sources/**"],
             resources: resources,
             dependencies: dependencies
@@ -48,7 +53,7 @@ public extension Project {
             product: .unitTests,
             bundleId: "\(flowOrganizationName).\(name)UnitTests",
             deploymentTargets: .iOS("17.0"),
-            infoPlist: .default,
+            infoPlist: infoPlist,
             sources: ["\(name)Tests/**"],
             dependencies: [.target(name: name, condition: .none)]
         ))

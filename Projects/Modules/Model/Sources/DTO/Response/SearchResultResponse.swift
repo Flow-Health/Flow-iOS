@@ -6,6 +6,6 @@ public struct SearchResultResponse: Decodable {
     public let medicineList: [MedicineInfoResponse]
 
     enum CodingKeys: String, CodingKey {
-        case medicineList = "medicine_list"
+        case medicineList = "items"
     }
 }

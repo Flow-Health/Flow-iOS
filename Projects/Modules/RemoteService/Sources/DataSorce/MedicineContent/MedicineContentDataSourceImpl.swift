@@ -16,7 +16,10 @@ public class MedicineContentDataSourceImpl: MedicineContentDataSource {
 
     public func searchMedicine(with name: String) -> Single<[MedicineInfoResponse]> {
         provider.rx.request(.searchMedicine(name: name))
-            .map(SearchResultResponse.self)
-            .map { $0.medicineList }
+            .map(OpenAPIResponse.self)
+            .map {
+                guard let body = $0.body else { return [] }
+                return body.medicineList
+            }
     }
 }

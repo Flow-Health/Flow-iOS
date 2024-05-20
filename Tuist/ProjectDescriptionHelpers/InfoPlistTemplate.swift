@@ -4,6 +4,9 @@ import ProjectDescription
 public let uiKitPlist: [String: Plist.Value] = [
     "UIUserInterfaceStyle": "Light",
     "UILaunchStoryboardName": "LaunchScreen.storyboard",
+    "NSAppTransportSecurity": [
+        "NSAllowsArbitraryLoads": true
+    ],
     "UIApplicationSceneManifest": [
         "UIApplicationSupportsMultipleScenes": false,
         "UISceneConfigurations": [

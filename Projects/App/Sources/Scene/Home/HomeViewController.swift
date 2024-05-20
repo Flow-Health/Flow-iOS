@@ -56,7 +56,6 @@ class HomeViewController: BaseVC<HomeViewModel> {
             $0.bottom.trailing.leading.equalToSuperview()
         }
         scrollView.contentView.snp.makeConstraints {
-            $0.top.bottom.width.equalToSuperview()
             $0.bottom.equalTo(homeVStaek)
         }
         headerView.snp.makeConstraints {

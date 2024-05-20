@@ -81,14 +81,13 @@ class MedicineDetailViewController: BaseVC<MedicineDetailViewModel> {
             $0.leading.trailing.bottom.equalToSuperview()
         }
         scrollView.contentView.snp.makeConstraints {
-            $0.top.bottom.width.equalToSuperview()
             $0.bottom.equalTo(explainVStack).offset(15)
         }
         updateAtLabel.snp.makeConstraints {
             $0.top.trailing.equalToSuperview().inset(10)
         }
         medicineImageView.snp.makeConstraints {
-            $0.top.width.equalToSuperview()
+            $0.top.leading.trailing.equalToSuperview()
             $0.height.equalTo(250)
         }
         companyNameLabel.snp.makeConstraints {

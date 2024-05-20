@@ -73,4 +73,3 @@ struct MediumMedicineCheckWidgetView: View {
         }
     }
 }
-

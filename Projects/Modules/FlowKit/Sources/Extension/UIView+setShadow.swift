@@ -9,6 +9,9 @@ public extension UIView {
         radius: CGFloat,
         offset: CGSize
     ) {
+        self.layer.shadowPath = UIBezierPath(
+            roundedRect: self.bounds,
+            cornerRadius: self.layer.cornerRadius).cgPath
         self.layer.shadowColor = color?.cgColor
         self.layer.shadowOpacity = opacity
         self.layer.shadowRadius = radius

@@ -10,7 +10,7 @@ let project = Project(
             name: "FlowApp",
             destinations: .iOS,
             product: .app,
-            bundleId: "\(flowOrganizationName).flow-App",
+            bundleId: "\(flowOrganizationName).flow-application",
             deploymentTargets: .iOS("17.0"),
             infoPlist: .extendingDefault(with: uiKitPlist),
             sources: [
@@ -29,7 +29,7 @@ let project = Project(
             name: "FlowWidgetExtension",
             destinations: .iOS,
             product: .appExtension,
-            bundleId: "\(flowOrganizationName).flow-App.flowWidget-Extension",
+            bundleId: "\(flowOrganizationName).flow-application.flowWidget-Extension",
             deploymentTargets: .iOS("17.0"),
             infoPlist: .extendingDefault(with: widgetPlist),
             sources: [

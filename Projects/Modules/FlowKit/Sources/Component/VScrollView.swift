@@ -25,6 +25,10 @@ public class VScrollView: UIScrollView {
         }
         contentInset = .init(top:  0, left: 0, bottom: 15, right: 0)
         addSubview(contentView)
+        contentView.snp.makeConstraints {
+            $0.edges.equalTo(self.contentLayoutGuide)
+            $0.width.equalTo(self.frameLayoutGuide.snp.width)
+        }
     }
 
     required init?(coder: NSCoder) {

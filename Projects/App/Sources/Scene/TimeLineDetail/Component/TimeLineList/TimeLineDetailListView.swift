@@ -9,6 +9,11 @@ import Then
 
 class TimeLineDetailListView: BaseView {
     private let timeLineVStack = VStack()
+    private let timeLineEmptyView = EmptyStatusView(
+        icon: FlowKitAsset.pageWithCloud.image,
+        title: "기록된 정보가 없습니다",
+        subTitle: "복용한 약을 기록하여\n타임라인을 만들어 보세요"
+    )
 
     override func addView() {
         addSubview(timeLineVStack)
@@ -29,6 +34,11 @@ extension TimeLineDetailListView {
         let subViews = timeLineVStack.subviews
         subViews.forEach(timeLineVStack.removeArrangedSubview(_:))
         subViews.forEach { $0.removeFromSuperview() }
+
+        guard !entity.isEmpty else {
+            timeLineVStack.addArrangedSubview(timeLineEmptyView)
+            return
+        }
 
         let timeLineCells = entity.enumerated().map {
             let cell = TimeLineListCell(

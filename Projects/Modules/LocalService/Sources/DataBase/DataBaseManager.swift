@@ -39,7 +39,7 @@ final class DataBaseManager {
     private init() {
         do {
             let fileSystem = FileManager.default
-            guard let fileURL = fileSystem.containerURL(forSecurityApplicationGroupIdentifier: "group.com.flow-health.flowApp")?
+            guard let fileURL = fileSystem.containerURL(forSecurityApplicationGroupIdentifier: "group.com.flow-health.flow-App")?
                 .appending(path: "SQlite", directoryHint: .isDirectory) else {
                 fatalError("fail to fileURL")
             }

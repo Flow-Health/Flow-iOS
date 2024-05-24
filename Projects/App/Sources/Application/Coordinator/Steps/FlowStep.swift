@@ -11,4 +11,5 @@ enum FlowStep: Step {
     case bookMarkIsRequired
     case madicineDetailIsRequired(with: MedicineInfoEntity)
     case timeLineDetailIsRequired
+    case appInfoIsRequired
 }

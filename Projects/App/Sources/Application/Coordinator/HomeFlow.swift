@@ -27,6 +27,8 @@ final class HomeFlow: Flow {
             return navigateToBookMarkVC()
         case .timeLineDetailIsRequired:
             return navigateToTimeLineVC()
+        case .appInfoIsRequired:
+            return navigateToAppInfoVC()
         default:
             return .none
         }
@@ -71,6 +73,15 @@ final class HomeFlow: Flow {
         return .one(flowContributor: .contribute(
             withNextPresentable: timeLineFlow,
             withNextStepper: OneStepper(withSingleStep: FlowStep.timeLineDetailIsRequired)
+        ))
+    }
+
+    private func navigateToAppInfoVC() -> FlowContributors {
+        let appInfoVC = AppInfoViewController(viewModel: appDI.appInfoViewModel)
+        presentable.pushViewController(appInfoVC, animated: true)
+        return .one(flowContributor: .contribute(
+            withNextPresentable: appInfoVC,
+            withNextStepper: appInfoVC.viewModel
         ))
     }
 }

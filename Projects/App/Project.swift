@@ -14,17 +14,25 @@ let project = Project(
     targets: [
         .target(
             name: "FlowApp",
-            destinations: .iOS,
+            destinations: [.iPhone],
             product: .app,
             bundleId: "\(flowOrganizationName).flow-application",
             deploymentTargets: .iOS("17.0"),
-            infoPlist: .extendingDefault(with: uiKitPlist),
+            infoPlist: .file(path: "SupportingFiles/Info.plist"),
             sources: [
                 "Sources/**",
                 "Intent/Sources/**"
             ],
-            resources: ["Resources/**"],
-            entitlements: .file(path: "Entitlements/FlowApp.entitlements"),
+            resources: .resources(
+                ["Resources/**"],
+                privacyManifest: .privacyManifest(
+                    tracking: false,
+                    trackingDomains: [],
+                    collectedDataTypes: [],
+                    accessedApiTypes: []
+                )
+            ),
+            entitlements: .file(path: "SupportingFiles/FlowApp.entitlements"),
             dependencies: [
                 .Module.flowKit,
                 .Module.flowService,

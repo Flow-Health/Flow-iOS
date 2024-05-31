@@ -10,6 +10,8 @@ import RxCocoa
 enum AppInfoType: String, CaseIterable {
 
     case inquiry = "문의하기"
+    case privacyPolicy = "개인정보처리방침"
+    case sourcesOfMedicineInfo = "의약품 정보 출처"
     case introduction = "서비스 소개"
 
     enum InteractionType {
@@ -21,6 +23,10 @@ enum AppInfoType: String, CaseIterable {
         switch self {
         case .inquiry: 
             return .withURL(url: "mailto:bjcho1503@naver.com")
+        case .privacyPolicy:
+            return .withURL(url: "https://flow-application.notion.site/2f5aed9e24754b2db2f11c1f105ee5e0?pvs=4")
+        case .sourcesOfMedicineInfo:
+            return .withURL(url: "https://www.mfds.go.kr/index.do")
         case .introduction:
             return .withURL(url: "https://flow-application.notion.site/Flow-6adca28f25e549a7958ef0906b74bd8d?pvs=4")
         }

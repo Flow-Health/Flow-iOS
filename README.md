@@ -2,6 +2,10 @@
   <img src="https://github.com/Flow-Health/Flow-iOS/assets/80248855/7889c10b-828a-4bf2-a0b4-91c8671f330e" width="100%"/>
 </div>
 <br>
+  <a href="https://apps.apple.com/us/app/flow-%EB%A7%A4%EC%9D%BC-%EB%B3%B5%EC%9A%A9%ED%95%9C-%EC%95%BD-%EA%B8%B0%EB%A1%9D%ED%95%98%EA%B8%B0/id6502969163">
+    <img src="https://github.com/Flow-Health/Flow-iOS/assets/80248855/f014da27-3591-46bb-9f6c-10d7e665dd71" width="30%"/>
+  </a>
+<br>
 
 # 프로젝트 소개 
 > Flow는 사용자가 복용한 약을 기록하고, 쉽게 확인하며 원하는 약의 상세정보를 빠르게 확인하는 것을 목표로 개발하는 프로젝트 입니다.<br>

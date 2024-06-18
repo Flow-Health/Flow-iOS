@@ -18,7 +18,7 @@ class TimeLineDetailViewController: BaseVC<TimeLineDetailViewModel> {
     )
     private let dateSelector = DateSelector()
     private let timeLineHeaderLable = TimeLineHeaderLabel()
-    private let resetButton = ResetDateButton()
+    private let resetButton = FlowPaddingButton(buttonTitle: "오늘로 돌아가기")
     private let timeLineDetailListView = TimeLineDetailListView()
     
     override func attridute() {

@@ -31,10 +31,7 @@ class MedicineDetailViewController: BaseVC<MedicineDetailViewModel> {
         $0.textColor = .blue1
         $0.numberOfLines = 0
     }
-    private let colorPickerController = UIColorPickerViewController().then {
-        $0.title = "약 태그 색상"
-        $0.supportsAlpha = false
-    }
+
     private let colorTagButton = ColorTagButton()
     private let medicineCodeLabel = PaddingLableView()
     private let bookMarkButton = BookMarkToggleButton()
@@ -51,7 +48,6 @@ class MedicineDetailViewController: BaseVC<MedicineDetailViewModel> {
         navigationItem.title = "상세정보"
         navigationItem.rightBarButtonItems = [bookMarkButton, colorTagButton]
         findItemRelay.accept(item?.itemCode ?? "")
-        colorPickerController.delegate = self
     }
 
     override func addView() {
@@ -118,7 +114,25 @@ class MedicineDetailViewController: BaseVC<MedicineDetailViewModel> {
         let output = viewModel.transform(input: input)
 
         output.isBookMarked.asObservable()
-            .do(onNext: { [weak self] in self?.colorTagButton.isHidden = !$0 })
+            .do(onNext: { [weak self] in
+                self?.colorTagButton.isHidden = !$0
+                guard let item = self?.item, !$0 else { return }
+                let noColorItem = MedicineInfoEntity(
+                    imageURL: item.imageURL,
+                    medicineName: item.medicineName,
+                    companyName: item.companyName,
+                    itemCode: item.itemCode,
+                    efficacy: item.efficacy,
+                    howToUse: item.howToUse,
+                    cautionWarning: item.cautionWarning,
+                    caution: item.caution,
+                    interaction: item.interaction,
+                    sideEffect: item.sideEffect,
+                    storageMethod: item.storageMethod,
+                    updateDate: item.updateDate
+                )
+                self?.item = noColorItem
+            })
             .bind(to: bookMarkButton.rx.isBookMarked)
             .disposed(by: disposeBag)
 
@@ -169,12 +183,18 @@ extension MedicineDetailViewController {
     }
 }
 
-extension MedicineDetailViewController: UIColorPickerViewControllerDelegate {
-    private func presentColorPicker() {
-        present(colorPickerController, animated: true)
-    }
+extension MedicineDetailViewController {
     
-    func colorPickerViewControllerDidFinish(_ viewController: UIColorPickerViewController) {
+    private func presentColorPicker() {
+        guard let item else { return }
+        let presentview = FlowColorPicker(
+            selectedColor: PickerColor(rawValue: item.tagHexColorCode ?? ""),
+            complition: pickerColorHandler
+        )
+        present(presentview, animated: false)
+    }
+
+    func pickerColorHandler(_ selectColor: PickerColor?) {
         guard let item else { return }
         let changedEntity: MedicineInfoEntity = .init(
             imageURL: item.imageURL,
@@ -189,9 +209,10 @@ extension MedicineDetailViewController: UIColorPickerViewControllerDelegate {
             sideEffect: item.sideEffect,
             storageMethod: item.storageMethod,
             updateDate: item.updateDate,
-            tagHexColorCode: viewController.selectedColor.toHexString()
+            tagHexColorCode: selectColor?.hexCode
         )
-        colorTagButton.tagColor = viewController.selectedColor
+        self.item = changedEntity
+        colorTagButton.tagColor = UIColor(hex: selectColor?.hexCode)
         updateBookMarkRelay.accept(changedEntity)
     }
 }

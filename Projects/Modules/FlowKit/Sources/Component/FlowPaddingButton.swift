@@ -1,21 +1,20 @@
 // Copyright © 2024 com.flow-health. All rights reserved.
 
 import UIKit
-import FlowKit
 
 import SnapKit
 
-class ResetDateButton: BaseButton {
+public class FlowPaddingButton: BaseButton {
 
     private let customTitleLabel = UILabel().then {
         $0.customLabel(font: .captionC1SemiBold, textColor: .blue1)
     }
 
-    init() {
+    public init(buttonTitle: String?) {
         super.init(frame: .zero)
         backgroundColor = .blue5
         titleLabel?.font = .captionC1SemiBold
-        setTitle("오늘로 돌아가기", for: .normal)
+        setTitle(buttonTitle, for: .normal)
         customTitleLabel.text = title(for: .normal)
         layer.cornerRadius = 5
     }
@@ -24,11 +23,11 @@ class ResetDateButton: BaseButton {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func addView() {
+    public override func addView() {
         addSubview(customTitleLabel)
     }
 
-    override func setLayout() {
+    public override func setLayout() {
         customTitleLabel.snp.makeConstraints {
             $0.center.equalToSuperview()
         }

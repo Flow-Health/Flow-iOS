@@ -40,7 +40,7 @@ public class FlowColorPicker: UIViewController {
         $0.layer.cornerRadius = 20
     }
     private let pickerTitleLabel = UILabel().then {
-        $0.customLabel("태크 색상", font: .headerH3Bold, textColor: .black)
+        $0.customLabel("태그 색상", font: .headerH3Bold, textColor: .black)
     }
     private let colorListStackView = HStack(spacing: 15).then {
         $0.alignment = .center

@@ -23,7 +23,7 @@ enum AppInfoType: String, CaseIterable {
     var interactionType: InteractionType {
         switch self {
         case .tutorial:
-            return .withURL(url: "https://www.notion.so/flow-application/Flow-34c9f1e510684bd5bff15f1203db76c1")
+            return .withURL(url: "https://flow-application.notion.site/Flow-34c9f1e510684bd5bff15f1203db76c1?pvs=4")
         case .inquiry:
             return .withURL(url: "mailto:bjcho1503@naver.com")
         case .privacyPolicy:

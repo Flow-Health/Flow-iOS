@@ -5,7 +5,8 @@ import SwiftUI
 
 public extension UIColor {
     // HexCode to UIColor
-    convenience init?(hex: String) {
+    convenience init?(hex: String?) {
+        guard let hex else { return nil }
         var hexString = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
         if hexString.hasPrefix("#") {
             hexString.removeFirst()
@@ -59,7 +60,8 @@ public extension UIColor {
 
 public extension Color {
     // HexCode to UIColor
-    init?(hex: String) {
+    init?(hex: String?) {
+        guard let hex else { return nil }
         guard let uiColor = UIColor(hex: hex) else { return nil }
         self.init(uiColor: uiColor)
     }

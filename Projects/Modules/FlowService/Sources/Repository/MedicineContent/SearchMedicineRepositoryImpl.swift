@@ -7,14 +7,23 @@ import RemoteService
 import RxSwift
 
 class SearchMedicineRepositoryImpl: SearchMedicineRepository {
-    var dataSource: MedicineContentDataSource
+    var nomalMedicinedataSource: MedicineContentDataSource
+    var prescriptionMedicinedataSource: PrescriptionMedicineDataSource
 
-    init(dataSource: MedicineContentDataSource) {
-        self.dataSource = dataSource
+    init(
+        nomalMedicinedataSource: MedicineContentDataSource,
+        prescriptionMedicinedataSource: PrescriptionMedicineDataSource
+    ) {
+        self.nomalMedicinedataSource = nomalMedicinedataSource
+        self.prescriptionMedicinedataSource = prescriptionMedicinedataSource
     }
 
     func searchMedicine(with name: String) -> Single<[MedicineInfoEntity]> {
-        dataSource.searchMedicine(with: name)
-            .map { $0.map { $0.toDomain() } }
+        let nomalMedicineSearch = nomalMedicinedataSource.searchMedicine(with: name).map { $0.map { $0.toDomain() } }.asObservable()
+        let prescriptionMedicineSearch = prescriptionMedicinedataSource.searchPrescriptionMedicine(with: name).map { $0.map { $0.toDomain() }.filter { $0.medicineType == .PRESCRIPTION } } .asObservable()
+
+        return Observable.combineLatest(nomalMedicineSearch, prescriptionMedicineSearch) {
+            [$0, $1].flatMap { $0 }.sorted { $0.medicineName > $1.medicineName }
+        }.asSingle()
     }
 }

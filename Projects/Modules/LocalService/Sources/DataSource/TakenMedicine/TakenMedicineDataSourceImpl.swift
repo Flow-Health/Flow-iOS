@@ -8,7 +8,7 @@ import SQLite
 
 public class TakenMedicineDataSourceImpl: TakenMedicineDataSource {
 
-    private let dbManager: DataBaseManager?
+    private let dbManager: DataBaseManager
     private let bookMarkTable = BookMarkMedicineTable.table
     private let takenMedicineTable = TakenMedicineTable.table
 
@@ -20,7 +20,7 @@ public class TakenMedicineDataSourceImpl: TakenMedicineDataSource {
         return Completable.create { [weak self] completable in
             guard let self else { return Disposables.create() }
             do {
-                try dbManager?.db?.run(
+                try dbManager.db?.run(
                     takenMedicineTable.insert(
                         TakenMedicineTable.itemCode <- itemCode,
                         TakenMedicineTable.medicineTakenTime <- takenTime
@@ -42,7 +42,7 @@ public class TakenMedicineDataSourceImpl: TakenMedicineDataSource {
         return Single.create { [weak self] single in
             guard let self else { return Disposables.create() }
             do {
-                let result = try dbManager?.db?.prepare(query).map {
+                let result = try dbManager.db?.prepare(query).map {
                     MedicineTakenEntity(
                         takenTime: $0[TakenMedicineTable.medicineTakenTime],
                         medicineInfo: .init(
@@ -80,7 +80,7 @@ public class TakenMedicineDataSourceImpl: TakenMedicineDataSource {
         return Single.create { [weak self] single in
             guard let self else { return Disposables.create() }
             do {
-                let recodeData = try dbManager?.db?.prepare(query).map {
+                let recodeData = try dbManager.db?.prepare(query).map {
                     (date: $0[TakenMedicineTable.medicineTakenTime],
                      name: $0[BookMarkMedicineTable.medicineName],
                      itemCode: $0[TakenMedicineTable.medicineTakenTime].description)

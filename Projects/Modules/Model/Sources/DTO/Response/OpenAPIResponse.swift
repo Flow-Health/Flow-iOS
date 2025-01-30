@@ -2,6 +2,8 @@
 
 import Foundation
 
+/// 일반약  OpenAPI를 위한  DTO
+
 public struct OpenAPIResponse: Decodable {
     public let body: SearchResultResponse?
 }

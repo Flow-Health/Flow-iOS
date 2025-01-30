@@ -2,6 +2,8 @@
 
 import Foundation
 
+/// 일반약  OpenAPI를 위한 상세정보 DTO
+
 public struct MedicineInfoResponse: Decodable {
     public let imageURL: String?
     public let medicineName: String?
@@ -34,7 +36,7 @@ public struct MedicineInfoResponse: Decodable {
 
 public extension MedicineInfoResponse {
     func toDomain() -> MedicineInfoEntity {
-        .init(
+        return .init(
             imageURL: imageURL ?? "-",
             medicineName: medicineName ?? "-",
             companyName: companyName ?? "-",
@@ -46,7 +48,8 @@ public extension MedicineInfoResponse {
             interaction: interaction ?? "-",
             sideEffect: sideEffect ?? "-",
             storageMethod: storageMethod ?? "-",
-            updateDate: updateDate ?? "-"
+            updateDate: updateDate ?? "-",
+            medicineType: .NOMAL
         )
     }
 }

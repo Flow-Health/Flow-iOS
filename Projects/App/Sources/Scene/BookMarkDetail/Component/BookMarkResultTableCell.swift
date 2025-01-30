@@ -26,6 +26,7 @@ class BookMarkResultTableCell: UITableViewCell {
         $0.textColor = .black2
     }
     private let updateAtLabel = PaddingLableView()
+    private let medicineTypeLabel = PaddingLableView()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -44,7 +45,8 @@ class BookMarkResultTableCell: UITableViewCell {
             medicineImageView,
             medicineNameLabel,
             companyNameLabel,
-            updateAtLabel
+            updateAtLabel,
+            medicineTypeLabel
         )
     }
 
@@ -66,6 +68,10 @@ class BookMarkResultTableCell: UITableViewCell {
             $0.top.equalTo(companyNameLabel.snp.bottom).offset(8)
             $0.leading.equalTo(companyNameLabel)
         }
+        medicineTypeLabel.snp.makeConstraints {
+            $0.top.equalTo(updateAtLabel)
+            $0.leading.equalTo(updateAtLabel.snp.trailing).offset(5)
+        }
     }
 }
 
@@ -78,5 +84,7 @@ extension BookMarkResultTableCell {
         medicineNameLabel.text = entity.medicineName
         companyNameLabel.text = entity.companyName
         updateAtLabel.contentText = entity.updateDate
+        medicineTypeLabel.contentText = entity.medicineType.toString
+        medicineTypeLabel.setTagType(tagType: entity.medicineType == .NOMAL ? .Common : .Primary)
     }
 }

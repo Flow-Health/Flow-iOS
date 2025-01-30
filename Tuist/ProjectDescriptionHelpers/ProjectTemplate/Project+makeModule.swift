@@ -13,6 +13,7 @@ public extension Project {
         return .init(
             name: name,
             organizationName: flowOrganizationName,
+            options: .options(defaultKnownRegions: ["ko"], developmentRegion: "ko"),
             settings: .settings(base: .codeSign, configurations: configurations),
             targets: makeTarget(
                 name: name,

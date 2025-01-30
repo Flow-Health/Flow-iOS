@@ -34,6 +34,7 @@ class MedicineDetailViewController: BaseVC<MedicineDetailViewModel> {
 
     private let colorTagButton = ColorTagButton()
     private let medicineCodeLabel = PaddingLableView()
+    private let medicineTypeLabel = PaddingLableView()
     private let bookMarkButton = BookMarkToggleButton()
     private let explainVStack = VStack(spacing: 20)
     private let efficacyExplain = ExplainFormView(title: "효능")
@@ -57,6 +58,7 @@ class MedicineDetailViewController: BaseVC<MedicineDetailViewModel> {
             companyNameLabel,
             medicineNameLabel,
             medicineCodeLabel,
+            medicineTypeLabel,
             explainVStack
         )
         medicineImageView.addSubview(updateAtLabel)
@@ -98,6 +100,10 @@ class MedicineDetailViewController: BaseVC<MedicineDetailViewModel> {
             $0.top.equalTo(medicineNameLabel.snp.bottom).offset(5)
             $0.leading.equalToSuperview().inset(20)
         }
+        medicineTypeLabel.snp.makeConstraints {
+            $0.top.equalTo(medicineCodeLabel)
+            $0.leading.equalTo(medicineCodeLabel.snp.trailing).offset(5)
+        }
         explainVStack.snp.makeConstraints {
             $0.top.equalTo(medicineCodeLabel.snp.bottom).offset(25)
             $0.leading.trailing.equalToSuperview().inset(20)
@@ -129,7 +135,8 @@ class MedicineDetailViewController: BaseVC<MedicineDetailViewModel> {
                     interaction: item.interaction,
                     sideEffect: item.sideEffect,
                     storageMethod: item.storageMethod,
-                    updateDate: item.updateDate
+                    updateDate: item.updateDate,
+                    medicineType: item.medicineType
                 )
                 self?.item = noColorItem
             })
@@ -179,6 +186,8 @@ extension MedicineDetailViewController {
 
         updateAtLabel.contentText = "마지막 업데이트: \(entity.updateDate)"
         medicineCodeLabel.contentText = entity.itemCode
+        medicineTypeLabel.contentText = entity.medicineType.toString
+        medicineTypeLabel.setTagType(tagType: entity.medicineType == .NOMAL ? .Common : .Primary)
         item = entity
     }
 }
@@ -209,7 +218,8 @@ extension MedicineDetailViewController {
             sideEffect: item.sideEffect,
             storageMethod: item.storageMethod,
             updateDate: item.updateDate,
-            tagHexColorCode: selectColor?.hexCode
+            tagHexColorCode: selectColor?.hexCode,
+            medicineType: item.medicineType
         )
         self.item = changedEntity
         colorTagButton.tagColor = UIColor(hex: selectColor?.hexCode)

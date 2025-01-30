@@ -5,12 +5,30 @@ import UIKit
 import SnapKit
 import Then
 
+public enum TagType {
+    case Common, Primary
+
+    var backgroundColor: UIColor {
+        switch self {
+        case .Common: return .blue5
+        case .Primary: return .blue1
+        }
+    }
+
+    var textColor: UIColor {
+        switch self {
+        case .Common: return .blue1
+        case .Primary: return .white
+        }
+    }
+}
+
 public class PaddingLableView: UIView {
     private let contentLabel = UILabel().then {
         $0.font = .captionC2SemiBold
         $0.textColor = .blue1
     }
-
+    
     public var contentText: String? {
         set {
             contentLabel.text = newValue
@@ -19,9 +37,15 @@ public class PaddingLableView: UIView {
         get { contentLabel.text }
     }
 
-    public init() {
+    public func setTagType(tagType: TagType) {
+        contentLabel.textColor = tagType.textColor
+        self.backgroundColor = tagType.backgroundColor
+    }
+
+    public init(tagType: TagType = .Common) {
         super.init(frame: .zero)
-        backgroundColor = .blue5
+        self.backgroundColor = tagType.backgroundColor
+        contentLabel.textColor = tagType.textColor
         layer.cornerRadius = 3
         settingLayout()
     }

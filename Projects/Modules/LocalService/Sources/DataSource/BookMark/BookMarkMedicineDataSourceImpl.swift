@@ -10,6 +10,7 @@ public class BookMarkMedicineDataSourceImpl: BookMarkMedicineDataSource {
 
     private let dbManager: DataBaseManager
     private let bookMarkTable = BookMarkMedicineTable.table
+    private let medicineTypeTable = MedicineTypeTable.table
 
     public init() {
         dbManager = DataBaseManager.shared
@@ -55,10 +56,17 @@ public class BookMarkMedicineDataSourceImpl: BookMarkMedicineDataSource {
     }
     
     public func fetchBookMarkMedicineList() -> Single<[MedicineInfoEntity]> {
+        let query = bookMarkTable
+            .join(
+                medicineTypeTable,
+                on: bookMarkTable[BookMarkMedicineTable.itemCode] == medicineTypeTable[MedicineTypeTable.itemCode]
+            )
+
         return Single.create { [weak self] single in
             guard let self else { return Disposables.create() }
+
             do {
-                let resultEntity = try dbManager.db?.prepare(bookMarkTable).map {
+                let resultEntity = try dbManager.db?.prepare(query).map {
                     MedicineInfoEntity(
                         imageURL: $0[BookMarkMedicineTable.imageURL],
                         medicineName: $0[BookMarkMedicineTable.medicineName],
@@ -72,7 +80,8 @@ public class BookMarkMedicineDataSourceImpl: BookMarkMedicineDataSource {
                         sideEffect: $0[BookMarkMedicineTable.sideEffect],
                         storageMethod: $0[BookMarkMedicineTable.storageMethod],
                         updateDate: $0[BookMarkMedicineTable.updateDate],
-                        tagHexColorCode: $0[BookMarkMedicineTable.tagHexColorCode]
+                        tagHexColorCode: $0[BookMarkMedicineTable.tagHexColorCode],
+                        medicineType: MedicineTypeEnum(rawValue: $0[MedicineTypeTable.medicineType]) ?? .NOMAL
                     )
                 }
                 single(.success(resultEntity ?? []))
@@ -82,9 +91,16 @@ public class BookMarkMedicineDataSourceImpl: BookMarkMedicineDataSource {
     }
     
     public func findBookMarkMedicine(with itemCode: String) -> Single<MedicineInfoEntity?> {
+        
+        let query = bookMarkTable
+            .join(
+                medicineTypeTable,
+                on: bookMarkTable[BookMarkMedicineTable.itemCode] == medicineTypeTable[MedicineTypeTable.itemCode]
+            )
+        
         return Single.create { [weak self]  single in
             guard let self else { return Disposables.create() }
-            let targetRow = bookMarkTable.filter(BookMarkMedicineTable.itemCode == itemCode)
+            let targetRow = query.filter(BookMarkMedicineTable.itemCode == itemCode)
             do {
                 let resultEntity = try dbManager.db?.prepare(targetRow).map {
                     MedicineInfoEntity(
@@ -100,7 +116,8 @@ public class BookMarkMedicineDataSourceImpl: BookMarkMedicineDataSource {
                         sideEffect: $0[BookMarkMedicineTable.sideEffect],
                         storageMethod: $0[BookMarkMedicineTable.storageMethod],
                         updateDate: $0[BookMarkMedicineTable.updateDate],
-                        tagHexColorCode: $0[BookMarkMedicineTable.tagHexColorCode]
+                        tagHexColorCode: $0[BookMarkMedicineTable.tagHexColorCode],
+                        medicineType: MedicineTypeEnum(rawValue: $0[MedicineTypeTable.medicineType]) ?? .NOMAL
                     )
                 }
                 single(.success(resultEntity?.first))

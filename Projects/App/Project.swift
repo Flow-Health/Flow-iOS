@@ -4,6 +4,7 @@ import ProjectDescriptionHelpers
 let project = Project(
     name: "FlowApp",
     organizationName: flowOrganizationName,
+    options: .options(defaultKnownRegions: ["ko"], developmentRegion: "ko"),
     settings: .settings(
         base: .codeSign,
         configurations: [

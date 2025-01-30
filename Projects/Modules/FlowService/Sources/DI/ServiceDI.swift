@@ -23,12 +23,15 @@ public extension ServiceDI {
     static func resolve() -> ServiceDI {
         // DataSource
         let medicineContentDataSource: MedicineContentDataSource = MedicineContentDataSourceImpl()
+        let prescriptionMedicineDataSource: PrescriptionMedicineDataSource = PrescriptionMedicineDataSourceImpl()
         let bookMakrDataSource: BookMarkMedicineDataSource = BookMarkMedicineDataSourceImpl()
+        let medicineTypeDataSource: MedicineTypeDataSource = MedicineTypeDataSourceImpl()
         let takenMedicineDataSource: TakenMedicineDataSource = TakenMedicineDataSourceImpl()
 
         // Repository
         let insertBookMarkMedicineRepositoryImpl = InsertBookMarkMedicineRepositoryImpl(
-            dataSource: bookMakrDataSource
+            bookMarkMedicineDataSource: bookMakrDataSource,
+            medicineTypeDataSource: medicineTypeDataSource
         )
         let deleteBookMarkMedicineRepositoryImpl = DeleteBookMarkMedicineRepositoryImpl(
             dataSource: bookMakrDataSource
@@ -52,7 +55,8 @@ public extension ServiceDI {
             dataBase: takenMedicineDataSource
         )
         let searchMedicineRepositoryImpl = SearchMedicineRepositoryImpl(
-            dataSource: medicineContentDataSource
+            nomalMedicinedataSource: medicineContentDataSource,
+            prescriptionMedicinedataSource: prescriptionMedicineDataSource
         )
 
         // UseCase

@@ -7,7 +7,8 @@ import RemoteService
 import RxSwift
 
 public protocol SearchMedicineRepository {
-    var dataSource: MedicineContentDataSource { get }
+    var nomalMedicinedataSource: MedicineContentDataSource { get }
+    var prescriptionMedicinedataSource: PrescriptionMedicineDataSource { get }
 
     func searchMedicine(with name: String) -> Single<[MedicineInfoEntity]>
 }

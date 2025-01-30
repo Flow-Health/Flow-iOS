@@ -7,7 +7,8 @@ import Model
 import LocalService
 
 public protocol InsertBookMarkMedicineRepository {
-    var dataSource: BookMarkMedicineDataSource { get }
+    var bookMarkMedicineDataSource: BookMarkMedicineDataSource { get }
+    var medicineTypeDataSource: MedicineTypeDataSource { get }
 
     func insertBookMarkMedicine(with entity: MedicineInfoEntity) -> Completable
 }

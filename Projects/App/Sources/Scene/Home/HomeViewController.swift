@@ -18,6 +18,7 @@ class HomeViewController: BaseVC<HomeViewModel> {
 
     private let headerView = HomeHeaderView()
     private let LastTakenBannerView = LastTakenTimeView()
+    private let PillGramADBannerButton = PillGramADBanner();
     private let searchButtonView = SearchButtonView()
     private let bookMarkMedicineView = BookMarkMedicineView()
     private let timeLineView = TimeLineView()
@@ -44,6 +45,7 @@ class HomeViewController: BaseVC<HomeViewModel> {
             homeVStaek
         )
         homeVStaek.addArrangedSubviews(
+            PillGramADBannerButton,
             LastTakenBannerView,
             searchButtonView,
             bookMarkMedicineView,
@@ -90,6 +92,15 @@ class HomeViewController: BaseVC<HomeViewModel> {
 
         output.lastTakenTime
             .drive(onNext: LastTakenBannerView.setLastTime(_:))
+            .disposed(by: disposeBag)
+        
+        PillGramADBannerButton.rx.tap
+            .subscribe(onNext: {
+                let fillgramURL = URL(string: "https://bit.ly/3X3tXTo")!
+                if (UIApplication.shared.canOpenURL(fillgramURL)) {
+                    UIApplication.shared.open(fillgramURL)
+                }
+            })
             .disposed(by: disposeBag)
     }
 }

@@ -96,7 +96,7 @@ class HomeViewController: BaseVC<HomeViewModel> {
         
         PillGramADBannerButton.rx.tap
             .subscribe(onNext: {
-                let fillgramURL = URL(string: "https://bit.ly/3X3tXTo")!
+                let fillgramURL = URL(string: "https://pillgram.kr/Promotion/PackageLanding.aspx?promotionId=EA2E8E27-69B7-405C-B076-C4A488ED22A0&utm_source=flow&utm_medium=event")!
                 if (UIApplication.shared.canOpenURL(fillgramURL)) {
                     UIApplication.shared.open(fillgramURL)
                 }

@@ -17,6 +17,7 @@ class SearchViewModel: ViewModelType, Stepper {
     struct Input {
         let searchInputText: Observable<String>
         let selectedItemIndex: Observable<IndexPath>
+        let onTapCreateMyMedicineButton: Observable<Void>
     }
     
     struct Output { 
@@ -47,6 +48,12 @@ class SearchViewModel: ViewModelType, Stepper {
         input.selectedItemIndex
             .map { FlowStep.madicineDetailIsRequired(with: self.searchResultList[$0.item]) }
             .bind(to: steps)
+            .disposed(by: disposeBag)
+
+        input.onTapCreateMyMedicineButton
+            .subscribe(onNext: {
+                print("나만의 약 추가 버튼 클릭")
+            })
             .disposed(by: disposeBag)
             
         return Output(resultMedicine: searchMedicine.asSignal())

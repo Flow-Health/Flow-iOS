@@ -44,11 +44,10 @@ class BookMarkDetailViewModel: ViewModelType, Stepper {
             .map { FlowStep.madicineDetailIsRequired(with: self.bookMarkResultList[$0.item])}
             .bind(to: steps)
             .disposed(by: disposeBag)
-        
+
         input.onTapCreateMyMedicineButton
-            .subscribe(onNext: {
-                print("내 약 만들기 클릭")
-            })
+            .map { FlowStep.createMyMedicineIsRequired }
+            .bind(to: steps)
             .disposed(by: disposeBag)
 
         return Output(bookMarkList: bookMarkList.asDriver())

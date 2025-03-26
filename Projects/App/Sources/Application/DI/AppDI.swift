@@ -9,6 +9,7 @@ struct AppDI {
     let bookMarkDetailViewModel: BookMarkDetailViewModel
     let timeLineDetailViewModel: TimeLineDetailViewModel
     let appInfoViewModel: AppInfoViewModel
+    let medicineRegisterViewModel: MedicineRegisterViewModel
 }
 
 extension AppDI {
@@ -37,6 +38,7 @@ extension AppDI {
             fetchTakenMedicineListUseCase: serviceDI.fetchTakenMedicineListUseCase
         )
         let appInfoViewModelInject = AppInfoViewModel()
+        let medicineRegisterViewModelInject = MedicineRegisterViewModel()
 
         return .init(
             homeViewModel: homeViewModelInject,
@@ -44,7 +46,8 @@ extension AppDI {
             medicineDetailViewModel: medicineDetailViewModelInject,
             bookMarkDetailViewModel: bookMarkDetailViewModelInject,
             timeLineDetailViewModel: timeLineDetailViewModelInject,
-            appInfoViewModel: appInfoViewModelInject
+            appInfoViewModel: appInfoViewModelInject,
+            medicineRegisterViewModel: medicineRegisterViewModelInject
         )
     }
 }

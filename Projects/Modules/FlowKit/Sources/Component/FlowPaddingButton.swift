@@ -37,3 +37,7 @@ public class FlowPaddingButton: BaseButton {
         }
     }
 }
+
+#Preview(body: {
+    FlowPaddingButton(buttonTitle: "Test")
+})

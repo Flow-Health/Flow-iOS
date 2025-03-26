@@ -3,8 +3,6 @@
 import UIKit
 import FlowKit
 
-import SwiftUI
-
 class PillGramADBanner: BaseButton {
     private let bannerImageView = UIImageView().then {
         $0.image = UIImage(named: "PillGramBanner")

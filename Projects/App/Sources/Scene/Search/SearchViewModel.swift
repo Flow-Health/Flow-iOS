@@ -51,9 +51,8 @@ class SearchViewModel: ViewModelType, Stepper {
             .disposed(by: disposeBag)
 
         input.onTapCreateMyMedicineButton
-            .subscribe(onNext: {
-                print("나만의 약 추가 버튼 클릭")
-            })
+            .map { FlowStep.createMyMedicineIsRequired }
+            .bind(to: steps)
             .disposed(by: disposeBag)
             
         return Output(resultMedicine: searchMedicine.asSignal())

@@ -9,20 +9,36 @@ import RxCocoa
 
 class MedicineRegisterViewController: BaseVC<MedicineRegisterViewModel> {
 
-    let nameStepView = NameRegisterStepView()
-    let descriptionRegisterStepView = DescriptionRegisterStepView()
-    let imageRegisterStepView = ImageRegisterStepView()
-    let endRegisterStepView = EndRegisterStepView()
-
-    private lazy var registerStepViewStack = [
-        self.nameStepView,
-        self.descriptionRegisterStepView,
-        self.imageRegisterStepView,
-        self.endRegisterStepView
-    ]
+    private let nameStepView = NameRegisterStepView()
+    private let descriptionRegisterStepView = DescriptionRegisterStepView()
+    private let imageRegisterStepView = ImageRegisterStepView()
+    private let endRegisterStepView = EndRegisterStepView()
+    
+    private let registerStepViewStack: [BaseView]
 
     private let backButton = BaseButton().then {
         $0.setImage(FlowKitAsset.backArrow.image, for: .normal)
+    }
+
+    override init(viewModel: MedicineRegisterViewModel) {
+        registerStepViewStack = [
+            nameStepView,
+            descriptionRegisterStepView,
+            imageRegisterStepView,
+            endRegisterStepView
+        ]
+
+        super.init(viewModel: viewModel)
+    }
+    
+    deinit {
+        registerStepViewStack.forEach {
+            $0.removeFromSuperview()
+        }
+    }
+
+    @MainActor required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     override func bind() {

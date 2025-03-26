@@ -9,6 +9,8 @@ import Then
 
 open class BaseView: UIView {
 
+    public let disposeBag = DisposeBag()
+
     public override init(frame: CGRect) {
         super.init(frame: frame)
         attribute()

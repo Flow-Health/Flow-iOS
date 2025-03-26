@@ -7,8 +7,6 @@ import Then
 import SnapKit
 
 open class FlowTextView: BaseView {
-
-    private let disposeBag = DisposeBag()
     
     public let textView = UITextView().then {
         $0.font = .bodyB1Medium

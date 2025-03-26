@@ -10,8 +10,6 @@ import RxSwift
 import RxCocoa
 
 class DescriptionRegisterStepView: BaseView {
-    
-    private let disposeBag = DisposeBag()
 
     private let headerView = RegisterHeaderView(
         description: "어떤 약인지 간단하게 설명해주세요.",
@@ -50,7 +48,11 @@ class DescriptionRegisterStepView: BaseView {
             .disposed(by: disposeBag)
 
         NotificationCenter.keyboardHightObservable
-            .subscribe(onNext: setNextButtonPosition)
+            .skip(while: { $0 == 0.0 })
+            .subscribe(onNext: { [weak self] in
+                guard let self else { return }
+                setNextButtonPosition(keyboardHeight: $0)
+            })
             .disposed(by: disposeBag)
     }
 

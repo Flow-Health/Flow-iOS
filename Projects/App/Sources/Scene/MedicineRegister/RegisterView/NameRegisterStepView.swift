@@ -11,8 +11,6 @@ import RxCocoa
 
 class NameRegisterStepView: BaseView {
 
-    private let disposeBag = DisposeBag()
-
     private let headerView = RegisterHeaderView(
         description: "기록할 때 어떤 약인지 알기위해 필요해요",
         title: "약의 이름을 입력해주세요."
@@ -50,7 +48,11 @@ class NameRegisterStepView: BaseView {
             .disposed(by: disposeBag)
 
         NotificationCenter.keyboardHightObservable
-            .subscribe(onNext: setNextButtonPosition)
+            .skip(while: { $0 == 0.0 })
+            .subscribe(onNext: { [weak self] in
+                guard let self else { return }
+                setNextButtonPosition(keyboardHeight: $0)
+            })
             .disposed(by: disposeBag)
     }
 

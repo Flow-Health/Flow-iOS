@@ -11,7 +11,6 @@ import Then
 class DateSelector: BaseView {
 
     let selectDate = BehaviorRelay<Date>(value: Date())
-    private let disposeBag = DisposeBag()
 
     private let decreaseDateButton = UIButton().then {
         $0.setImage(FlowKitAsset.leftFillArrow.image, for: .normal)

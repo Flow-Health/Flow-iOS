@@ -10,8 +10,6 @@ import RxSwift
 import RxCocoa
 
 class ImageRegisterStepView: BaseView {
-    
-    private let disposeBag = DisposeBag()
 
     private let headerView = RegisterHeaderView(
         description: "마지막 단계입니다!",

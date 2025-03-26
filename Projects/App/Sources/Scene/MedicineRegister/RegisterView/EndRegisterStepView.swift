@@ -11,8 +11,6 @@ import RxCocoa
 
 class EndRegisterStepView: BaseView {
 
-    private let disposeBag = DisposeBag()
-
     private let titleLabel = UILabel().then {
         $0.text = "약을 추가하였습니다!"
         $0.font = .headerH2SemiBold

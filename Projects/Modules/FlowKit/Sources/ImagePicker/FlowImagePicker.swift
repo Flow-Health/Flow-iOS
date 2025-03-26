@@ -10,8 +10,6 @@ import SnapKit
 import Then
 
 open class FlowImagePicker: BaseView {
-
-    private let disposeBag = DisposeBag()
     public let selectedImageRelay = BehaviorRelay<UIImage?>(value: nil)
 
     private let imageView = UIImageView().then {

@@ -46,7 +46,7 @@ class TimeLineDetailViewController: BaseVC<TimeLineDetailViewModel> {
         }
         dateSelector.snp.makeConstraints {
             $0.top.equalToSuperview().inset(30)
-            $0.leading.equalToSuperview().inset(22)
+            $0.horizontalEdges.equalToSuperview().inset(22)
         }
         timeLineHeaderLable.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(22)

@@ -71,6 +71,9 @@ final class DataBaseManager {
             guard let db else { fatalError("fail to connect DataBase.") }
             debugPrint("[succes connet DB] Path: \(dbURL.absoluteString)")
 
+            // 외래키 설정 활성화
+            try db.run("PRAGMA foreign_keys = ON;")
+
             let bookMarkTable = BookMarkMedicineTable.table
             let takenMedicineTable = TakenMedicineTable.table
             let medicineTypeTable = MedicineTypeTable.table
@@ -102,7 +105,7 @@ final class DataBaseManager {
                     delete: .cascade
                 )
             })
-            
+
             try db.run(medicineTypeTable.create(ifNotExists: true) {
                 $0.column(MedicineTypeTable.itemCode)
                 $0.column(MedicineTypeTable.medicineType)

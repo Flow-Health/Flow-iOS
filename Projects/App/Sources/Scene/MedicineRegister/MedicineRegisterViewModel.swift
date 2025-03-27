@@ -1,4 +1,4 @@
-import Foundation
+import UIKit
 import RxFlow
 import FlowService
 import Model
@@ -16,10 +16,15 @@ class MedicineRegisterViewModel: ViewModelType, Stepper {
     var steps: PublishRelay<Step> = .init()
     var disposeBag: DisposeBag = .init()
 
+    private let registerMyMedicineUseCase: RegisterMyMedicineUseCase
+
     struct Input {
         let onTapBackButton: Observable<Void>
         let onTapNextButton: Observable<Void>
         let onTapCreateMedicineButton: Observable<Void>
+        let nameText: Observable<String>
+        let descriptionText: Observable<String>
+        let medicineImage: Observable<UIImage?>
     }
     
     struct Output {
@@ -27,11 +32,14 @@ class MedicineRegisterViewModel: ViewModelType, Stepper {
         let dismissView: Signal<Void>
     }
 
-    init() {}
+    init(registerMyMedicineUseCase: RegisterMyMedicineUseCase) {
+        self.registerMyMedicineUseCase = registerMyMedicineUseCase
+    }
 
     func transform(input: Input) -> Output {
         let currentStepRelay = BehaviorRelay<RegisterStepType>(value: .NAME)
         let dismissViewRelay = PublishRelay<Void>()
+        let medicineCreateInfo = Observable.combineLatest(input.nameText, input.descriptionText, input.medicineImage)
 
         input.onTapNextButton
             .map { _ -> RegisterStepType in
@@ -50,6 +58,14 @@ class MedicineRegisterViewModel: ViewModelType, Stepper {
                     dismissViewRelay.accept(())
                 }
             })
+            .disposed(by: disposeBag)
+
+        input.onTapCreateMedicineButton.withLatestFrom(medicineCreateInfo)
+            .flatMap { (name, description, image) -> Single<RegisterStepType> in
+                self.registerMyMedicineUseCase.execute(name: name, description: description, image: image)
+                    .andThen(.just(RegisterStepType.END))
+            }
+            .bind(to: currentStepRelay)
             .disposed(by: disposeBag)
 
         return Output(

@@ -38,7 +38,9 @@ extension AppDI {
             fetchTakenMedicineListUseCase: serviceDI.fetchTakenMedicineListUseCase
         )
         let appInfoViewModelInject = AppInfoViewModel()
-        let medicineRegisterViewModelInject = MedicineRegisterViewModel()
+        let medicineRegisterViewModelInject = MedicineRegisterViewModel(
+            registerMyMedicineUseCase: serviceDI.registerMyMedicineUseCase
+        )
 
         return .init(
             homeViewModel: homeViewModelInject,

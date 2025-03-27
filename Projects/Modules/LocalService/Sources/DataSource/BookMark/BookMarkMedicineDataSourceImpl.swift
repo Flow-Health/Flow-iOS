@@ -47,8 +47,10 @@ public class BookMarkMedicineDataSourceImpl: BookMarkMedicineDataSource {
         return Completable.create { [weak self] completable in
             guard let self else { return Disposables.create() }
             let targetRow = bookMarkTable.filter(BookMarkMedicineTable.itemCode == itemCode)
+            let targetMedicineTypeRow = medicineTypeTable.filter(MedicineTypeTable.itemCode == itemCode)
             do {
                 try dbManager.db?.run(targetRow.delete())
+                try dbManager.db?.run(targetMedicineTypeRow.delete())
                 completable(.completed)
             } catch { completable(.error(error)) }
             return Disposables.create()

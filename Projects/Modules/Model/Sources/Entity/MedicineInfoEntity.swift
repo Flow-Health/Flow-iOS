@@ -3,7 +3,7 @@
 import Foundation
 
 public struct MedicineInfoEntity {
-    public let imageURL: String                 // 이미지 링크
+    public let imageURL: String                 // 이미지 링크 혹은 파일 경로
     public let medicineName: String             // 약 이름
     public let companyName: String              // 약 제조사 이름
     public let itemCode: String                 // 품목기준코드
@@ -16,7 +16,7 @@ public struct MedicineInfoEntity {
     public let storageMethod: String            // 보관법
     public let updateDate: String               // 수정일자
     public let tagHexColorCode: String?         // 태그색상 헥스 코드
-    public let medicineType: MedicineTypeEnum   // 약 종류 (일반약, 전문약)
+    public let medicineType: MedicineTypeEnum   // 약 종류 (일반약, 전문약, 나만의 약)
 
     public init(
         imageURL: String,

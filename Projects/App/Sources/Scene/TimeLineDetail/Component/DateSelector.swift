@@ -46,8 +46,7 @@ class DateSelector: BaseView {
             $0.centerY.equalToSuperview()
         }
         self.snp.makeConstraints {
-            $0.bottom.equalTo(decreaseDateButton.snp.bottom)
-            $0.trailing.equalTo(increaseDateButton)
+            $0.bottom.equalTo(decreaseDateButton)
         }
     }
 

@@ -47,7 +47,10 @@ class MedicineRegisterViewController: BaseVC<MedicineRegisterViewModel> {
         let input = MedicineRegisterViewModel.Input(
             onTapBackButton: backButton.rx.tap.asObservable(),
             onTapNextButton: nextButtonTap,
-            onTapCreateMedicineButton: imageRegisterStepView.addMedicineButton.rx.tap.asObservable()
+            onTapCreateMedicineButton: imageRegisterStepView.addMedicineButton.rx.tap.asObservable(),
+            nameText: nameStepView.nameTextField.rx.text.orEmpty.asObservable(),
+            descriptionText: descriptionRegisterStepView.descriptionTextView.textView.rx.text.orEmpty.asObservable(),
+            medicineImage: imageRegisterStepView.imagePicker.selectedImageRelay.asObservable()
         )
         let output = viewModel.transform(input: input)
 

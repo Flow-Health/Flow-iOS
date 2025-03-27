@@ -30,12 +30,6 @@ class MedicineRegisterViewController: BaseVC<MedicineRegisterViewModel> {
 
         super.init(viewModel: viewModel)
     }
-    
-    deinit {
-        registerStepViewStack.forEach {
-            $0.removeFromSuperview()
-        }
-    }
 
     @MainActor required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

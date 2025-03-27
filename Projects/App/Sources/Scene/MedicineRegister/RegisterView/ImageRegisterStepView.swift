@@ -24,14 +24,6 @@ class ImageRegisterStepView: BaseView {
         backgroundColor = .white
     }
 
-    override func bind() {
-        imagePicker.selectedImageRelay
-            .subscribe {
-                print($0)
-            }
-            .disposed(by: disposeBag)
-    }
-
     override func addView() {
         addSubViews(
             headerView,

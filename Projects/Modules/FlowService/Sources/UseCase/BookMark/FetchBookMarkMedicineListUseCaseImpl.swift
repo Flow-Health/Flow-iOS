@@ -12,7 +12,7 @@ class FetchBookMarkMedicineListUseCaseImpl: FetchBookMarkMedicineListUseCase {
         self.repository = repository
     }
 
-    public func execute() -> Single<[MedicineInfoEntity]> {
+    func execute() -> Single<[MedicineInfoEntity]> {
         return repository.fetchBookMarkMedicineList()
     }
 }

@@ -12,7 +12,7 @@ class DeleteBookMarkMedicineUseCaseImpl: DeleteBookMarkMedicineUseCase {
         self.repository = repository
     }
 
-    public func execute(with itemCode: String) -> Completable {
+    func execute(with itemCode: String) -> Completable {
         repository.deleteBookMarkMedicine(with: itemCode)
     }
 }

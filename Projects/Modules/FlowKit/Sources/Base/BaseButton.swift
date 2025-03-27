@@ -25,6 +25,7 @@ open class BaseButton: UIButton {
     }
 
     override open func layoutSubviews() {
+        super.layoutSubviews()
         addView()
         setLayout()
     }
@@ -39,6 +40,7 @@ open class BaseButton: UIButton {
     }
 
     open func attribute() {}
+    open func bind() {}
     open func addView() {}
     open func setLayout() {}
 }

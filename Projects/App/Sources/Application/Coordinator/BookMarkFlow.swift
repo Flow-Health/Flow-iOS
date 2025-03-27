@@ -24,6 +24,8 @@ final class BookMarkFlow: Flow {
             return reqiredBookMarkVC()
         case .madicineDetailIsRequired(let medicineInfo):
             return navigateToMedicineDetailVC(medicineInfo)
+        case .createMyMedicineIsRequired:
+            return presentMedicineRegister()
         default:
             return .none
         }
@@ -43,6 +45,18 @@ final class BookMarkFlow: Flow {
         return .one(flowContributor: .contribute(
             withNextPresentable: medicineDetailVC,
             withNextStepper: medicineDetailVC.viewModel
+        ))
+    }
+    
+    private func presentMedicineRegister() -> FlowContributors {
+        let medicineRegisterVC = MedicineRegisterViewController(viewModel: appDI.medicineRegisterViewModel)
+        medicineRegisterVC.modalPresentationStyle = .fullScreen
+
+        presentable.present(medicineRegisterVC, animated: true)
+
+        return .one(flowContributor: .contribute(
+            withNextPresentable: medicineRegisterVC,
+            withNextStepper: medicineRegisterVC.viewModel
         ))
     }
 }

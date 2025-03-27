@@ -6,12 +6,13 @@ import SnapKit
 import Then
 
 public enum TagType {
-    case Common, Primary
+    case Common, Primary, Secondary
 
     var backgroundColor: UIColor {
         switch self {
         case .Common: return .blue5
         case .Primary: return .blue1
+        case .Secondary: return .white
         }
     }
 
@@ -19,6 +20,15 @@ public enum TagType {
         switch self {
         case .Common: return .blue1
         case .Primary: return .white
+        case .Secondary: return .blue1
+        }
+    }
+
+    var borderColor: UIColor {
+        switch self {
+        case .Common: return .clear
+        case .Primary: return .clear
+        case .Secondary: return .blue1
         }
     }
 }
@@ -39,13 +49,16 @@ public class PaddingLableView: UIView {
 
     public func setTagType(tagType: TagType) {
         contentLabel.textColor = tagType.textColor
-        self.backgroundColor = tagType.backgroundColor
+        backgroundColor = tagType.backgroundColor
+        layer.borderColor = tagType.borderColor.cgColor
     }
 
     public init(tagType: TagType = .Common) {
         super.init(frame: .zero)
-        self.backgroundColor = tagType.backgroundColor
+        backgroundColor = tagType.backgroundColor
         contentLabel.textColor = tagType.textColor
+        layer.borderWidth = 1
+        layer.borderColor = tagType.borderColor.cgColor
         layer.cornerRadius = 3
         settingLayout()
     }

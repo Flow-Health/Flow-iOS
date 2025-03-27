@@ -85,6 +85,12 @@ extension BookMarkResultTableCell {
         companyNameLabel.text = entity.companyName
         updateAtLabel.contentText = entity.updateDate
         medicineTypeLabel.contentText = entity.medicineType.toString
-        medicineTypeLabel.setTagType(tagType: entity.medicineType == .NOMAL ? .Common : .Primary)
+        
+        let tagTypeMapper: [MedicineTypeEnum: TagType] = [
+            .NOMAL: .Common,
+            .PRESCRIPTION: .Primary,
+            .CUSTOM: .Secondary
+        ]
+        medicineTypeLabel.setTagType(tagType: tagTypeMapper[entity.medicineType] ?? .Common)
     }
 }

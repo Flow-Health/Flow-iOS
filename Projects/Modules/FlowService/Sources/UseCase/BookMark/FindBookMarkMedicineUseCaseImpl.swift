@@ -12,7 +12,7 @@ class FindBookMarkMedicineUseCaseImpl: FindBookMarkMedicineUseCase {
         self.repository = repository
     }
 
-    public func execute(with itemCode: String) -> Single<MedicineInfoEntity?> {
+    func execute(with itemCode: String) -> Single<MedicineInfoEntity?> {
         repository.findBookMarkMedicine(with: itemCode)
     }
 }

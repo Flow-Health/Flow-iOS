@@ -20,6 +20,7 @@ class MedicineDetailViewController: BaseVC<MedicineDetailViewModel> {
     private let scrollView = VScrollView(showsVerticalScrollIndicator: true)
     private let medicineImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
+        $0.clipsToBounds = true
     }
     private let updateAtLabel = PaddingLableView()
     private let companyNameLabel = UILabel().then {
@@ -44,6 +45,7 @@ class MedicineDetailViewController: BaseVC<MedicineDetailViewModel> {
     private let interactionExplain = ExplainFormView(title: "상호작용")
     private let sideEffectExplain = ExplainFormView(title: "부작용")
     private let storageMethodExplain = ExplainFormView(title: "보관법")
+    private let customShortDescription = ExplainFormView(title: "간단한 설명")
 
     override func attridute() {
         navigationItem.title = "상세정보"
@@ -63,6 +65,7 @@ class MedicineDetailViewController: BaseVC<MedicineDetailViewModel> {
         )
         medicineImageView.addSubview(updateAtLabel)
         explainVStack.addArrangedSubviews(
+            customShortDescription,
             efficacyExplain,
             howToUseExplain,
             cautionWarningExplain,
@@ -97,12 +100,12 @@ class MedicineDetailViewController: BaseVC<MedicineDetailViewModel> {
             $0.leading.trailing.equalToSuperview().inset(20)
         }
         medicineCodeLabel.snp.makeConstraints {
-            $0.top.equalTo(medicineNameLabel.snp.bottom).offset(5)
-            $0.leading.equalToSuperview().inset(20)
+            $0.top.equalTo(medicineTypeLabel)
+            $0.leading.equalTo(medicineTypeLabel.snp.trailing).offset(5)
         }
         medicineTypeLabel.snp.makeConstraints {
-            $0.top.equalTo(medicineCodeLabel)
-            $0.leading.equalTo(medicineCodeLabel.snp.trailing).offset(5)
+            $0.top.equalTo(medicineNameLabel.snp.bottom).offset(5)
+            $0.leading.equalToSuperview().inset(20)
         }
         explainVStack.snp.makeConstraints {
             $0.top.equalTo(medicineCodeLabel.snp.bottom).offset(25)
@@ -183,12 +186,33 @@ extension MedicineDetailViewController {
         interactionExplain.explain = entity.interaction
         sideEffectExplain.explain = entity.sideEffect
         storageMethodExplain.explain = entity.storageMethod
+        customShortDescription.explain = entity.howToUse
 
         updateAtLabel.contentText = "마지막 업데이트: \(entity.updateDate)"
         medicineCodeLabel.contentText = entity.itemCode
         medicineTypeLabel.contentText = entity.medicineType.toString
-        medicineTypeLabel.setTagType(tagType: entity.medicineType == .NOMAL ? .Common : .Primary)
         item = entity
+
+        // 약 타입별 TagType
+        let tagTypeMapper: [MedicineTypeEnum: TagType] = [
+            .NOMAL: .Common,
+            .PRESCRIPTION: .Primary,
+            .CUSTOM: .Secondary
+        ]
+        medicineTypeLabel.setTagType(tagType: tagTypeMapper[entity.medicineType] ?? .Common)
+
+        // 내가 설정한 약일 때,
+        customShortDescription.isHidden = entity.medicineType != .CUSTOM
+        [
+            efficacyExplain,
+            howToUseExplain,
+            cautionWarningExplain,
+            cautionExplain,
+            interactionExplain,
+            sideEffectExplain,
+            storageMethodExplain,
+            medicineCodeLabel
+        ].forEach { $0.isHidden = entity.medicineType == .CUSTOM }
     }
 }
 

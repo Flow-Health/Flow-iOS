@@ -1,30 +1,32 @@
-// Copyright © 2024 com.flow-health. All rights reserved.
+// Copyright © 2025 com.flow-health. All rights reserved.
 
 import UIKit
 import Core
-import RxSwift
 
+import RxSwift
+import RxCocoa
+import RxGesture
 import SnapKit
 import Then
 
-open class BaseView: UIView {
+open class BaseTextField: UITextField {
 
-    public let disposeBag = DisposeBag()
-
+    open var disposeBag = DisposeBag();
+    
     public override init(frame: CGRect) {
         super.init(frame: frame)
         attribute()
         bind()
     }
 
-    override open func layoutSubviews() {
+    public required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    open override func layoutSubviews() {
         super.layoutSubviews()
         addView()
         setLayout()
-    }
-
-    required public init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 
     open func attribute() {}

@@ -11,6 +11,7 @@ public struct ServiceDI {
     public let fetchBookMarkMedicineListUseCase: FetchBookMarkMedicineListUseCase
     public let findBookMarkMedicineUseCase: FindBookMarkMedicineUseCase
     public let updateBookMarkMedicineUseCase: UpdateBookMarkMedicineUseCase
+    public let registerMyMedicineUseCase: RegisterMyMedicineUseCase
 
     public let insertTakenMedicineUseCase: InsertTakenMedicineUseCase
     public let fetchTakenMedicineListUseCase: FetchTakenMedicineListUseCase
@@ -87,6 +88,9 @@ public extension ServiceDI {
         let searchMedicineUseCaseImpl = SearchMedicineUseCaseImpl(
             repository: searchMedicineRepositoryImpl
         )
+        let registerMyMedicineUseCaseImpl = RegisterMyMedicineUseCaseImpl(
+            repository: insertBookMarkMedicineRepositoryImpl
+        )
 
         return .init(
             insertBookMarkMedicineUseCase: insertBookMarkMedicineUseCaseImpl,
@@ -94,6 +98,7 @@ public extension ServiceDI {
             fetchBookMarkMedicineListUseCase: fetchBookMarkMedicineListUseCaseImpl,
             findBookMarkMedicineUseCase: findBookMarkMedicineUseCaseImpl,
             updateBookMarkMedicineUseCase: updateBookMarkMedicineUseCaseImpl,
+            registerMyMedicineUseCase: registerMyMedicineUseCaseImpl,
             insertTakenMedicineUseCase: insertTakenMedicineUseCaseImpl,
             fetchTakenMedicineListUseCase: fetchTakenMedicineListUseCaseImpl,
             fetchMedicineRecodeUseCase: fetchMedicineRecodeUseCaseImpl,

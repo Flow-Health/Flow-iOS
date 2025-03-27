@@ -8,11 +8,15 @@ public enum MedicineTypeEnum: String {
 
     /// 전문약
     case PRESCRIPTION = "전문의약품"
+
+    /// 나만의 약
+    case CUSTOM = "나만의 약"
     
     public var toString : String {
         switch self {
         case .NOMAL: return "일반의약품"
         case .PRESCRIPTION: return "전문의약품"
+        case .CUSTOM: return "나만의 약"
         }
     }
 }

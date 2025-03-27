@@ -18,6 +18,7 @@ class BookMarkDetailViewModel: ViewModelType, Stepper {
     struct Input {
         let viewWillAppear: Observable<Void>
         let selectedItemIndex: Observable<IndexPath>
+        let onTapCreateMyMedicineButton: Observable<Void>
     }
 
     struct Output {
@@ -41,6 +42,11 @@ class BookMarkDetailViewModel: ViewModelType, Stepper {
 
         input.selectedItemIndex
             .map { FlowStep.madicineDetailIsRequired(with: self.bookMarkResultList[$0.item])}
+            .bind(to: steps)
+            .disposed(by: disposeBag)
+
+        input.onTapCreateMyMedicineButton
+            .map { FlowStep.createMyMedicineIsRequired }
             .bind(to: steps)
             .disposed(by: disposeBag)
 

@@ -12,7 +12,7 @@ class InsertBookMarkMedicineUseCaseImpl: InsertBookMarkMedicineUseCase {
         self.repository = repository
     }
     
-    public func execute(with entity: MedicineInfoEntity) -> Completable {
+    func execute(with entity: MedicineInfoEntity) -> Completable {
         repository.insertBookMarkMedicine(with: entity)
     }
 }

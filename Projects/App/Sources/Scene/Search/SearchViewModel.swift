@@ -32,7 +32,9 @@ class SearchViewModel: ViewModelType, Stepper {
         let searchMedicine = PublishRelay<[MedicineInfoEntity]>()
 
         input.searchInputText
+            .map { $0.trimmingCharacters(in: .whitespaces) }
             .filter { !$0.isEmpty }
+            .distinctUntilChanged()
             .debounce(.milliseconds(600), scheduler: MainScheduler.asyncInstance)
             .flatMap {
                 self.searchMedicineUseCase.execute(with: $0)

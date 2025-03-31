@@ -21,7 +21,7 @@ class SearchViewModel: ViewModelType, Stepper {
     }
     
     struct Output { 
-        let resultMedicine: Signal<[MedicineInfoEntity]>
+        let resultMedicine: Signal<(searchText: String, result: [MedicineInfoEntity])>
     }
 
     init(searchMedicineUseCase: SearchMedicineUseCase) {
@@ -29,7 +29,7 @@ class SearchViewModel: ViewModelType, Stepper {
     }
 
     func transform(input: Input) -> Output {
-        let searchMedicine = PublishRelay<[MedicineInfoEntity]>()
+        let searchMedicine = PublishRelay<(searchText: String, result: [MedicineInfoEntity])>()
 
         input.searchInputText
             .map { $0.trimmingCharacters(in: .whitespaces) }
@@ -43,7 +43,11 @@ class SearchViewModel: ViewModelType, Stepper {
                         return .just([])
                     }
             }
-            .do(onNext: { [weak self] in self?.searchResultList = $0 })
+            .withLatestFrom(
+                input.searchInputText,
+                resultSelector: { (searchText: $1.trimmingCharacters(in: .whitespaces), result: $0)
+            })
+            .do(onNext: { [weak self] in self?.searchResultList = $0.result })
             .bind(to: searchMedicine)
             .disposed(by: disposeBag)
 

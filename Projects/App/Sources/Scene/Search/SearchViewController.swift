@@ -88,7 +88,12 @@ class SearchViewController: BaseVC<SearchViewModel> {
         let output = viewModel.transform(input: input)
 
         output.resultMedicine.asObservable()
-            .do(onNext: { [weak self] in self?.noFoundVStackView.isHidden = !$0.isEmpty })
+            .do(onNext: { [weak self] in
+                guard let self else { return }
+                noFoundVStackView.isHidden = !$0.result.isEmpty
+                notFoundMainLabel.text = "\"\($0.searchText)\"를 찾을 수 없음"
+            })
+            .map { $0.result }
             .bind(to: resultTableView.rx.items(
                 cellIdentifier: SearchResultTableCell.identifier,
                 cellType: SearchResultTableCell.self
@@ -97,13 +102,9 @@ class SearchViewController: BaseVC<SearchViewModel> {
             }
             .disposed(by: disposeBag)
 
-        searchController.searchBar.rx.text.asObservable()
-            .do(onNext: { [weak self] _ in self?.noFoundVStackView.isHidden = true })
-            .map {
-                guard let name = $0, !name.isEmpty else { return "" }
-                return "\"\(name)\"를 찾을 수 없음"
-            }
-            .bind(to: notFoundMainLabel.rx.text)
+        searchController.searchBar.rx.text
+            .map { _ in true }
+            .bind(to: noFoundVStackView.rx.isHidden)
             .disposed(by: disposeBag)
     }
 }

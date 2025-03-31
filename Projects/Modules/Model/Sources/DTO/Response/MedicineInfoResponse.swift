@@ -37,19 +37,25 @@ public struct MedicineInfoResponse: Decodable {
 public extension MedicineInfoResponse {
     func toDomain() -> MedicineInfoEntity {
         return .init(
-            imageURL: imageURL ?? "-",
-            medicineName: medicineName ?? "-",
-            companyName: companyName ?? "-",
-            itemCode: itemCode ?? "-",
-            efficacy: efficacy ?? "-",
-            howToUse: howToUse ?? "-",
-            cautionWarning: cautionWarning ?? "-",
-            caution: caution ?? "-",
-            interaction: interaction ?? "-",
-            sideEffect: sideEffect ?? "-",
-            storageMethod: storageMethod ?? "-",
-            updateDate: updateDate ?? "-",
+            imageURL: toTrimString(imageURL),
+            medicineName: toTrimString(medicineName),
+            companyName: toTrimString(companyName),
+            itemCode: toTrimString(itemCode),
+            efficacy: toTrimString(efficacy),
+            howToUse: toTrimString(howToUse),
+            cautionWarning: toTrimString(cautionWarning),
+            caution: toTrimString(caution),
+            interaction: toTrimString(interaction),
+            sideEffect: toTrimString(sideEffect),
+            storageMethod: toTrimString(storageMethod),
+            updateDate: toTrimString(updateDate),
             medicineType: .NOMAL
         )
+    }
+
+    private func toTrimString(_ content: String?) -> String {
+        guard let content else { return "-" }
+
+        return content.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 }

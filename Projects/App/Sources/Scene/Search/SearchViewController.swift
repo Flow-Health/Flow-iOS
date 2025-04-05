@@ -8,6 +8,10 @@ import RxSwift
 import RxCocoa
 
 class SearchViewController: BaseVC<SearchViewModel> {
+
+    private let onScrollButtomEndRelay = PublishRelay<Void>()
+    private var isBottomCellVisible: Bool = false
+
     private let resultTableView = UITableView().then {
         $0.backgroundColor = .black6
         $0.register(SearchResultTableCell.self, forCellReuseIdentifier: SearchResultTableCell.identifier)
@@ -43,6 +47,12 @@ class SearchViewController: BaseVC<SearchViewModel> {
         $0.layer.cornerRadius = 5
     }
 
+    private let searchEmptyView = EmptyStatusView(
+        icon: FlowKitAsset.readingGlassesWithCloud.image,
+        title: "원하는 약을 검색하고, 찾아보세요!",
+        subTitle: "식약처 데이터를 사용하여 정확한 정보를 제공해드려요"
+    )
+
     private let searchController = SearchBarController()
 
     override func attridute() {
@@ -52,7 +62,7 @@ class SearchViewController: BaseVC<SearchViewModel> {
     }
 
     override func addView() {
-        view.addSubview(resultTableView)
+        view.addSubViews(searchEmptyView, resultTableView)
         resultTableView.addSubview(noFoundVStackView)
 
         // NotFound일때, 나오는 요소들 세팅
@@ -64,6 +74,10 @@ class SearchViewController: BaseVC<SearchViewModel> {
     }
 
     override func setLayout() {
+        searchEmptyView.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
+
         resultTableView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.trailing.leading.bottom.equalToSuperview()
@@ -83,13 +97,17 @@ class SearchViewController: BaseVC<SearchViewModel> {
         let input = SearchViewModel.Input(
             searchInputText: searchController.searchBar.searchTextField.rx.text.orEmpty.asObservable(),
             selectedItemIndex: resultTableView.rx.itemSelected.asObservable(),
-            onTapCreateMyMedicineButton: creactMyMedicineButton.rx.tap.asObservable()
+            onTapCreateMyMedicineButton: creactMyMedicineButton.rx.tap.asObservable(),
+            onScrollButtomEnd: onScrollButtomEndRelay.asObservable()
         )
         let output = viewModel.transform(input: input)
 
         output.resultMedicine.asObservable()
+            .filter {
+                $0.searchText == (self.searchController.searchBar.searchTextField.text ?? "").trimmingCharacters(in: .whitespaces)
+            }
             .do(onNext: { [weak self] in
-                guard let self else { return }
+                guard let self, !$0.searchText.isEmpty else { return }
                 noFoundVStackView.isHidden = !$0.result.isEmpty
                 notFoundMainLabel.text = "\"\($0.searchText)\"를 찾을 수 없음"
             })
@@ -102,9 +120,35 @@ class SearchViewController: BaseVC<SearchViewModel> {
             }
             .disposed(by: disposeBag)
 
-        searchController.searchBar.rx.text
-            .map { _ in true }
-            .bind(to: noFoundVStackView.rx.isHidden)
+        resultTableView.rx.contentOffset
+            .subscribe(onNext: { [weak self] (contentOffset) in
+                guard let self, resultTableView.contentSize.height > 0 else { return }
+
+                let contentHight = resultTableView.contentSize.height
+                let offsetY = contentOffset.y
+                let height = resultTableView.frame.size.height
+
+                // 최하단으로 스크롤시 페이지네이션 진행
+                if offsetY + height >= contentHight - 50 {
+                    if !isBottomCellVisible {
+                        onScrollButtomEndRelay.accept(())
+                        isBottomCellVisible = true
+                    }
+                } else {
+                    isBottomCellVisible = false
+                }
+            })
+            .disposed(by: disposeBag)
+
+        searchController.searchBar.searchTextField.rx.text.orEmpty
+            .distinctUntilChanged()
+            .map { $0.isEmpty }
+            .subscribe(onNext: { [weak self] in
+                guard let self else { return }
+                searchEmptyView.isHidden = !$0
+                resultTableView.isHidden = $0
+                noFoundVStackView.isHidden = true
+            })
             .disposed(by: disposeBag)
     }
 }

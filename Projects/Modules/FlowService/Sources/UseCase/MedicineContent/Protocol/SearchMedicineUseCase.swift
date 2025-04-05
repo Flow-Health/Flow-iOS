@@ -8,5 +8,5 @@ import RxSwift
 public protocol SearchMedicineUseCase {
     var repository: SearchMedicineRepository { get set }
 
-    func execute(with name: String) -> Single<[MedicineInfoEntity]>
+    func execute(with name: String, _ pageNumber: Int) -> Single<[MedicineInfoEntity]>
 }

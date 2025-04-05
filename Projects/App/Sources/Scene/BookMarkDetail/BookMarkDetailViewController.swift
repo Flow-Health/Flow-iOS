@@ -16,7 +16,7 @@ class BookMarkDetailViewController: BaseVC<BookMarkDetailViewModel> {
     }
 
     private let bookMarkEmptyView = EmptyStatusView(
-        icon: FlowKitAsset.readingGlassesWithCloud.image,
+        icon: FlowKitAsset.emptyBoxWithCloud.image,
         title: "등록된 약이 없습니다",
         subTitle: "약을 검색하여 자주 먹는\n약을 등록해보세요"
     )

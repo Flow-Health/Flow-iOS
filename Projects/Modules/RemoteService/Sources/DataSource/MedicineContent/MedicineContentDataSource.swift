@@ -6,5 +6,5 @@ import Model
 import RxSwift
 
 public protocol MedicineContentDataSource {
-    func searchMedicine(with name: String) -> Single<[MedicineInfoResponse]>
+    func searchMedicine(with name: String, _ pageNumber: Int) -> Single<[MedicineInfoResponse]>
 }

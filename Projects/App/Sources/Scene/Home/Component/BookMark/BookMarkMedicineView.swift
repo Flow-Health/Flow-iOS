@@ -12,7 +12,7 @@ class BookMarkMedicineView: BaseView {
     let headerButton = HeaderNavigationButton()
     private let medicineVStack = VStack(spacing: 10)
     private let bookMarkEmptyView = EmptyStatusView(
-        icon: FlowKitAsset.readingGlassesWithCloud.image,
+        icon: FlowKitAsset.emptyBoxWithCloud.image,
         title: "등록된 약이 없습니다",
         subTitle: "약을 검색하여 자주 먹는\n약을 등록해보세요"
     )

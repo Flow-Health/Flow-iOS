@@ -18,12 +18,18 @@ class SearchMedicineRepositoryImpl: SearchMedicineRepository {
         self.prescriptionMedicinedataSource = prescriptionMedicinedataSource
     }
 
-    func searchMedicine(with name: String) -> Single<[MedicineInfoEntity]> {
-        let nomalMedicineSearch = nomalMedicinedataSource.searchMedicine(with: name).map { $0.map { $0.toDomain() } }.asObservable()
-        let prescriptionMedicineSearch = prescriptionMedicinedataSource.searchPrescriptionMedicine(with: name).map { $0.map { $0.toDomain() }.filter { $0.medicineType == .PRESCRIPTION } } .asObservable()
+    func searchMedicine(with name: String, _ pageNumber: Int) -> Single<[MedicineInfoEntity]> {
+        let nomalMedicineSearch = nomalMedicinedataSource.searchMedicine(with: name, pageNumber)
+            .map { $0.map { $0.toDomain() } }
+            .asObservable()
+
+        let prescriptionMedicineSearch = prescriptionMedicinedataSource.searchPrescriptionMedicine(with: name, pageNumber)
+            .map { $0.map { $0.toDomain() }
+            .filter { $0.medicineType == .PRESCRIPTION } }
+            .asObservable()
 
         return Observable.combineLatest(nomalMedicineSearch, prescriptionMedicineSearch) {
-            [$0, $1].flatMap { $0 }.sorted { $0.medicineName > $1.medicineName }
+            ($0 + $1).sorted { $0.medicineName > $1.medicineName }
         }.asSingle()
     }
 }

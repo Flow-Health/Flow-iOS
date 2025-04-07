@@ -12,7 +12,7 @@ class SearchMedicineUseCaseImpl: SearchMedicineUseCase {
         self.repository = repository
     }
 
-    func execute(with name: String) -> Single<[MedicineInfoEntity]> {
-        repository.searchMedicine(with: name)
+    func execute(with name: String, _ pageNumber: Int) -> Single<[MedicineInfoEntity]> {
+        repository.searchMedicine(with: name, pageNumber)
     }
 }

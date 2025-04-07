@@ -158,9 +158,25 @@ class MedicineDetailViewController: BaseVC<MedicineDetailViewModel> {
             .map { self.item }
             .subscribe(onNext: { [weak self] item in
                 guard let self else { return }
-                bookMarkButton.isBookMarked ?
-                deleteBookMarkRelay.accept(item) :
-                insetBookMarkRelay.accept(item)
+
+                if bookMarkButton.isBookMarked {
+                    let deleteBookMarkAlert = UIAlertController(
+                        title: "자주먹는 약에서 제외할까요?",
+                        message: "해당 약에 대한 모든 기록이 삭제됩니다",
+                        preferredStyle: .alert
+                    )
+
+                    [
+                        UIAlertAction(title: "아니요", style: .default),
+                        UIAlertAction(title: "네, 제외합니다", style: .destructive) { _ in
+                            self.deleteBookMarkRelay.accept(item)
+                        }
+                    ].forEach { deleteBookMarkAlert.addAction($0) }
+
+                    present(deleteBookMarkAlert, animated: true)
+                } else {
+                    insetBookMarkRelay.accept(item)
+                }
             })
             .disposed(by: disposeBag)
 

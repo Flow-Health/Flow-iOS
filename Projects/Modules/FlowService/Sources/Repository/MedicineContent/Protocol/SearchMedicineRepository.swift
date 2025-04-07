@@ -10,5 +10,5 @@ public protocol SearchMedicineRepository {
     var nomalMedicinedataSource: MedicineContentDataSource { get }
     var prescriptionMedicinedataSource: PrescriptionMedicineDataSource { get }
 
-    func searchMedicine(with name: String) -> Single<[MedicineInfoEntity]>
+    func searchMedicine(with name: String, _ pageNumber: Int) -> Single<[MedicineInfoEntity]>
 }

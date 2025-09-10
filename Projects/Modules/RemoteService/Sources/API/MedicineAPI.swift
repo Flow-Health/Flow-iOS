@@ -17,7 +17,7 @@ extension MedicineAPI: TargetType {
         case .searchMedicine:
             return "/DrbEasyDrugInfoService/getDrbEasyDrugList"
         case .searchPrescriptionMedicine:
-            return "/MdcinGrnIdntfcInfoService01/getMdcinGrnIdntfcInfoList01"
+            return "/MdcinGrnIdntfcInfoService02/getMdcinGrnIdntfcInfoList02"
         }
     }
 

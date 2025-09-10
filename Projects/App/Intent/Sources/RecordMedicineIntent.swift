@@ -21,6 +21,7 @@ struct RecordMedicineIntent: AppIntent {
         self.medicineItemCode = medicineItemCode
     }
 
+    @discardableResult
     func perform() async throws -> some IntentResult {
         await recodeMedicine(itemCode: medicineItemCode)
         return .result()

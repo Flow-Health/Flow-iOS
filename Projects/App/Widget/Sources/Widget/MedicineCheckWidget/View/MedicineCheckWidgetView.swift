@@ -14,6 +14,7 @@ struct MedicineCheckWidgetEntryView: View {
     var body: some View {
         widgetBody()
             .containerBackground(.white, for: .widget)
+            .background(.white)
     }
 
     @ViewBuilder

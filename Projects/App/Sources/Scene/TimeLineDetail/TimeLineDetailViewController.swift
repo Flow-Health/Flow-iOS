@@ -38,8 +38,7 @@ class TimeLineDetailViewController: BaseVC<TimeLineDetailViewModel> {
     
     override func setLayout() {
         scrollView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide)
-            $0.bottom.trailing.leading.equalToSuperview()
+            $0.top.bottom.trailing.leading.equalToSuperview()
         }
         scrollView.contentView.snp.makeConstraints {
             $0.bottom.equalTo(timeLineDetailListView)

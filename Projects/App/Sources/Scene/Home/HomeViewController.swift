@@ -68,7 +68,7 @@ class HomeViewController: BaseVC<HomeViewModel> {
         }
         homeVStaek.snp.makeConstraints {
             $0.top.equalTo(headerView.snp.bottom).offset(15)
-            $0.leading.trailing.equalToSuperview().inset(25)
+            $0.horizontalEdges.equalToSuperview().inset(16)
         }
     }
 

@@ -32,8 +32,8 @@ class PillGramADBanner: BaseButton {
         }
 
         bannerImageView.snp.makeConstraints {
-            $0.top.bottom.equalToSuperview().inset(3)
-            $0.leading.equalToSuperview().inset(5)
+            $0.top.bottom.equalToSuperview().inset(1)
+            $0.leading.equalToSuperview().inset(0)
             $0.trailing.equalToSuperview()
         }
     }

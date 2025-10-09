@@ -23,6 +23,8 @@ final class HomeFlow: Flow {
             return navigateToHomeVC()
         case .searchIsRequired:
             return navigateToSearchVC()
+        case .receiptOcrIsRequired:
+            return navigateToReceiptOcrVC()
         case .bookMarkIsRequired:
             return navigateToBookMarkVC()
         case .timeLineDetailIsRequired:
@@ -51,6 +53,17 @@ final class HomeFlow: Flow {
         return .one(flowContributor: .contribute(
             withNextPresentable: searchFlow,
             withNextStepper: OneStepper(withSingleStep: FlowStep.searchIsRequired)
+        ))
+    }
+
+    private func navigateToReceiptOcrVC() -> FlowContributors {
+        let receiptOcrFlow = ReceiptOcrFlow(appDI: appDI)
+        Flows.use(receiptOcrFlow, when: .created) { [weak self] root in
+            self?.presentable.pushViewController(root, animated: true)
+        }
+        return .one(flowContributor: .contribute(
+            withNextPresentable: receiptOcrFlow,
+            withNextStepper: OneStepper(withSingleStep: FlowStep.receiptOcrIsRequired)
         ))
     }
 

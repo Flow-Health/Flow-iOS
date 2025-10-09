@@ -5,6 +5,7 @@ import Model
 struct AppDI {
     let homeViewModel: HomeViewModel
     let searchViewModel: SearchViewModel
+    let receiptOcrViewModel: ReceiptOcrViewModel
     let medicineDetailViewModel: MedicineDetailViewModel
     let bookMarkDetailViewModel: BookMarkDetailViewModel
     let timeLineDetailViewModel: TimeLineDetailViewModel
@@ -25,6 +26,7 @@ extension AppDI {
         let searchViewModelInject = SearchViewModel(
             searchMedicineUseCase: serviceDI.searchMedicineUseCase
         )
+        let receiptOcrViewModelInject = ReceiptOcrViewModel()
         let medicineDetailViewModelInject = MedicineDetailViewModel(
             findBookMarkMedicineUseCase: serviceDI.findBookMarkMedicineUseCase,
             deleteBookMarkMedicineUseCase: serviceDI.deleteBookMarkMedicineUseCase,
@@ -45,6 +47,7 @@ extension AppDI {
         return .init(
             homeViewModel: homeViewModelInject,
             searchViewModel: searchViewModelInject,
+            receiptOcrViewModel: receiptOcrViewModelInject,
             medicineDetailViewModel: medicineDetailViewModelInject,
             bookMarkDetailViewModel: bookMarkDetailViewModelInject,
             timeLineDetailViewModel: timeLineDetailViewModelInject,

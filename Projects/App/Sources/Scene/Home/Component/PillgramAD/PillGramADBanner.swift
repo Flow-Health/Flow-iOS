@@ -14,12 +14,6 @@ class PillGramADBanner: BaseButton {
     override func attribute() {
         layer.cornerRadius = 20
         backgroundColor = .white
-        setShadow(
-            color: .black,
-            opacity: 0.05,
-            radius: 10,
-            offset: .init(width: 0, height: 4)
-        )
     }
 
     override func addView() {

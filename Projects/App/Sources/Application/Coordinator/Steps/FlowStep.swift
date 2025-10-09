@@ -8,6 +8,7 @@ import RxFlow
 enum FlowStep: Step {
     case homeIsRequired
     case searchIsRequired
+    case receiptOcrIsRequired
     case bookMarkIsRequired
     case madicineDetailIsRequired(with: MedicineInfoEntity)
     case timeLineDetailIsRequired

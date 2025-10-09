@@ -6,15 +6,16 @@ import FlowKit
 import SnapKit
 import Then
 
-class SearchButtonView: BaseButton {
+class ReceiptOcrButtonView: BaseButton {
 
     private let mainTitleLabel = UILabel().then {
         $0.numberOfLines = 2
-        $0.customLabel("원하는 약\n검색하기", font: .bodyB1Bold, textColor: .black)
+        $0.customLabel("처방전 약\n추가하기", font: .bodyB1Bold, textColor: .black)
     }
-
+    
     private let sideImageView = UIImageView().then {
-        $0.image = FlowKitAsset.glassTiltedRight.image
+        $0.image = FlowKitAsset.pageFacingUp.image
+        $0.transform = CGAffineTransform(rotationAngle: .pi / 8)
     }
 
     override func attribute() {
@@ -37,8 +38,8 @@ class SearchButtonView: BaseButton {
         }
         sideImageView.snp.makeConstraints {
             $0.size.equalTo(77)
-            $0.top.equalToSuperview().inset(8)
-            $0.trailing.equalToSuperview().inset(12)
+            $0.top.equalToSuperview().inset(13)
+            $0.trailing.equalToSuperview().inset(9)
         }
         self.snp.makeConstraints {
             $0.height.equalTo(70)

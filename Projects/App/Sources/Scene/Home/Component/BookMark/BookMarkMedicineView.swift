@@ -23,12 +23,6 @@ class BookMarkMedicineView: BaseView {
         backgroundColor = .white
         headerButton.setHeader("자주 먹는 약")
         headerButton.isEnabled = isNavigatAble
-        setShadow(
-            color: .black,
-            opacity: 0.05,
-            radius: 10,
-            offset: .init(width: 0, height: 4)
-        )
     }
 
     required init?(coder: NSCoder) {

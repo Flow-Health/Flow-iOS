@@ -122,7 +122,7 @@ class MedicineDetailViewController: BaseVC<MedicineDetailViewModel> {
         )
         let output = viewModel.transform(input: input)
 
-        output.isBookMarked.asObservable()
+        output.isBookMarked
             .do(onNext: { [weak self] in
                 self?.colorTagButton.isHidden = !$0
                 guard let item = self?.item, !$0 else { return }
@@ -143,15 +143,15 @@ class MedicineDetailViewController: BaseVC<MedicineDetailViewModel> {
                 )
                 self?.item = noColorItem
             })
-            .bind(to: bookMarkButton.rx.isBookMarked)
+            .drive(bookMarkButton.rx.isBookMarked)
             .disposed(by: disposeBag)
 
-        output.tagColorHexCode.asObservable()
+        output.tagColorHexCode
             .map {
                 guard let hexCode = $0 else { return nil }
                 return UIColor(hex: hexCode)
             }
-            .bind(to: colorTagButton.rx.tagColor)
+            .drive(colorTagButton.rx.tagColor)
             .disposed(by: disposeBag)
 
         bookMarkButton.rx.tap

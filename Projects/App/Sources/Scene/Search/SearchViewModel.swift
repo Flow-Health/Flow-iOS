@@ -24,7 +24,7 @@ class SearchViewModel: ViewModelType, Stepper {
     }
     
     struct Output { 
-        let resultMedicine: Signal<(searchText: String, result: [MedicineInfoEntity])>
+        let resultMedicine: Driver<(searchText: String, result: [MedicineInfoEntity])>
     }
 
     init(searchMedicineUseCase: SearchMedicineUseCase) {
@@ -32,7 +32,7 @@ class SearchViewModel: ViewModelType, Stepper {
     }
 
     func transform(input: Input) -> Output {
-        let searchMedicine = PublishRelay<(searchText: String, result: [MedicineInfoEntity])>()
+        let searchMedicine = BehaviorRelay<(searchText: String, result: [MedicineInfoEntity])>(value: ("", []))
 
         input.searchInputText
             .map { $0.trimmingCharacters(in: .whitespaces) }
@@ -103,7 +103,7 @@ class SearchViewModel: ViewModelType, Stepper {
             .disposed(by: disposeBag)
             
         return Output(
-            resultMedicine: searchMedicine.asSignal()
+            resultMedicine: searchMedicine.asDriver()
         )
     }
 }

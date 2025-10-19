@@ -36,7 +36,6 @@ class MedicineRegisterViewController: BaseVC<MedicineRegisterViewModel> {
     }
 
     override func bind() {
-
         let nextButtonTap = Observable.merge(
             nameStepView.nextButton.rx.tap.asObservable(),
             nameStepView.keyboardNextButton.rx.tap.asObservable(),
@@ -54,16 +53,16 @@ class MedicineRegisterViewController: BaseVC<MedicineRegisterViewModel> {
         )
         let output = viewModel.transform(input: input)
 
-        output.currentStep.asObservable()
-            .subscribe(onNext: { [weak self] step in
+        output.currentStep
+            .drive(onNext: { [weak self] step in
                 guard let self else { return }
                 registerStepViewStack.forEach { $0.isHidden = true }
                 registerStepViewStack[step.rawValue - 1].isHidden = false
             })
             .disposed(by: disposeBag)
 
-        output.dismissView.asObservable()
-            .subscribe(onNext: { [weak self] in
+        output.dismissView
+            .emit(onNext: { [weak self] in
                 self?.dismiss(animated: true)
             })
             .disposed(by: disposeBag)

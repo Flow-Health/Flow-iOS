@@ -6,11 +6,10 @@ import Core
 import RxSwift
 import RxCocoa
 
-
-open class BaseVC<ViewModel: ViewModelType>: UIViewController {
-
+open class BaseVC<ViewModel: ViewModelType>: UIViewController, HasDisposeBag {
+    
     public let viewModel: ViewModel
-    public let disposeBag = DisposeBag()
+    public let disposeBag: DisposeBag = .init()
 
     public let viewDidLoadRelay = PublishRelay<Void>()
     public let viewDidAppearRelay = PublishRelay<Void>()

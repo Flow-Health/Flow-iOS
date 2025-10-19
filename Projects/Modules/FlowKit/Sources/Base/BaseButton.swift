@@ -13,8 +13,6 @@ import Then
 
 open class BaseButton: UIButton {
 
-    let disposBag = DisposeBag()
-
     public override init(frame: CGRect) {
         super.init(frame: frame)
         bind()

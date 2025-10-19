@@ -4,8 +4,7 @@ import Foundation
 
 import RxSwift
 
-public protocol ViewModelType {
-    var disposeBag: DisposeBag { get set }
+public protocol ViewModelType: HasDisposeBag {
 
     associatedtype Input
     associatedtype Output

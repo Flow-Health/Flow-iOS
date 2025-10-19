@@ -6,11 +6,10 @@ import Core
 import RxSwift
 import RxCocoa
 
-
-open class BaseVC<ViewModel: ViewModelType>: UIViewController {
-
+open class BaseVC<ViewModel: ViewModelType>: UIViewController, HasDisposeBag {
+    
     public let viewModel: ViewModel
-    public let disposeBag = DisposeBag()
+    public let disposeBag: DisposeBag = .init()
 
     public let viewDidLoadRelay = PublishRelay<Void>()
     public let viewDidAppearRelay = PublishRelay<Void>()
@@ -30,13 +29,9 @@ open class BaseVC<ViewModel: ViewModelType>: UIViewController {
         view.backgroundColor = .white
         bind()
         attridute()
-        viewDidLoadRelay.accept(())
-    }
-
-    open override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
         addView()
-        setLayout()
+        setAutoLayout()
+        viewDidLoadRelay.accept(())
     }
 
     open override func viewDidAppear(_ animated: Bool) {
@@ -50,7 +45,7 @@ open class BaseVC<ViewModel: ViewModelType>: UIViewController {
     }
 
     open func addView() {}
-    open func setLayout() {}
+    open func setAutoLayout() {}
     open func bind() {}
     open func attridute() {}
 }

@@ -36,7 +36,7 @@ class BookMarkMedicineView: BaseView {
         )
     }
 
-    override func setLayout() {
+    override func setAutoLayout() {
         headerButton.snp.makeConstraints {
             $0.top.equalToSuperview().inset(17)
             $0.leading.equalToSuperview().inset(20)

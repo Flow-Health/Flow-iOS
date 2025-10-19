@@ -36,7 +36,7 @@ class TimeLineDetailViewController: BaseVC<TimeLineDetailViewModel> {
         )
     }
     
-    override func setLayout() {
+    override func setAutoLayout() {
         scrollView.snp.makeConstraints {
             $0.top.bottom.trailing.leading.equalToSuperview()
         }
@@ -67,11 +67,11 @@ class TimeLineDetailViewController: BaseVC<TimeLineDetailViewModel> {
         )
         let output = viewModel.transform(input: input)
         
-        output.takenMedicineData.asObservable()
+        output.takenMedicineData
             .do(onNext: { [weak self] in
                 self?.timeLineHeaderLable.setCountOfMedicine(with: $0.count)
             })
-            .subscribe(onNext: timeLineDetailListView.setTimeLineList(with:))
+            .drive(onNext: timeLineDetailListView.setTimeLineList(with:))
             .disposed(by: disposeBag)
 
         view.rx.swipeGesture([.right, .left])

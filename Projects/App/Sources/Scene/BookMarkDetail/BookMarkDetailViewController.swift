@@ -39,7 +39,7 @@ class BookMarkDetailViewController: BaseVC<BookMarkDetailViewModel> {
         )
     }
 
-    override func setLayout() {
+    override func setAutoLayout() {
         resultTableView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.trailing.leading.bottom.equalToSuperview()
@@ -58,9 +58,9 @@ class BookMarkDetailViewController: BaseVC<BookMarkDetailViewModel> {
         )
         let output = viewModel.transform(input: input)
 
-        output.bookMarkList.asObservable()
+        output.bookMarkList
             .do(onNext: { [weak self] in self?.bookMarkEmptyView.isHidden = !$0.isEmpty })
-            .bind(to: resultTableView.rx.items(
+            .drive(resultTableView.rx.items(
                 cellIdentifier: BookMarkResultTableCell.identifier,
                 cellType: BookMarkResultTableCell.self
             )) { _, data, cell in

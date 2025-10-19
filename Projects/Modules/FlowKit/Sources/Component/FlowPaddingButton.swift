@@ -6,16 +6,12 @@ import SnapKit
 
 public class FlowPaddingButton: BaseButton {
 
-    private let customTitleLabel = UILabel().then {
-        $0.customLabel(font: .captionC1SemiBold, textColor: .blue1)
-    }
-
     public init(buttonTitle: String?) {
         super.init(frame: .zero)
         backgroundColor = .blue5
         titleLabel?.font = .captionC1SemiBold
         setTitle(buttonTitle, for: .normal)
-        customTitleLabel.text = title(for: .normal)
+        setTitleColor(.blue1, for: .normal)
         layer.cornerRadius = 5
     }
 
@@ -23,14 +19,7 @@ public class FlowPaddingButton: BaseButton {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public override func addView() {
-        addSubview(customTitleLabel)
-    }
-
-    public override func setLayout() {
-        customTitleLabel.snp.makeConstraints {
-            $0.center.equalToSuperview()
-        }
+    public override func setAutoLayout() {
         self.snp.makeConstraints {
             $0.height.equalTo(24)
             $0.width.equalTo(92)

@@ -42,7 +42,7 @@ class LastTakenTimeView: BaseView {
         )
     }
 
-    override func setLayout() {
+    override func setAutoLayout() {
         lastTakenTitleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(25)
             $0.leading.equalToSuperview().inset(20)

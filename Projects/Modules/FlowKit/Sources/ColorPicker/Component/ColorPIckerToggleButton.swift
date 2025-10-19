@@ -38,7 +38,7 @@ class ColorPIckerToggleButton: BaseButton {
         addSubview(checkImage)
     }
 
-    override func setLayout() {
+    override func setAutoLayout() {
         checkImage.snp.makeConstraints {
             $0.width.height.equalTo(16)
             $0.center.equalToSuperview()

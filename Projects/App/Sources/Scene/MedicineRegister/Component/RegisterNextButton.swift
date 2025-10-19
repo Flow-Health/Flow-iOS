@@ -30,7 +30,7 @@ class RegisterNextButton: BaseButton {
         }
     }
 
-    override func setLayout() {
+    override func setAutoLayout() {
         self.snp.makeConstraints {
             $0.height.equalTo(54)
         }

@@ -46,7 +46,7 @@ class EmptyStatusView: BaseView {
         )
     }
 
-    override func setLayout() {
+    override func setAutoLayout() {
         iconImageView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(10)
             $0.centerX.equalToSuperview()

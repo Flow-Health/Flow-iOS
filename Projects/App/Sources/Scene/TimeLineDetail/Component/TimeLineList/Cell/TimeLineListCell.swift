@@ -61,7 +61,7 @@ class TimeLineListCell: BaseView {
         )
     }
 
-    override func setLayout() {
+    override func setAutoLayout() {
         labelStack.setCustomSpacing(3, after: medicineNameLabel)
         lineIndicator.snp.makeConstraints {
             $0.top.bottom.equalToSuperview()

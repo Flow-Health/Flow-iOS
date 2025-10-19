@@ -81,7 +81,7 @@ class ReceiptOcrViewController: BaseVC<ReceiptOcrViewModel> {
         scanButton.addSubview(scanButtonCircle)
     }
 
-    override func setLayout() {
+    override func setAutoLayout() {
         subTitle.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(20)

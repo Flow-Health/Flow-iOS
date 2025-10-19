@@ -65,7 +65,7 @@ class DescriptionRegisterStepView: BaseView {
         )
     }
 
-    override func setLayout() {
+    override func setAutoLayout() {
         headerView.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.horizontalEdges.equalToSuperview().inset(22)

@@ -20,7 +20,7 @@ class PillGramADBanner: BaseButton {
         addSubview(bannerImageView)
     }
 
-    override func setLayout() {
+    override func setAutoLayout() {
         self.snp.makeConstraints {
             $0.height.equalTo(80)
         }

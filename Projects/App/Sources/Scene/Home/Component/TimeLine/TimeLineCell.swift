@@ -46,7 +46,7 @@ class TimeLineCell: BaseView {
         )
     }
 
-    override func setLayout() {
+    override func setAutoLayout() {
         pointDotView.snp.makeConstraints {
             $0.top.bottom.equalToSuperview()
             $0.leading.equalToSuperview().inset(18)

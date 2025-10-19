@@ -31,7 +31,7 @@ class RegisterHeaderView: BaseView {
         addSubViews(descriptionLabel, titleLabel)
     }
 
-    override func setLayout() {
+    override func setAutoLayout() {
         descriptionLabel.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
         }

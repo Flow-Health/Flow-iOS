@@ -40,7 +40,7 @@ class PointLineView: BaseView {
         )
     }
 
-    override func setLayout() {
+    override func setAutoLayout() {
         inDot.snp.makeConstraints {
             $0.center.equalToSuperview()
             $0.width.height.equalTo(4)

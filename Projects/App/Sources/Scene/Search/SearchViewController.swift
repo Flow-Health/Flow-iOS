@@ -73,7 +73,7 @@ class SearchViewController: BaseVC<SearchViewModel> {
         ])
     }
 
-    override func setLayout() {
+    override func setAutoLayout() {
         searchEmptyView.snp.makeConstraints {
             $0.center.equalToSuperview()
         }
@@ -102,7 +102,7 @@ class SearchViewController: BaseVC<SearchViewModel> {
         )
         let output = viewModel.transform(input: input)
 
-        output.resultMedicine.asObservable()
+        output.resultMedicine
             .filter {
                 $0.searchText == (self.searchController.searchBar.searchTextField.text ?? "").trimmingCharacters(in: .whitespaces)
             }
@@ -112,7 +112,7 @@ class SearchViewController: BaseVC<SearchViewModel> {
                 notFoundMainLabel.text = "\"\($0.searchText)\"를 찾을 수 없음"
             })
             .map { $0.result }
-            .bind(to: resultTableView.rx.items(
+            .drive(resultTableView.rx.items(
                 cellIdentifier: SearchResultTableCell.identifier,
                 cellType: SearchResultTableCell.self
             )) { _, data, cell in

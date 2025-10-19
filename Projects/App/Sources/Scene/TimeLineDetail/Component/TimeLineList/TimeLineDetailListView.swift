@@ -19,7 +19,7 @@ class TimeLineDetailListView: BaseView {
         addSubview(timeLineVStack)
     }
 
-    override func setLayout() {
+    override func setAutoLayout() {
         timeLineVStack.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
         }

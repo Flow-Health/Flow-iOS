@@ -49,7 +49,7 @@ class BookMarkContentCell: BaseView {
         )
     }
 
-    override func setLayout() {
+    override func setAutoLayout() {
         guardLineView.snp.makeConstraints {
             $0.leading.top.bottom.equalToSuperview()
             $0.width.equalTo(4)

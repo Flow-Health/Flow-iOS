@@ -30,13 +30,9 @@ open class BaseVC<ViewModel: ViewModelType>: UIViewController {
         view.backgroundColor = .white
         bind()
         attridute()
-        viewDidLoadRelay.accept(())
-    }
-
-    open override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
         addView()
-        setLayout()
+        setAutoLayout()
+        viewDidLoadRelay.accept(())
     }
 
     open override func viewDidAppear(_ animated: Bool) {
@@ -50,7 +46,7 @@ open class BaseVC<ViewModel: ViewModelType>: UIViewController {
     }
 
     open func addView() {}
-    open func setLayout() {}
+    open func setAutoLayout() {}
     open func bind() {}
     open func attridute() {}
 }

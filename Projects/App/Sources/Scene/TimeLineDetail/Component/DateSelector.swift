@@ -33,7 +33,7 @@ class DateSelector: BaseView {
         )
     }
 
-    override func setLayout() {
+    override func setAutoLayout() {
         decreaseDateButton.snp.makeConstraints {
             $0.top.leading.equalToSuperview()
         }

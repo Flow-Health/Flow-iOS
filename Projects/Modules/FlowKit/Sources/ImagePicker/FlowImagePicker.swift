@@ -51,7 +51,7 @@ open class FlowImagePicker: BaseView {
         addSubViews(imageView, setDefaultImageButton)
     }
 
-    open override func setLayout() {
+    open override func setAutoLayout() {
         imageView.snp.makeConstraints {
             $0.top.horizontalEdges.equalToSuperview()
             $0.height.equalTo(220)

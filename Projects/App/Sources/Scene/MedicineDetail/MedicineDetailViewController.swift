@@ -76,7 +76,7 @@ class MedicineDetailViewController: BaseVC<MedicineDetailViewModel> {
         )
     }
 
-    override func setLayout() {
+    override func setAutoLayout() {
         scrollView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.bottom.equalToSuperview()

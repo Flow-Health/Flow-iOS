@@ -40,7 +40,7 @@ class SearchButtonView: BaseButton {
         )
     }
 
-    override func setLayout() {
+    override func setAutoLayout() {
         subTitleLabel.snp.makeConstraints {
             $0.top.leading.equalToSuperview().inset(18)
         }

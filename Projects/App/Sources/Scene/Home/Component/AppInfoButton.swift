@@ -38,7 +38,7 @@ class AppInfoButton: BaseButton {
         )
     }
 
-    override func setLayout() {
+    override func setAutoLayout() {
         iconImageView.snp.makeConstraints {
             $0.width.height.equalTo(14)
             $0.leading.equalToSuperview().inset(20)

@@ -73,7 +73,7 @@ class SearchViewController: BaseVC<SearchViewModel> {
         ])
     }
 
-    override func setLayout() {
+    override func setAutoLayout() {
         searchEmptyView.snp.makeConstraints {
             $0.center.equalToSuperview()
         }

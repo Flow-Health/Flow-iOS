@@ -42,7 +42,7 @@ class TimeLineView: BaseView {
         )
     }
 
-    override func setLayout() {
+    override func setAutoLayout() {
         headerView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(17)
             $0.leading.equalToSuperview().inset(20)

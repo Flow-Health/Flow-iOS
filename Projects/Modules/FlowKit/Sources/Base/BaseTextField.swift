@@ -11,26 +11,22 @@ import Then
 
 open class BaseTextField: UITextField {
 
-    open var disposeBag = DisposeBag();
+    open var disposeBag = DisposeBag()
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        attribute()
         bind()
+        attribute()
+        addView()
+        setAutoLayout()
     }
 
     public required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    open override func layoutSubviews() {
-        super.layoutSubviews()
-        addView()
-        setLayout()
-    }
-
     open func attribute() {}
     open func bind() {}
     open func addView() {}
-    open func setLayout() {}
+    open func setAutoLayout() {}
 }

@@ -13,14 +13,10 @@ open class BaseView: UIView {
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        attribute()
         bind()
-    }
-
-    override open func layoutSubviews() {
-        super.layoutSubviews()
+        attribute()
         addView()
-        setLayout()
+        setAutoLayout()
     }
 
     required public init?(coder: NSCoder) {
@@ -30,5 +26,5 @@ open class BaseView: UIView {
     open func attribute() {}
     open func bind() {}
     open func addView() {}
-    open func setLayout() {}
+    open func setAutoLayout() {}
 }

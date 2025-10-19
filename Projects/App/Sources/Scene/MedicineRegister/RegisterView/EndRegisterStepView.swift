@@ -53,7 +53,7 @@ class EndRegisterStepView: BaseView {
         )
     }
 
-    override func setLayout() {
+    override func setAutoLayout() {
 
         pillImageView.snp.makeConstraints {
             $0.size.equalTo(108)

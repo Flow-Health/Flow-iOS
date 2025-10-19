@@ -82,7 +82,7 @@ open class FlowTextView: BaseView {
         textView.addSubview(placehorderLabel)
     }
 
-    open override func setLayout() {
+    open override func setAutoLayout() {
 
         textViewVstack.snp.makeConstraints {
             $0.top.horizontalEdges.equalToSuperview()

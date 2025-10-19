@@ -32,7 +32,7 @@ class HeaderNavigationButton: BaseButton {
         )
     }
 
-    override func setLayout() {
+    override func setAutoLayout() {
         buttonHStack.snp.makeConstraints {
             $0.top.trailing.leading.equalToSuperview()
         }

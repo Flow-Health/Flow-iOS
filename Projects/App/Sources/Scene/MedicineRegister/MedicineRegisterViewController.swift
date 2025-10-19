@@ -79,7 +79,7 @@ class MedicineRegisterViewController: BaseVC<MedicineRegisterViewModel> {
         view.addSubViews(registerStepViewStack + [backButton, endRegisterStepView])
     }
 
-    override func setLayout() {
+    override func setAutoLayout() {
         backButton.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.equalToSuperview().offset(22)

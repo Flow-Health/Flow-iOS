@@ -33,7 +33,7 @@ class LineIndicator: BaseView {
         )
     }
 
-    override func setLayout() {
+    override func setAutoLayout() {
         outCircle.snp.makeConstraints {
             $0.width.height.equalTo(14)
             $0.top.equalToSuperview().inset(2)

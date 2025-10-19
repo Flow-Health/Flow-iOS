@@ -51,7 +51,7 @@ open class FlowTextField: BaseTextField {
             .disposed(by: disposeBag)
     }
 
-    open override func setLayout() {
+    open override func setAutoLayout() {
         self.snp.makeConstraints {
             $0.height.equalTo(50)
         }

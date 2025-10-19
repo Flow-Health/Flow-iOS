@@ -39,7 +39,7 @@ class BookMarkDetailViewController: BaseVC<BookMarkDetailViewModel> {
         )
     }
 
-    override func setLayout() {
+    override func setAutoLayout() {
         resultTableView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.trailing.leading.bottom.equalToSuperview()

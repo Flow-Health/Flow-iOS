@@ -62,11 +62,11 @@ class AppInfoViewController: BaseVC<AppInfoViewModel> {
         )
     }
 
-    override func setLayout() {
+    override func setAutoLayout() {
         appInfoTableView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(appInfoTableView.contentSize.height)
+            $0.height.equalTo(appInfoTableView.snp.contentHuggingVerticalPriority)
         }
         versionLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(16)

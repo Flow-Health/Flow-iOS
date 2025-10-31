@@ -92,17 +92,7 @@ class MedicineRegisterViewController: BaseVC<MedicineRegisterViewModel> {
         [nameStepView, descriptionRegisterStepView, imageRegisterStepView].forEach { stepView in
             stepView.snp.makeConstraints {
                 $0.top.equalTo(backButton.snp.bottom).offset(35)
-                $0.horizontalEdges.equalToSuperview()
-                $0.bottom.equalTo(view.safeAreaLayoutGuide)
-            }
-        }
-    }
-
-    override func setAutoLayoutAfterLayoutSubviews() {
-        registerStepViewStack.forEach { stepView in
-            stepView.snp.updateConstraints {
-                $0.bottom.equalTo(view.safeAreaLayoutGuide)
-                    .inset(view.safeAreaInsets.bottom > 0 ? 0 : 10)
+                $0.bottom.horizontalEdges.equalToSuperview()
             }
         }
     }

@@ -18,6 +18,7 @@ public struct ServiceDI {
     public let fetchMedicineRecodeUseCase: FetchMedicineRecodeUseCase
 
     public let searchMedicineUseCase: SearchMedicineUseCase
+    public let searchMedicineWithOcrUseCase: SearchMedicineWithOcrUseCase
 }
 
 public extension ServiceDI {
@@ -88,6 +89,9 @@ public extension ServiceDI {
         let searchMedicineUseCaseImpl = SearchMedicineUseCaseImpl(
             repository: searchMedicineRepositoryImpl
         )
+        let searchMedicineWithOcrUseCaseImpl = SearchMedicineWithOcrUseCaseImpl(
+            repository: searchMedicineRepositoryImpl
+        )
         let registerMyMedicineUseCaseImpl = RegisterMyMedicineUseCaseImpl(
             repository: insertBookMarkMedicineRepositoryImpl
         )
@@ -102,7 +106,8 @@ public extension ServiceDI {
             insertTakenMedicineUseCase: insertTakenMedicineUseCaseImpl,
             fetchTakenMedicineListUseCase: fetchTakenMedicineListUseCaseImpl,
             fetchMedicineRecodeUseCase: fetchMedicineRecodeUseCaseImpl,
-            searchMedicineUseCase: searchMedicineUseCaseImpl
+            searchMedicineUseCase: searchMedicineUseCaseImpl,
+            searchMedicineWithOcrUseCase: searchMedicineWithOcrUseCaseImpl
         )
     }
 }

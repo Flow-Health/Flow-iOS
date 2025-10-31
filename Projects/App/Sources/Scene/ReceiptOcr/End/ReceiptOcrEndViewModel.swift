@@ -9,11 +9,12 @@ import RxSwift
 import RxCocoa
 import RxFlow
 
-class ReceiptOcrViewModel: ViewModelType, Stepper {
+class ReceiptOcrEndViewModel: ViewModelType, Stepper {
     var steps: PublishRelay<Step> = .init()
     var disposeBag: DisposeBag = .init()
 
     struct Input {
+        let tapCloseButton: Observable<Void>
     }
     
     struct Output {
@@ -22,7 +23,11 @@ class ReceiptOcrViewModel: ViewModelType, Stepper {
     init() {}
 
     func transform(input: Input) -> Output {
+        input.tapCloseButton
+            .map { FlowStep.homeIsRequired }
+            .bind(to: steps)
+            .disposed(by: disposeBag)
+        
         return Output()
     }
 }
-

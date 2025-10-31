@@ -21,7 +21,7 @@ class NameRegisterStepView: BaseView {
         placeholder: "약 이름 입력"
     )
 
-    let nextButton = RegisterNextButton(title: "다음")
+    let nextButton = FlowNextButton(title: "다음")
     let keyboardNextButton = RegisterKeyboardNextButton(title: "다음")
 
     override var isHidden: Bool {
@@ -77,7 +77,7 @@ class NameRegisterStepView: BaseView {
         }
 
         nextButton.snp.makeConstraints {
-            $0.bottom.equalTo(safeAreaLayoutGuide)
+            $0.bottom.equalToSuperview()
             $0.horizontalEdges.equalToSuperview().inset(22)
         }
     }

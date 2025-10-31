@@ -9,6 +9,8 @@ enum FlowStep: Step {
     case homeIsRequired
     case searchIsRequired
     case receiptOcrIsRequired
+    case receiptOcrResultIsRequired(with: [MedicineInfoEntity])
+    case receiptOcrEndIsRequired
     case bookMarkIsRequired
     case madicineDetailIsRequired(with: MedicineInfoEntity)
     case timeLineDetailIsRequired

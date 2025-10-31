@@ -5,7 +5,9 @@ import Model
 struct AppDI {
     let homeViewModel: HomeViewModel
     let searchViewModel: SearchViewModel
-    let receiptOcrViewModel: ReceiptOcrViewModel
+    let receiptOcrScanViewModel: ReceiptOcrScanViewModel
+    let receiptOcrResultViewModel: ReceiptOcrResultViewModel
+    let receiptOcrEndViewModel: ReceiptOcrEndViewModel
     let medicineDetailViewModel: MedicineDetailViewModel
     let bookMarkDetailViewModel: BookMarkDetailViewModel
     let timeLineDetailViewModel: TimeLineDetailViewModel
@@ -26,7 +28,14 @@ extension AppDI {
         let searchViewModelInject = SearchViewModel(
             searchMedicineUseCase: serviceDI.searchMedicineUseCase
         )
-        let receiptOcrViewModelInject = ReceiptOcrViewModel()
+        let receiptOcrScanViewModelInject = ReceiptOcrScanViewModel(
+            searchMedicineWithOcrUseCase: serviceDI.searchMedicineWithOcrUseCase
+        )
+        let receiptOcrResultViewModelInject = ReceiptOcrResultViewModel(
+            insertBookMarkMedicineUseCase: serviceDI.insertBookMarkMedicineUseCase,
+            findBookMarkMedicineUseCase: serviceDI.findBookMarkMedicineUseCase
+        )
+        let receiptOcrEndViewModelInject = ReceiptOcrEndViewModel()
         let medicineDetailViewModelInject = MedicineDetailViewModel(
             findBookMarkMedicineUseCase: serviceDI.findBookMarkMedicineUseCase,
             deleteBookMarkMedicineUseCase: serviceDI.deleteBookMarkMedicineUseCase,
@@ -47,7 +56,9 @@ extension AppDI {
         return .init(
             homeViewModel: homeViewModelInject,
             searchViewModel: searchViewModelInject,
-            receiptOcrViewModel: receiptOcrViewModelInject,
+            receiptOcrScanViewModel: receiptOcrScanViewModelInject,
+            receiptOcrResultViewModel: receiptOcrResultViewModelInject,
+            receiptOcrEndViewModel: receiptOcrEndViewModelInject,
             medicineDetailViewModel: medicineDetailViewModelInject,
             bookMarkDetailViewModel: bookMarkDetailViewModelInject,
             timeLineDetailViewModel: timeLineDetailViewModelInject,

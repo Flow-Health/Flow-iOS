@@ -14,8 +14,8 @@ public class PrescriptionMedicineDataSourceImpl: PrescriptionMedicineDataSource 
     
     public init() { }
     
-    public func searchPrescriptionMedicine(with name: String, _ pageNumber: Int) -> Single<[PrescriptionMedicineInfoResponse]> {
-        provider.rx.request(.searchPrescriptionMedicine(name: name, pageNumber: pageNumber))
+    public func searchPrescriptionMedicine(with name: String, _ pageNumber: Int, _ numOfRows: Int) -> Single<[PrescriptionMedicineInfoResponse]> {
+        provider.rx.request(.searchPrescriptionMedicine(name: name, pageNumber: pageNumber, numOfRows: numOfRows))
             .map(PrescriptionOpenAPIResponse.self)
             .map {
                 guard let body = $0.body,

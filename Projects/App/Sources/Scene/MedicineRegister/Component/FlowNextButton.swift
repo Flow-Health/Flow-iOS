@@ -5,7 +5,7 @@ import FlowKit
 import RxSwift
 import RxCocoa
 
-class RegisterNextButton: BaseButton {
+class FlowNextButton: BaseButton {
 
     init(title: String?) {
         super.init(frame: .zero)
@@ -38,5 +38,5 @@ class RegisterNextButton: BaseButton {
 }
 
 #Preview(body: {
-    RegisterNextButton(title: "다음")
+    FlowNextButton(title: "다음")
 })

@@ -23,8 +23,14 @@ open class BaseView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    open override func layoutSubviews() {
+        super.layoutSubviews()
+        setAutoLayoutAfterLayoutSubviews()
+    }
+
     open func attribute() {}
     open func bind() {}
     open func addView() {}
     open func setAutoLayout() {}
+    open func setAutoLayoutAfterLayoutSubviews() {}
 }

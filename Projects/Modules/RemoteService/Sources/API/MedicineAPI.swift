@@ -5,8 +5,8 @@ import Core
 import Moya
 
 enum MedicineAPI {
-    case searchMedicine(name: String, pageNumber: Int)
-    case searchPrescriptionMedicine(name: String, pageNumber: Int)
+    case searchMedicine(name: String, pageNumber: Int, numOfRows: Int)
+    case searchPrescriptionMedicine(name: String, pageNumber: Int, numOfRows: Int)
 }
 
 extension MedicineAPI: TargetType {
@@ -27,24 +27,24 @@ extension MedicineAPI: TargetType {
 
     var task: Moya.Task {
         switch self {
-        case let .searchMedicine(name, pageNumber):
+        case let .searchMedicine(name, pageNumber, numOfRows):
             return .requestParameters(
                 parameters: [
                     "serviceKey": Environment.getValue(key: .openApiServiceKey),
                     "pageNo": pageNumber,
                     "itemName": name,
-                    "numOfRows": 10,
+                    "numOfRows": numOfRows,
                     "type": "json"
                 ],
                 encoding: URLEncoding.queryString
             )
-        case let .searchPrescriptionMedicine(name, pageNumber):
+        case let .searchPrescriptionMedicine(name, pageNumber, numOfRows):
             return .requestParameters(
                 parameters: [
                     "serviceKey": Environment.getValue(key: .openApiServiceKey),
                     "pageNo": pageNumber,
                     "item_name": name,
-                    "numOfRows": 10,
+                    "numOfRows": numOfRows,
                     "type": "json"
                 ],
                 encoding: URLEncoding.queryString

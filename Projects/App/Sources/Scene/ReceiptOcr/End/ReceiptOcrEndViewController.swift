@@ -2,14 +2,12 @@
 
 import UIKit
 import FlowKit
-import Core
+import Model
 
-import SnapKit
-import Then
 import RxSwift
 import RxCocoa
 
-class EndRegisterStepView: BaseView {
+class ReceiptOcrEndViewController: BaseVC<ReceiptOcrEndViewModel> {
 
     private let titleLabel = UILabel().then {
         $0.text = "약을 추가하였습니다!"
@@ -37,15 +35,21 @@ class EndRegisterStepView: BaseView {
         $0.image = FlowKitAsset.pill.image
     }
 
-    let closeButton = FlowNextButton(title: "닫기")
+    let closeButton = FlowNextButton(title: "홈으로 이동")
 
-    override func attribute() {
-        backgroundColor = .white
+    override func bind() {
+        let input = ReceiptOcrEndViewModel.Input(
+            tapCloseButton: closeButton.rx.tap.asObservable()
+        )
+        let _ = viewModel.transform(input: input)
     }
 
+    override func attridute() {
+        navigationItem.hidesBackButton = true
+    }
 
     override func addView() {
-        addSubViews(
+        view.addSubViews(
             titleLabel,
             subTitleLabel,
             pillImageView,
@@ -71,7 +75,7 @@ class EndRegisterStepView: BaseView {
         }
 
         closeButton.snp.makeConstraints {
-            $0.bottom.equalToSuperview()
+            $0.bottom.equalTo(view.safeAreaLayoutGuide)
             $0.horizontalEdges.equalToSuperview().inset(22)
         }
     }

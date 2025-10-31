@@ -9,4 +9,5 @@ public protocol InsertBookMarkMedicineUseCase {
     var repository: InsertBookMarkMedicineRepository { get set }
 
     func execute(with entity: MedicineInfoEntity) -> Completable
+    func execute(with entities: [MedicineInfoEntity]) -> Completable
 }

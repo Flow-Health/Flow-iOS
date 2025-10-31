@@ -13,6 +13,6 @@ class SearchMedicineUseCaseImpl: SearchMedicineUseCase {
     }
 
     func execute(with name: String, _ pageNumber: Int) -> Single<[MedicineInfoEntity]> {
-        repository.searchMedicine(with: name, pageNumber)
+        repository.searchMedicine(with: name, pageNumber, 10)
     }
 }

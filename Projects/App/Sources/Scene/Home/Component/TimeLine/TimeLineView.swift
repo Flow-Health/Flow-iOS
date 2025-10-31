@@ -9,7 +9,10 @@ import Then
 
 class TimeLineView: BaseView {
 
-    let headerView = HeaderNavigationButton()
+    let headerView = HeaderNavigationButton().then {
+        $0.isUserInteractionEnabled = false
+    }
+
     private let timeLineVStack = VStack()
     private let timeLineEmptyView = EmptyStatusView(
         icon: FlowKitAsset.pageWithCloud.image,

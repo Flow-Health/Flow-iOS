@@ -78,8 +78,8 @@ class HomeViewController: BaseVC<HomeViewModel> {
             viewWillAppear: viewWillAppearRelay.asObservable(),
             tapSearchButton: searchButtonView.rx.tap.asObservable(),
             tapOcrButton: reciptButtonView.rx.tap.asObservable(),
-            tapBookMarkNavigationButton: bookMarkMedicineView.headerButton.rx.tap.asObservable(),
-            tapTimeLineNavigationButton: timeLineView.headerView.rx.tap.asObservable(),
+            tapBookMarkNavigationButton: bookMarkMedicineView.rx.tapGesture().when(.ended).map { _ in }.asObservable(),
+            tapTimeLineNavigationButton: timeLineView.rx.tapGesture().when(.ended).map { _ in }.asObservable(),
             tapAppInfoButton: infoNavigateButton.rx.tap.asObservable()
         )
         let output = viewModel.transform(input: input)

@@ -9,7 +9,10 @@ import Then
 
 class BookMarkMedicineView: BaseView {
 
-    let headerButton = HeaderNavigationButton()
+    let headerButton = HeaderNavigationButton().then {
+        $0.isUserInteractionEnabled = false
+    }
+
     private let medicineVStack = VStack(spacing: 10)
     private let bookMarkEmptyView = EmptyStatusView(
         icon: FlowKitAsset.emptyBoxWithCloud.image,

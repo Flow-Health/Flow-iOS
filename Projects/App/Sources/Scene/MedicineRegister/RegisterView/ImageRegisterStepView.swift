@@ -44,8 +44,15 @@ class ImageRegisterStepView: BaseView {
         }
 
         addMedicineButton.snp.makeConstraints {
-            $0.bottom.equalToSuperview()
+            $0.bottom.equalTo(safeAreaLayoutGuide)
             $0.horizontalEdges.equalToSuperview().inset(22)
+        }
+    }
+
+    override func setAutoLayoutAfterLayoutSubviews() {
+        addMedicineButton.snp.updateConstraints {
+            $0.bottom.equalTo(safeAreaLayoutGuide)
+                .inset(safeAreaInsets.bottom > 0 ? 0 : 10)
         }
     }
 }

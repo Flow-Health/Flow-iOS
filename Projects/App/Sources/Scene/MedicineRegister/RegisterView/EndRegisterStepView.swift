@@ -71,8 +71,15 @@ class EndRegisterStepView: BaseView {
         }
 
         closeButton.snp.makeConstraints {
-            $0.bottom.equalToSuperview()
+            $0.bottom.equalTo(safeAreaLayoutGuide)
             $0.horizontalEdges.equalToSuperview().inset(22)
+        }
+    }
+
+    override func setAutoLayoutAfterLayoutSubviews() {
+        closeButton.snp.updateConstraints {
+            $0.bottom.equalTo(safeAreaLayoutGuide)
+                .inset(safeAreaInsets.bottom > 0 ? 0 : 10)
         }
     }
 }

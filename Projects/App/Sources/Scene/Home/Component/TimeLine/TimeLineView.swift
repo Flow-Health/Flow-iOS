@@ -9,7 +9,10 @@ import Then
 
 class TimeLineView: BaseView {
 
-    let headerView = HeaderNavigationButton()
+    let headerView = HeaderNavigationButton().then {
+        $0.isUserInteractionEnabled = false
+    }
+
     private let timeLineVStack = VStack()
     private let timeLineEmptyView = EmptyStatusView(
         icon: FlowKitAsset.pageWithCloud.image,
@@ -23,12 +26,6 @@ class TimeLineView: BaseView {
         backgroundColor = .white
         headerView.isEnabled = isNavigatAble
         headerView.setHeader("타임라인")
-        setShadow(
-            color: .black,
-            opacity: 0.05,
-            radius: 10,
-            offset: .init(width: 0, height: 4)
-        )
     }
 
     required init?(coder: NSCoder) {

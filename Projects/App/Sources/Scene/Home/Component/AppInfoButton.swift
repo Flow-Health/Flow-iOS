@@ -22,12 +22,6 @@ class AppInfoButton: BaseButton {
     override func attribute() {
         backgroundColor = .white
         layer.cornerRadius = 20
-        setShadow(
-            color: .black,
-            opacity: 0.05,
-            radius: 10,
-            offset: .init(width: 0, height: 4)
-        )
     }
 
     override func addView() {

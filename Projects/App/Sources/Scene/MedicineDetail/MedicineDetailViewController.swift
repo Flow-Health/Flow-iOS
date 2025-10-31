@@ -161,14 +161,14 @@ class MedicineDetailViewController: BaseVC<MedicineDetailViewModel> {
 
                 if bookMarkButton.isBookMarked {
                     let deleteBookMarkAlert = UIAlertController(
-                        title: "자주먹는 약에서 제외할까요?",
+                        title: "자주먹는 약에서 삭제할까요?",
                         message: "해당 약에 대한 모든 기록이 삭제됩니다",
                         preferredStyle: .alert
                     )
 
                     [
                         UIAlertAction(title: "아니요", style: .default),
-                        UIAlertAction(title: "네, 제외합니다", style: .destructive) { _ in
+                        UIAlertAction(title: "네, 삭제합니다", style: .destructive) { _ in
                             self.deleteBookMarkRelay.accept(item)
                         }
                     ].forEach { deleteBookMarkAlert.addAction($0) }

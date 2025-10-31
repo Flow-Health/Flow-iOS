@@ -18,7 +18,7 @@ class ImageRegisterStepView: BaseView {
 
     let imagePicker = FlowImagePicker()
 
-    let addMedicineButton = RegisterNextButton(title: "약 추가하기")
+    let addMedicineButton = FlowNextButton(title: "약 추가하기")
 
     override func attribute() {
         backgroundColor = .white
@@ -44,7 +44,7 @@ class ImageRegisterStepView: BaseView {
         }
 
         addMedicineButton.snp.makeConstraints {
-            $0.bottom.equalTo(safeAreaLayoutGuide)
+            $0.bottom.equalToSuperview()
             $0.horizontalEdges.equalToSuperview().inset(22)
         }
     }

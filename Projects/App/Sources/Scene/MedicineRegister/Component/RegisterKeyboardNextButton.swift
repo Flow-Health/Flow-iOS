@@ -44,7 +44,3 @@ class RegisterKeyboardNextButton: UIButton {
         }
     }
 }
-
-#Preview(body: {
-    RegisterNextButton(title: "다음")
-})

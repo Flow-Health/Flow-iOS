@@ -1,6 +1,7 @@
 // Copyright © 2024 com.flow-health. All rights reserved.
 
 import UIKit
+import SnapKit
 
 public class BaseNavigationController: UINavigationController {
     private let backButtonImage: UIImage? = {
@@ -14,6 +15,7 @@ public class BaseNavigationController: UINavigationController {
         return backButtonAppearance
     }()
 
+    private let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .systemUltraThinMaterial))
 
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,10 +23,13 @@ public class BaseNavigationController: UINavigationController {
     }
 
     private func settingController() {
+
         let appearance = UINavigationBarAppearance()
-        appearance.backgroundColor = .white
+        appearance.configureWithDefaultBackground()
         appearance.setBackIndicatorImage(backButtonImage, transitionMaskImage: backButtonImage)
         appearance.backButtonAppearance = backButtonAppearance
+        appearance.shadowImage = UIImage()
+        appearance.shadowColor = nil
         navigationBar.standardAppearance = appearance
         navigationBar.tintColor = .black
     }

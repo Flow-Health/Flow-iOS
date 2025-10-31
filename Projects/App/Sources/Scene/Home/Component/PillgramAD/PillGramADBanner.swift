@@ -14,12 +14,6 @@ class PillGramADBanner: BaseButton {
     override func attribute() {
         layer.cornerRadius = 20
         backgroundColor = .white
-        setShadow(
-            color: .black,
-            opacity: 0.05,
-            radius: 10,
-            offset: .init(width: 0, height: 4)
-        )
     }
 
     override func addView() {
@@ -32,8 +26,8 @@ class PillGramADBanner: BaseButton {
         }
 
         bannerImageView.snp.makeConstraints {
-            $0.top.bottom.equalToSuperview().inset(3)
-            $0.leading.equalToSuperview().inset(5)
+            $0.top.bottom.equalToSuperview().inset(1)
+            $0.leading.equalToSuperview().inset(0)
             $0.trailing.equalToSuperview()
         }
     }

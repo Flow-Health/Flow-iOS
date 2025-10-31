@@ -34,6 +34,11 @@ open class BaseVC<ViewModel: ViewModelType>: UIViewController, HasDisposeBag {
         viewDidLoadRelay.accept(())
     }
 
+    open override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        setAutoLayoutAfterLayoutSubviews()
+    }
+
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         viewDidAppearRelay.accept(())
@@ -46,6 +51,7 @@ open class BaseVC<ViewModel: ViewModelType>: UIViewController, HasDisposeBag {
 
     open func addView() {}
     open func setAutoLayout() {}
+    open func setAutoLayoutAfterLayoutSubviews() {}
     open func bind() {}
     open func attridute() {}
 }

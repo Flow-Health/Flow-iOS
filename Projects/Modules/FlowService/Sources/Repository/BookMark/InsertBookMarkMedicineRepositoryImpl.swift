@@ -16,21 +16,9 @@ class InsertBookMarkMedicineRepositoryImpl: InsertBookMarkMedicineRepository {
     }
 
     func insertBookMarkMedicine(with entity: MedicineInfoEntity) -> Completable {
-        let bookmakrObservable = bookMarkMedicineDataSource.insertBookMarkMedicine(with: entity).asObservable()
-        let medicineTypeObservable = medicineTypeDataSource.insertMedicineType(with: entity.itemCode, type: entity.medicineType).asObservable()
-        let observable = Observable.combineLatest(bookmakrObservable, medicineTypeObservable)
+        let bookmakrObservable = bookMarkMedicineDataSource.insertBookMarkMedicine(with: entity)
+        let medicineTypeObservable = medicineTypeDataSource.insertMedicineType(with: entity.itemCode, type: entity.medicineType)
 
-        return Completable.create { Completable in
-            Completable(.completed)
-            observable
-                .subscribe(onError: { error in
-                    Completable(.error(error))
-                }, onCompleted: {
-                    Completable(.completed)
-                })
-                .disposed(by: DisposeBag())
-            
-            return Disposables.create()
-        }
+        return Completable.zip([bookmakrObservable, medicineTypeObservable])
     }
 }

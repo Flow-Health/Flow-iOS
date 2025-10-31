@@ -10,47 +10,52 @@ import RxCocoa
 
 class HomeViewController: BaseVC<HomeViewModel> {
 
+    private let logoImageView = UIImageView().then {
+        $0.image = FlowKitAsset.logoText.image
+    }
+    private let infoNavigateButton = UIBarButtonItem().then {
+        $0.image = FlowKitAsset.settingGear.image
+        $0.tintColor = .black.withAlphaComponent(0.7)
+        $0.imageInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 5)
+    }
+
     private let homeVStaek = VStack(spacing: 10)
+    private let appendButtonBundle = HStack(spacing: 10).then {
+        $0.distribution = .fillEqually
+    }
     private lazy var scrollView = VScrollView(
         isRefreshAble: true,
         refreshAction: { self.viewWillAppearRelay.accept(()) }
     )
 
-    private let headerView = HomeHeaderView()
     private let LastTakenBannerView = LastTakenTimeView()
-    private let PillGramADBannerButton = PillGramADBanner();
+    private let PillGramADBannerButton = PillGramADBanner()
     private let searchButtonView = SearchButtonView()
+    private let reciptButtonView = ReceiptOcrButtonView()
     private let bookMarkMedicineView = BookMarkMedicineView()
     private let timeLineView = TimeLineView()
-    private let appInfoButtonView = AppInfoButton()
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
-    }
 
     override func attridute() {
         view.backgroundColor = .blue5
+        navigationItem.leftBarButtonItem = .init(customView: logoImageView)
+        navigationItem.rightBarButtonItem = infoNavigateButton
     }
 
     override func addView() {
         view.addSubview(scrollView)
         scrollView.contentView.addSubViews(
-            headerView,
             homeVStaek
         )
+        appendButtonBundle.addArrangedSubviews(
+            reciptButtonView,
+            searchButtonView
+        )
         homeVStaek.addArrangedSubviews(
-            PillGramADBannerButton,
             LastTakenBannerView,
-            searchButtonView,
+            appendButtonBundle,
             bookMarkMedicineView,
             timeLineView,
-            appInfoButtonView
+            PillGramADBannerButton
         )
     }
 
@@ -62,13 +67,9 @@ class HomeViewController: BaseVC<HomeViewModel> {
         scrollView.contentView.snp.makeConstraints {
             $0.bottom.equalTo(homeVStaek)
         }
-        headerView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(20)
-            $0.leading.equalToSuperview().inset(25)
-        }
         homeVStaek.snp.makeConstraints {
-            $0.top.equalTo(headerView.snp.bottom).offset(15)
-            $0.leading.trailing.equalToSuperview().inset(25)
+            $0.top.equalToSuperview().offset(5)
+            $0.horizontalEdges.equalToSuperview().inset(16)
         }
     }
 
@@ -76,9 +77,10 @@ class HomeViewController: BaseVC<HomeViewModel> {
         let input = HomeViewModel.Input(
             viewWillAppear: viewWillAppearRelay.asObservable(),
             tapSearchButton: searchButtonView.rx.tap.asObservable(),
-            tapBookMarkNavigationButton: bookMarkMedicineView.headerButton.rx.tap.asObservable(),
-            tapTimeLineNavigationButton: timeLineView.headerView.rx.tap.asObservable(),
-            tapAppInfoButton: appInfoButtonView.rx.tap.asObservable()
+            tapOcrButton: reciptButtonView.rx.tap.asObservable(),
+            tapBookMarkNavigationButton: bookMarkMedicineView.rx.tapGesture().when(.ended).map { _ in }.asObservable(),
+            tapTimeLineNavigationButton: timeLineView.rx.tapGesture().when(.ended).map { _ in }.asObservable(),
+            tapAppInfoButton: infoNavigateButton.rx.tap.asObservable()
         )
         let output = viewModel.transform(input: input)
 

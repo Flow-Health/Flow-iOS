@@ -15,4 +15,12 @@ class InsertBookMarkMedicineUseCaseImpl: InsertBookMarkMedicineUseCase {
     func execute(with entity: MedicineInfoEntity) -> Completable {
         repository.insertBookMarkMedicine(with: entity)
     }
+
+    func execute(with entities: [MedicineInfoEntity]) -> Completable {
+        let observalbes = entities.map { entity in
+            repository.insertBookMarkMedicine(with: entity)
+        }
+
+        return Completable.zip(observalbes)
+    }
 }

@@ -14,8 +14,8 @@ public class MedicineContentDataSourceImpl: MedicineContentDataSource {
     
     public init() { }
     
-    public func searchMedicine(with name: String, _ pageNumber: Int) -> Single<[MedicineInfoResponse]> {
-        provider.rx.request(.searchMedicine(name: name, pageNumber: pageNumber))
+    public func searchMedicine(with name: String, _ pageNumber: Int, _ numOfRows: Int) -> Single<[MedicineInfoResponse]> {
+        provider.rx.request(.searchMedicine(name: name, pageNumber: pageNumber, numOfRows: numOfRows))
             .map(OpenAPIResponse.self)
             .map {
                 guard let body = $0.body,

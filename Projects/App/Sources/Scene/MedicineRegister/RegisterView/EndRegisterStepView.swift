@@ -37,7 +37,7 @@ class EndRegisterStepView: BaseView {
         $0.image = FlowKitAsset.pill.image
     }
 
-    let closeButton = RegisterNextButton(title: "닫기")
+    let closeButton = FlowNextButton(title: "닫기")
 
     override func attribute() {
         backgroundColor = .white

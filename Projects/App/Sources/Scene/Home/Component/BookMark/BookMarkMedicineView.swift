@@ -9,7 +9,10 @@ import Then
 
 class BookMarkMedicineView: BaseView {
 
-    let headerButton = HeaderNavigationButton()
+    let headerButton = HeaderNavigationButton().then {
+        $0.isUserInteractionEnabled = false
+    }
+
     private let medicineVStack = VStack(spacing: 10)
     private let bookMarkEmptyView = EmptyStatusView(
         icon: FlowKitAsset.emptyBoxWithCloud.image,
@@ -23,12 +26,6 @@ class BookMarkMedicineView: BaseView {
         backgroundColor = .white
         headerButton.setHeader("자주 먹는 약")
         headerButton.isEnabled = isNavigatAble
-        setShadow(
-            color: .black,
-            opacity: 0.05,
-            radius: 10,
-            offset: .init(width: 0, height: 4)
-        )
     }
 
     required init?(coder: NSCoder) {

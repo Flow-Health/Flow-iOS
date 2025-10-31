@@ -8,54 +8,40 @@ import Then
 
 class SearchButtonView: BaseButton {
 
-    private let subTitleLabel = UILabel().then {
-        $0.customLabel("약의 정보가 궁금하다면?", font: .captionC1SemiBold, textColor: .black2)
-    }
-
     private let mainTitleLabel = UILabel().then {
-        $0.customLabel("여기를 눌러 검색하세요!", font: .bodyB1Bold, textColor: .blue1)
+        $0.numberOfLines = 2
+        $0.customLabel("원하는 약\n검색하기", font: .bodyB1Bold, textColor: .black)
     }
 
-    private let leftArrowImageView = UIImageView().then {
-        $0.image = FlowKitAsset.bannerLeftArrow.image
-        $0.tintColor = .black3
+    private let sideImageView = UIImageView().then {
+        $0.image = FlowKitAsset.glassTiltedRight.image
     }
 
     override func attribute() {
         layer.cornerRadius = 20
+        clipsToBounds = true
         backgroundColor = .white
-        setShadow(
-            color: .black,
-            opacity: 0.05,
-            radius: 10,
-            offset: .init(width: 0, height: 4)
-        )
     }
 
     override func addView() {
         addSubViews(
-            subTitleLabel,
             mainTitleLabel,
-            leftArrowImageView
+            sideImageView
         )
     }
 
     override func setAutoLayout() {
-        subTitleLabel.snp.makeConstraints {
-            $0.top.leading.equalToSuperview().inset(18)
-        }
         mainTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(subTitleLabel.snp.bottom).offset(1)
-            $0.leading.equalTo(subTitleLabel)
-        }
-        leftArrowImageView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.trailing.equalToSuperview().inset(24)
-            $0.width.equalTo(7)
-            $0.height.equalTo(12)
+            $0.leading.equalToSuperview().inset(16)
+        }
+        sideImageView.snp.makeConstraints {
+            $0.size.equalTo(77)
+            $0.top.equalToSuperview().inset(8)
+            $0.trailing.equalToSuperview().inset(12)
         }
         self.snp.makeConstraints {
-            $0.bottom.equalTo(mainTitleLabel).offset(18)
+            $0.height.equalTo(70)
         }
     }
 }

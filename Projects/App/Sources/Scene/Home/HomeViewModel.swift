@@ -19,6 +19,7 @@ class HomeViewModel: ViewModelType, Stepper {
     struct Input { 
         let viewWillAppear: Observable<Void>
         let tapSearchButton: Observable<Void>
+        let tapOcrButton: Observable<Void>
         let tapBookMarkNavigationButton: Observable<Void>
         let tapTimeLineNavigationButton: Observable<Void>
         let tapAppInfoButton: Observable<Void>
@@ -64,6 +65,11 @@ class HomeViewModel: ViewModelType, Stepper {
 
         input.tapSearchButton
             .map { FlowStep.searchIsRequired }
+            .bind(to: steps)
+            .disposed(by: disposeBag)
+
+        input.tapOcrButton
+            .map { FlowStep.receiptOcrIsRequired }
             .bind(to: steps)
             .disposed(by: disposeBag)
 

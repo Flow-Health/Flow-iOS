@@ -1,5 +1,5 @@
 <div align=center>
-  <img src="https://github.com/Flow-Health/Flow-iOS/assets/80248855/7889c10b-828a-4bf2-a0b4-91c8671f330e" width="100%"/>
+  <img src="https://github.com/user-attachments/assets/091736d6-831b-415f-8bac-3a829babd98b" width="100%"/>
 </div>
 <br>
   <a href="https://apps.apple.com/us/app/flow-%EB%A7%A4%EC%9D%BC-%EB%B3%B5%EC%9A%A9%ED%95%9C-%EC%95%BD-%EA%B8%B0%EB%A1%9D%ED%95%98%EA%B8%B0/id6502969163">

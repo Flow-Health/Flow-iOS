@@ -11,7 +11,8 @@ import RxCocoa
 class TimeLineDetailViewController: BaseVC<TimeLineDetailViewModel> {
     private lazy var scrollView = VScrollView(
         isRefreshAble: true,
-        refreshAction: { [self] in
+        refreshAction: { [weak self] in
+            guard let self else { return }
             let currentDate = dateSelector.selectDate.value
             dateSelector.selectDate.accept(currentDate)
         }
@@ -20,6 +21,20 @@ class TimeLineDetailViewController: BaseVC<TimeLineDetailViewModel> {
     private let timeLineHeaderLable = TimeLineHeaderLabel()
     private let resetButton = FlowPaddingButton(buttonTitle: "오늘로 돌아가기")
     private let timeLineDetailListView = TimeLineDetailListView()
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if #available(iOS 26.0, *) {
+            navigationController?.interactiveContentPopGestureRecognizer?.isEnabled = false
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if #available(iOS 26.0, *) {
+            navigationController?.interactiveContentPopGestureRecognizer?.isEnabled = true
+        }
+    }
     
     override func attridute() {
         navigationItem.title = "타임라인"

@@ -22,11 +22,13 @@ class SearchMedicineRepositoryImpl: SearchMedicineRepository {
         let nomalMedicineSearch = nomalMedicinedataSource.searchMedicine(with: name, pageNumber, numOfRows)
             .map { $0.map { $0.toDomain() } }
             .asObservable()
+            .catchAndReturn([])
 
         let prescriptionMedicineSearch = prescriptionMedicinedataSource.searchPrescriptionMedicine(with: name, pageNumber, numOfRows)
             .map { $0.map { $0.toDomain() }
             .filter { $0.medicineType == .PRESCRIPTION } }
             .asObservable()
+            .catchAndReturn([])
 
         return Observable.combineLatest(nomalMedicineSearch, prescriptionMedicineSearch) {
             ($0 + $1).sorted { $0.medicineName > $1.medicineName }

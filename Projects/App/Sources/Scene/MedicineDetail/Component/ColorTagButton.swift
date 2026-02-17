@@ -24,7 +24,11 @@ class ColorTagButton: UIBarButtonItem {
 
     override init() {
         super.init()
-        imageInsets = .init(top: 0, left: 30, bottom: 0, right: 0)
+        guard #available(iOS 26.0, *) else {
+            // iOS 26.0 버전 이하
+            imageInsets = .init(top: 0, left: 20, bottom: 0, right: 0)
+            return
+        }
     }
 
     required init?(coder: NSCoder) {

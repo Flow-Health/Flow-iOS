@@ -13,11 +13,7 @@ class HomeViewController: BaseVC<HomeViewModel> {
     private let logoImageView = UIImageView().then {
         $0.image = FlowKitAsset.logoText.image
     }
-    private let infoNavigateButton = UIBarButtonItem().then {
-        $0.image = FlowKitAsset.settingGear.image
-        $0.tintColor = .black.withAlphaComponent(0.7)
-        $0.imageInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 5)
-    }
+    private let infoNavigateButton = InfoNavigateButton()
 
     private let homeVStaek = VStack(spacing: 10)
     private let appendButtonBundle = HStack(spacing: 10).then {
@@ -25,7 +21,9 @@ class HomeViewController: BaseVC<HomeViewModel> {
     }
     private lazy var scrollView = VScrollView(
         isRefreshAble: true,
-        refreshAction: { self.viewWillAppearRelay.accept(()) }
+        refreshAction: { [weak self] in
+            self?.viewWillAppearRelay.accept(())
+        }
     )
 
     private let LastTakenBannerView = LastTakenTimeView()
@@ -37,7 +35,9 @@ class HomeViewController: BaseVC<HomeViewModel> {
 
     override func attridute() {
         view.backgroundColor = .blue5
-        navigationItem.leftBarButtonItem = .init(customView: logoImageView)
+        navigationItem.title = "홈"
+        navigationItem.titleView = UIView()
+        navigationItem.leftBarButtonItem = .init(customView: logoImageView).applyHidesSharedBackground()
         navigationItem.rightBarButtonItem = infoNavigateButton
     }
 
@@ -80,7 +80,7 @@ class HomeViewController: BaseVC<HomeViewModel> {
             tapOcrButton: reciptButtonView.rx.tap.asObservable(),
             tapBookMarkNavigationButton: bookMarkMedicineView.rx.tapGesture().when(.ended).map { _ in }.asObservable(),
             tapTimeLineNavigationButton: timeLineView.rx.tapGesture().when(.ended).map { _ in }.asObservable(),
-            tapAppInfoButton: infoNavigateButton.rx.tap.asObservable()
+            tapAppInfoButton: infoNavigateButton.tap.asObservable()
         )
         let output = viewModel.transform(input: input)
 

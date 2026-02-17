@@ -49,7 +49,7 @@ class MedicineDetailViewController: BaseVC<MedicineDetailViewModel> {
 
     override func attridute() {
         navigationItem.title = "상세정보"
-        navigationItem.rightBarButtonItems = [bookMarkButton, colorTagButton]
+        navigationItem.rightBarButtonItems = [bookMarkButton, .flexibleSpace(), colorTagButton]
         findItemRelay.accept(item?.itemCode ?? "")
     }
 

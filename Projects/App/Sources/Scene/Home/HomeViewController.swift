@@ -27,7 +27,6 @@ class HomeViewController: BaseVC<HomeViewModel> {
     )
 
     private let LastTakenBannerView = LastTakenTimeView()
-    private let PillGramADBannerButton = PillGramADBanner()
     private let searchButtonView = SearchButtonView()
     private let reciptButtonView = ReceiptOcrButtonView()
     private let bookMarkMedicineView = BookMarkMedicineView()
@@ -54,8 +53,7 @@ class HomeViewController: BaseVC<HomeViewModel> {
             LastTakenBannerView,
             appendButtonBundle,
             bookMarkMedicineView,
-            timeLineView,
-            PillGramADBannerButton
+            timeLineView
         )
     }
 
@@ -94,15 +92,6 @@ class HomeViewController: BaseVC<HomeViewModel> {
 
         output.lastTakenTime
             .drive(onNext: LastTakenBannerView.setLastTime(_:))
-            .disposed(by: disposeBag)
-        
-        PillGramADBannerButton.rx.tap
-            .subscribe(onNext: {
-                let fillgramURL = URL(string: "https://pillgram.kr/Promotion/PackageLanding.aspx?promotionId=EA2E8E27-69B7-405C-B076-C4A488ED22A0&utm_source=flow&utm_medium=event")!
-                if (UIApplication.shared.canOpenURL(fillgramURL)) {
-                    UIApplication.shared.open(fillgramURL)
-                }
-            })
             .disposed(by: disposeBag)
     }
 }

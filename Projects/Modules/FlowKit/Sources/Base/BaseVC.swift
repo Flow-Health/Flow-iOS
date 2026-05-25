@@ -28,7 +28,7 @@ open class BaseVC<ViewModel: ViewModelType>: UIViewController, HasDisposeBag {
         super.viewDidLoad()
         view.backgroundColor = .white
         bind()
-        attridute()
+        attribute()
         addView()
         setAutoLayout()
         viewDidLoadRelay.accept(())
@@ -53,5 +53,5 @@ open class BaseVC<ViewModel: ViewModelType>: UIViewController, HasDisposeBag {
     open func setAutoLayout() {}
     open func setAutoLayoutAfterLayoutSubviews() {}
     open func bind() {}
-    open func attridute() {}
+    open func attribute() {}
 }

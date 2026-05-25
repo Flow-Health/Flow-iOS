@@ -36,7 +36,7 @@ class TimeLineDetailViewController: BaseVC<TimeLineDetailViewModel> {
         }
     }
     
-    override func attridute() {
+    override func attribute() {
         navigationItem.title = "타임라인"
         view.backgroundColor = .white
     }

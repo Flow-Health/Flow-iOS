@@ -44,7 +44,7 @@ class ReceiptOcrEndViewController: BaseVC<ReceiptOcrEndViewModel> {
         let _ = viewModel.transform(input: input)
     }
 
-    override func attridute() {
+    override func attribute() {
         navigationItem.hidesBackButton = true
     }
 

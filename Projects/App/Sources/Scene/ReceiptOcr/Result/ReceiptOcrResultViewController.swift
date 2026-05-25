@@ -31,7 +31,7 @@ class ReceiptOcrResultViewController: BaseVC<ReceiptOcrResultViewModel> {
 
     private let retakeButton = FlowPaddingButton(buttonTitle: "다시 촬영하기")
 
-    override func attridute() {
+    override func attribute() {
         navigationItem.hidesBackButton = true
     }
 

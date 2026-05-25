@@ -75,7 +75,7 @@ class ReceiptOcrScanViewController: BaseVC<ReceiptOcrScanViewModel> {
         startCamera()
     }
 
-    override func attridute() {
+    override func attribute() {
         // 카메라 세팅
         Task {
             do {

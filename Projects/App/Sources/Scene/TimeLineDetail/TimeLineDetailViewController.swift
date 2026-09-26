@@ -36,7 +36,7 @@ class TimeLineDetailViewController: BaseVC<TimeLineDetailViewModel> {
     ).then {
         $0.showsVerticalScrollIndicator = false
     }
-    private var timeLineDataSource: UICollectionViewDiffableDataSource<TimeLineListSection, TimeLineListItem>?
+    private lazy var timeLineDataSource = makeListDataSource()
     
     private let timeLineEmptyView = EmptyStatusView(
         icon: FlowKitAsset.pageWithCloud.image,
@@ -71,7 +71,7 @@ class TimeLineDetailViewController: BaseVC<TimeLineDetailViewModel> {
         return .init(section: section)
     }
 
-    private func settingListDataSource() {
+    private func makeListDataSource() -> UICollectionViewDiffableDataSource<TimeLineListSection, TimeLineListItem> {
         let headerRegistration = UICollectionView.SupplementaryRegistration<TimeLineListHeaderView>(
             elementKind: UICollectionView.elementKindSectionHeader
         ) { [weak self] header, _, _ in
@@ -89,18 +89,21 @@ class TimeLineDetailViewController: BaseVC<TimeLineDetailViewModel> {
             )
         }
 
-        timeLineDataSource = .init(collectionView: timeLineCollectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
+        let dataSource = UICollectionViewDiffableDataSource<TimeLineListSection, TimeLineListItem>(
+            collectionView: timeLineCollectionView
+        ) { collectionView, indexPath, itemIdentifier in
             collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: itemIdentifier)
-        })
+        }
 
-        timeLineDataSource?.supplementaryViewProvider = { collectionView, elementKind, indexPath in
+        dataSource.supplementaryViewProvider = { collectionView, elementKind, indexPath in
             guard elementKind == UICollectionView.elementKindSectionHeader else { return nil }
             return collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
         }
 
         var snapshot = NSDiffableDataSourceSnapshot<TimeLineListSection, TimeLineListItem>()
         snapshot.appendSections([.timeLine])
-        timeLineDataSource?.apply(snapshot, animatingDifferences: false)
+        dataSource.apply(snapshot, animatingDifferences: false)
+        return dataSource
     }
 
     private func bindHeader(_ header: TimeLineListHeaderView) {
@@ -113,8 +116,6 @@ class TimeLineDetailViewController: BaseVC<TimeLineDetailViewModel> {
     }
 
     private func updateList(to entities: [MedicineTakenEntity]) {
-        guard let timeLineDataSource else { return }
-        
         let items: [TimeLineListItem] = entities.enumerated().map { (offset, entity) in
             .init(
                 rowID: entity.rowID,
@@ -160,7 +161,6 @@ class TimeLineDetailViewController: BaseVC<TimeLineDetailViewModel> {
         ])
         navigationItem.rightBarButtonItem = .init(image: UIImage(systemName: "list.bullet"), menu: barButtonMenu)
         timeLineCollectionView.refreshControl = refreshControl
-        settingListDataSource()
     }
 
     override func addView() {

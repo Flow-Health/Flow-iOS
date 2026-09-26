@@ -25,6 +25,7 @@ class TimeLineSettingViewModel: ViewModelType, Stepper {
         let takenMedicineData: Driver<[MedicineTakenEntity]>
         let isHiddenEmptyView: Driver<Bool>
         let deleteCompleted: Signal<Int>
+        let deleteFailed: Signal<Void>
     }
 
     init(
@@ -39,11 +40,15 @@ class TimeLineSettingViewModel: ViewModelType, Stepper {
         let takenMedicineData = BehaviorRelay<[MedicineTakenEntity]>(value: [])
         let isHiddenEmptyView = BehaviorRelay<Bool>(value: true)
         let deleteCompleted = PublishRelay<Int>()
+        let deleteFailed = PublishRelay<Void>()
         let reloadTrigger = PublishRelay<Date>()
 
+        // 조회 실패 시 스트림을 유지하고 기존 목록을 그대로 둔다
         Observable.merge(input.selectedDate, reloadTrigger.asObservable())
-            .flatMapLatest { [fetchTakenMedicineListUseCase] in
-                fetchTakenMedicineListUseCase.execute(at: $0)
+            .flatMapLatest { [fetchTakenMedicineListUseCase] date in
+                fetchTakenMedicineListUseCase.execute(at: date)
+                    .asObservable()
+                    .catch { _ in .empty() }
             }
             .subscribe(onNext: {
                 takenMedicineData.accept($0)
@@ -54,20 +59,29 @@ class TimeLineSettingViewModel: ViewModelType, Stepper {
         input.deleteRowIDs
             .filter { !$0.isEmpty }
             .withLatestFrom(input.selectedDate) { ($0, $1) }
-            .flatMapLatest { [deleteTakenMedicineUseCase] rowIDs, date -> Single<(Int, Date)> in
+            .flatMapLatest { [deleteTakenMedicineUseCase] rowIDs, date -> Observable<Event<(Int, Date)>> in
                 deleteTakenMedicineUseCase.execute(rowIDs: rowIDs)
-                    .andThen(.just((rowIDs.count, date)))
+                    .andThen(Observable.just((rowIDs.count, date)))
+                    .materialize() // 삭제 실패가 스트림을 종료시키지 않도록 Event로 감싼다
             }
-            .subscribe(onNext: { count, date in
-                deleteCompleted.accept(count)
-                reloadTrigger.accept(date)
+            .subscribe(onNext: { event in
+                switch event {
+                case .next(let (count, date)):
+                    deleteCompleted.accept(count)
+                    reloadTrigger.accept(date)
+                case .error:
+                    deleteFailed.accept(())
+                case .completed:
+                    break
+                }
             })
             .disposed(by: disposeBag)
 
         return Output(
             takenMedicineData: takenMedicineData.asDriver(),
             isHiddenEmptyView: isHiddenEmptyView.asDriver(),
-            deleteCompleted: deleteCompleted.asSignal()
+            deleteCompleted: deleteCompleted.asSignal(),
+            deleteFailed: deleteFailed.asSignal()
         )
     }
 }

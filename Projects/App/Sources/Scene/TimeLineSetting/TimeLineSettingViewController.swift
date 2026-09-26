@@ -235,6 +235,12 @@ class TimeLineSettingViewController: BaseVC<TimeLineSettingViewModel> {
             }
             .disposed(by: disposeBag)
 
+        output.deleteFailed
+            .emit(with: self) { owner, _ in
+                owner.presentDeleteFailedAlert()
+            }
+            .disposed(by: disposeBag)
+
         selectedCountRelay
             .bind(with: self) { owner, count in
                 owner.deleteButton.isEnabled = count > 0
@@ -271,6 +277,16 @@ class TimeLineSettingViewController: BaseVC<TimeLineSettingViewModel> {
         let total = settingDataSource.snapshot().numberOfItems
         let selected = settingCollectionView.indexPathsForSelectedItems?.count ?? 0
         return total > 0 && total == selected
+    }
+
+    private func presentDeleteFailedAlert() {
+        let alert = UIAlertController(
+            title: "삭제에 실패했습니다",
+            message: "잠시 후 다시 시도해 주세요",
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "확인", style: .default))
+        present(alert, animated: true)
     }
 
     private func presentDeleteCompletedToast(count: Int) {

@@ -43,7 +43,7 @@ class TimeLineSettingViewModel: ViewModelType, Stepper {
         let deleteFailed = PublishRelay<Void>()
         let reloadTrigger = PublishRelay<Date>()
 
-        // 조회 실패 시 스트림을 유지하고 기존 목록을 그대로 둔다
+        // 조회 실패 시 기존 목록 유지
         Observable.merge(input.selectedDate, reloadTrigger.asObservable())
             .flatMapLatest { [fetchTakenMedicineListUseCase] date in
                 fetchTakenMedicineListUseCase.execute(at: date)
@@ -62,7 +62,7 @@ class TimeLineSettingViewModel: ViewModelType, Stepper {
             .flatMapLatest { [deleteTakenMedicineUseCase] rowIDs, date -> Observable<Event<(Int, Date)>> in
                 deleteTakenMedicineUseCase.execute(rowIDs: rowIDs)
                     .andThen(Observable.just((rowIDs.count, date)))
-                    .materialize() // 삭제 실패가 스트림을 종료시키지 않도록 Event로 감싼다
+                    .materialize()
             }
             .subscribe(onNext: { event in
                 switch event {

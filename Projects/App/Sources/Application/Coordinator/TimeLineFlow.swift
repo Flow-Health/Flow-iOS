@@ -14,7 +14,7 @@ final class TimeLineFlow: Flow {
 
     init(appDI: AppDI) {
         self.appDI = appDI
-        self.presentable = TimeLineDetailViewController(viewModel: appDI.timeLineDetailViewModel)
+        self.presentable = TimeLineDetailViewController(viewModel: appDI.makeTimeLineDetailViewModel())
     }
     
     func navigate(to step: Step) -> FlowContributors {
@@ -22,6 +22,8 @@ final class TimeLineFlow: Flow {
         switch step {
         case .timeLineDetailIsRequired:
             return reqiredTimeLineVC()
+        case .timeLineSettingIsRequired(let date):
+            return navigateToTimeLineSettingVC(date)
         default:
             return .none
         }
@@ -31,6 +33,16 @@ final class TimeLineFlow: Flow {
         return .one(flowContributor: .contribute(
             withNextPresentable: presentable,
             withNextStepper: presentable.viewModel
+        ))
+    }
+
+    private func navigateToTimeLineSettingVC(_ date: Date) -> FlowContributors {
+        let timeLineSettingVC = TimeLineSettingViewController(viewModel: appDI.makeTimeLineSettingViewModel())
+        timeLineSettingVC.setUp(date: date)
+        presentable.navigationController?.pushViewController(timeLineSettingVC, animated: true)
+        return .one(flowContributor: .contribute(
+            withNextPresentable: timeLineSettingVC,
+            withNextStepper: timeLineSettingVC.viewModel
         ))
     }
 }

@@ -9,4 +9,5 @@ public protocol TakenMedicineDataSource {
     func insertTakenMedicine(with itemCode: String, at takenTime: Date) -> Completable
     func fetchTakenMedicineList() -> Single<[MedicineTakenEntity]>
     func fetchMedicineRecode() -> Single<MedicineRecodeEntity?>
+    func deleteTakenMedicine(rowIDs: [Int64]) -> Completable
 }

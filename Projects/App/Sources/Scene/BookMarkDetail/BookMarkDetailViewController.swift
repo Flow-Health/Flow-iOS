@@ -27,7 +27,7 @@ class BookMarkDetailViewController: BaseVC<BookMarkDetailViewModel> {
         $0.tintColor = .black
     }
 
-    override func attridute() {
+    override func attribute() {
         navigationItem.title = "자주 먹는 약"
         navigationItem.rightBarButtonItem = creactMyMedicineNavigationButton
     }

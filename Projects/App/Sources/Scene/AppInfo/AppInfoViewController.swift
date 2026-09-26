@@ -51,7 +51,7 @@ class AppInfoViewController: BaseVC<AppInfoViewModel> {
         )
     }
 
-    override func attridute() {
+    override func attribute() {
         navigationItem.title = "앱 정보"
     }
 

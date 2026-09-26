@@ -16,6 +16,7 @@ public struct ServiceDI {
     public let insertTakenMedicineUseCase: InsertTakenMedicineUseCase
     public let fetchTakenMedicineListUseCase: FetchTakenMedicineListUseCase
     public let fetchMedicineRecodeUseCase: FetchMedicineRecodeUseCase
+    public let deleteTakenMedicineUseCase: DeleteTakenMedicineUseCase
 
     public let searchMedicineUseCase: SearchMedicineUseCase
     public let searchMedicineWithOcrUseCase: SearchMedicineWithOcrUseCase
@@ -56,6 +57,9 @@ public extension ServiceDI {
         let fetchMedicineRecodeRepositoryImpl = FetchMedicineRecodeRepositoryImpl(
             dataBase: takenMedicineDataSource
         )
+        let deleteTakenMedicineRepositoryImpl = DeleteTakenMedicineRepositoryImpl(
+            dataBase: takenMedicineDataSource
+        )
         let searchMedicineRepositoryImpl = SearchMedicineRepositoryImpl(
             nomalMedicinedataSource: medicineContentDataSource,
             prescriptionMedicinedataSource: prescriptionMedicineDataSource
@@ -86,6 +90,9 @@ public extension ServiceDI {
         let fetchMedicineRecodeUseCaseImpl = FetchMedicineRecodeUseCaseImpl(
             repository: fetchMedicineRecodeRepositoryImpl
         )
+        let deleteTakenMedicineUseCaseImpl = DeleteTakenMedicineUseCaseImpl(
+            repository: deleteTakenMedicineRepositoryImpl
+        )
         let searchMedicineUseCaseImpl = SearchMedicineUseCaseImpl(
             repository: searchMedicineRepositoryImpl
         )
@@ -106,6 +113,7 @@ public extension ServiceDI {
             insertTakenMedicineUseCase: insertTakenMedicineUseCaseImpl,
             fetchTakenMedicineListUseCase: fetchTakenMedicineListUseCaseImpl,
             fetchMedicineRecodeUseCase: fetchMedicineRecodeUseCaseImpl,
+            deleteTakenMedicineUseCase: deleteTakenMedicineUseCaseImpl,
             searchMedicineUseCase: searchMedicineUseCaseImpl,
             searchMedicineWithOcrUseCase: searchMedicineWithOcrUseCaseImpl
         )

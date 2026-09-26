@@ -2,68 +2,86 @@ import Foundation
 import FlowService
 import Model
 
+/// ViewModel은 싱글턴으로 두면 transform 구독이 누적되므로 화면 생성 시마다 make*로 새로 만든다
 struct AppDI {
+    private let serviceDI: ServiceDI
+
     let homeViewModel: HomeViewModel
-    let searchViewModel: SearchViewModel
-    let receiptOcrScanViewModel: ReceiptOcrScanViewModel
-    let receiptOcrResultViewModel: ReceiptOcrResultViewModel
-    let receiptOcrEndViewModel: ReceiptOcrEndViewModel
-    let medicineDetailViewModel: MedicineDetailViewModel
-    let bookMarkDetailViewModel: BookMarkDetailViewModel
-    let timeLineDetailViewModel: TimeLineDetailViewModel
-    let appInfoViewModel: AppInfoViewModel
-    let medicineRegisterViewModel: MedicineRegisterViewModel
-}
 
-extension AppDI {
-    static func resolve() -> AppDI {
-        let serviceDI = ServiceDI.resolve()
-
-        let homeViewModelInject = HomeViewModel(
+    private init(serviceDI: ServiceDI) {
+        self.serviceDI = serviceDI
+        self.homeViewModel = HomeViewModel(
             fetchMedicineRecodeUseCase: serviceDI.fetchMedicineRecodeUseCase,
             fetchTakenMedicineListUseCase: serviceDI.fetchTakenMedicineListUseCase,
             fetchBookMarkMedicineListUseCase: serviceDI.fetchBookMarkMedicineListUseCase
         )
+    }
 
-        let searchViewModelInject = SearchViewModel(
+    static func resolve() -> AppDI {
+        .init(serviceDI: ServiceDI.resolve())
+    }
+}
+
+// MARK: - ViewModel Factory
+extension AppDI {
+    func makeSearchViewModel() -> SearchViewModel {
+        SearchViewModel(
             searchMedicineUseCase: serviceDI.searchMedicineUseCase
         )
-        let receiptOcrScanViewModelInject = ReceiptOcrScanViewModel(
+    }
+
+    func makeReceiptOcrScanViewModel() -> ReceiptOcrScanViewModel {
+        ReceiptOcrScanViewModel(
             searchMedicineWithOcrUseCase: serviceDI.searchMedicineWithOcrUseCase
         )
-        let receiptOcrResultViewModelInject = ReceiptOcrResultViewModel(
+    }
+
+    func makeReceiptOcrResultViewModel() -> ReceiptOcrResultViewModel {
+        ReceiptOcrResultViewModel(
             insertBookMarkMedicineUseCase: serviceDI.insertBookMarkMedicineUseCase,
             findBookMarkMedicineUseCase: serviceDI.findBookMarkMedicineUseCase
         )
-        let receiptOcrEndViewModelInject = ReceiptOcrEndViewModel()
-        let medicineDetailViewModelInject = MedicineDetailViewModel(
+    }
+
+    func makeReceiptOcrEndViewModel() -> ReceiptOcrEndViewModel {
+        ReceiptOcrEndViewModel()
+    }
+
+    func makeMedicineDetailViewModel() -> MedicineDetailViewModel {
+        MedicineDetailViewModel(
             findBookMarkMedicineUseCase: serviceDI.findBookMarkMedicineUseCase,
             deleteBookMarkMedicineUseCase: serviceDI.deleteBookMarkMedicineUseCase,
             insertBookMarkMedicineUseCase: serviceDI.insertBookMarkMedicineUseCase,
             updateBookMarkMedicineUseCase: serviceDI.updateBookMarkMedicineUseCase
         )
-        let bookMarkDetailViewModelInject = BookMarkDetailViewModel(
+    }
+
+    func makeBookMarkDetailViewModel() -> BookMarkDetailViewModel {
+        BookMarkDetailViewModel(
             fetchBookMarkMedicineListUseCase: serviceDI.fetchBookMarkMedicineListUseCase
         )
-        let timeLineDetailViewModelInject = TimeLineDetailViewModel(
+    }
+
+    func makeTimeLineDetailViewModel() -> TimeLineDetailViewModel {
+        TimeLineDetailViewModel(
             fetchTakenMedicineListUseCase: serviceDI.fetchTakenMedicineListUseCase
         )
-        let appInfoViewModelInject = AppInfoViewModel()
-        let medicineRegisterViewModelInject = MedicineRegisterViewModel(
-            registerMyMedicineUseCase: serviceDI.registerMyMedicineUseCase
-        )
+    }
 
-        return .init(
-            homeViewModel: homeViewModelInject,
-            searchViewModel: searchViewModelInject,
-            receiptOcrScanViewModel: receiptOcrScanViewModelInject,
-            receiptOcrResultViewModel: receiptOcrResultViewModelInject,
-            receiptOcrEndViewModel: receiptOcrEndViewModelInject,
-            medicineDetailViewModel: medicineDetailViewModelInject,
-            bookMarkDetailViewModel: bookMarkDetailViewModelInject,
-            timeLineDetailViewModel: timeLineDetailViewModelInject,
-            appInfoViewModel: appInfoViewModelInject,
-            medicineRegisterViewModel: medicineRegisterViewModelInject
+    func makeTimeLineSettingViewModel() -> TimeLineSettingViewModel {
+        TimeLineSettingViewModel(
+            fetchTakenMedicineListUseCase: serviceDI.fetchTakenMedicineListUseCase,
+            deleteTakenMedicineUseCase: serviceDI.deleteTakenMedicineUseCase
+        )
+    }
+
+    func makeAppInfoViewModel() -> AppInfoViewModel {
+        AppInfoViewModel()
+    }
+
+    func makeMedicineRegisterViewModel() -> MedicineRegisterViewModel {
+        MedicineRegisterViewModel(
+            registerMyMedicineUseCase: serviceDI.registerMyMedicineUseCase
         )
     }
 }

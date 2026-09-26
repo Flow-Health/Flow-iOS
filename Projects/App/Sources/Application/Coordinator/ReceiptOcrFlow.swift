@@ -14,7 +14,7 @@ final class ReceiptOcrFlow: Flow {
 
     init(appDI: AppDI) {
         self.appDI = appDI
-        self.presentable = ReceiptOcrScanViewController(viewModel: appDI.receiptOcrScanViewModel)
+        self.presentable = ReceiptOcrScanViewController(viewModel: appDI.makeReceiptOcrScanViewModel())
     }
     
     func navigate(to step: Step) -> FlowContributors {
@@ -42,7 +42,7 @@ final class ReceiptOcrFlow: Flow {
 
     private func presentReceiptOcrResultVC(_ ocrResult: [MedicineInfoEntity]) -> FlowContributors {
         let receiptOcrResultVC = ReceiptOcrResultViewController(
-            viewModel: appDI.receiptOcrResultViewModel,
+            viewModel: appDI.makeReceiptOcrResultViewModel(),
             ocrResult: ocrResult
         )
 
@@ -56,7 +56,7 @@ final class ReceiptOcrFlow: Flow {
 
     private func presentReceiptOcrEndVC() -> FlowContributors {
         let receiptOcrEndVC = ReceiptOcrEndViewController(
-            viewModel: appDI.receiptOcrEndViewModel
+            viewModel: appDI.makeReceiptOcrEndViewModel()
         )
 
         presentable.navigationController?.pushViewController(receiptOcrEndVC, animated: true)

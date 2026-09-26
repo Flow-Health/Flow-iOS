@@ -47,7 +47,7 @@ class MedicineDetailViewController: BaseVC<MedicineDetailViewModel> {
     private let storageMethodExplain = ExplainFormView(title: "보관법")
     private let customShortDescription = ExplainFormView(title: "간단한 설명")
 
-    override func attridute() {
+    override func attribute() {
         navigationItem.title = "상세정보"
         navigationItem.rightBarButtonItems = [bookMarkButton, .flexibleSpace(), colorTagButton]
         findItemRelay.accept(item?.itemCode ?? "")

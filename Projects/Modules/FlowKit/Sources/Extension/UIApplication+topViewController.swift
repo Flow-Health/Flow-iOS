@@ -3,7 +3,7 @@
 import UIKit
 
 extension UIApplication {
-    static func topViewController() -> UIViewController? {
+    public static func topViewController() -> UIViewController? {
         guard let windowScene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene else {
             return nil
         }

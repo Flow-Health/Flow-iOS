@@ -32,7 +32,7 @@ class HomeViewController: BaseVC<HomeViewModel> {
     private let bookMarkMedicineView = BookMarkMedicineView()
     private let timeLineView = TimeLineView()
 
-    override func attridute() {
+    override func attribute() {
         view.backgroundColor = .blue5
         navigationItem.title = "홈"
         navigationItem.titleView = UIView()

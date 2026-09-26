@@ -15,10 +15,12 @@ class TimeLineDetailViewModel: ViewModelType, Stepper {
 
     struct Input {
         let selectedDate: Observable<Date>
+        let openTimeLineSetting: Observable<Date>
     }
     
     struct Output {
         let takenMedicineData: Driver<[MedicineTakenEntity]>
+        let isHiddenEmptyView: Driver<Bool>
     }
 
     init(fetchTakenMedicineListUseCase: FetchTakenMedicineListUseCase) {
@@ -27,14 +29,26 @@ class TimeLineDetailViewModel: ViewModelType, Stepper {
 
     func transform(input: Input) -> Output {
         let takenMedicineData = BehaviorRelay<[MedicineTakenEntity]>(value: [])
+        let isHiddenEmptyView = BehaviorRelay<Bool>(value: true)
 
         input.selectedDate
             .flatMap {
                 self.fetchTakenMedicineListUseCase.execute(at: $0)
             }
-            .bind(to: takenMedicineData)
+            .subscribe(onNext: {
+                takenMedicineData.accept($0)
+                isHiddenEmptyView.accept(!$0.isEmpty)
+            })
+            .disposed(by: disposeBag)
+        
+        input.openTimeLineSetting
+            .map { FlowStep.timeLineSettingIsRequired(date: $0) }
+            .bind(to: steps)
             .disposed(by: disposeBag)
 
-        return Output(takenMedicineData: takenMedicineData.asDriver())
+        return Output(
+            takenMedicineData: takenMedicineData.asDriver(),
+            isHiddenEmptyView: isHiddenEmptyView.asDriver()
+        )
     }
 }

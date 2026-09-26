@@ -34,6 +34,11 @@ public class TakenMedicineDataSourceImpl: TakenMedicineDataSource {
     
     public func fetchTakenMedicineList() -> Single<[MedicineTakenEntity]> {
         let query = takenMedicineTable
+            .select(
+                takenMedicineTable[TakenMedicineTable.timeRowID],
+                takenMedicineTable[*],
+                bookMarkTable[*]
+            )
             .join(
                 bookMarkTable,
                 on: takenMedicineTable[TakenMedicineTable.itemCode] == bookMarkTable[BookMarkMedicineTable.itemCode]
@@ -44,6 +49,7 @@ public class TakenMedicineDataSourceImpl: TakenMedicineDataSource {
             do {
                 let result = try dbManager.db?.prepare(query).map {
                     MedicineTakenEntity(
+                        rowID: $0[self.takenMedicineTable[TakenMedicineTable.timeRowID]], // taken_medicine.rowid 값 추출
                         takenTime: $0[TakenMedicineTable.medicineTakenTime],
                         medicineInfo: .init(
                             imageURL: $0[BookMarkMedicineTable.imageURL],
@@ -69,6 +75,11 @@ public class TakenMedicineDataSourceImpl: TakenMedicineDataSource {
     
     public func fetchMedicineRecode() -> Single<MedicineRecodeEntity?> {
         let query = takenMedicineTable
+            .select(
+                takenMedicineTable[TakenMedicineTable.timeRowID],
+                takenMedicineTable[*],
+                bookMarkTable[*]
+            )
             .filter(takenMedicineTable[TakenMedicineTable.medicineTakenTime].date == Date().date)
             .join(
                 bookMarkTable,
@@ -83,9 +94,9 @@ public class TakenMedicineDataSourceImpl: TakenMedicineDataSource {
                 let recodeData = try dbManager.db?.prepare(query).map {
                     (date: $0[TakenMedicineTable.medicineTakenTime],
                      name: $0[BookMarkMedicineTable.medicineName],
-                     itemCode: $0[TakenMedicineTable.medicineTakenTime].description)
+                     id: String($0[self.takenMedicineTable[TakenMedicineTable.timeRowID]])) // taken_medicine.rowid 값을 id로 사용
                 }
-                let nameList = recodeData?.map { (name: $0.name, id: $0.itemCode) }
+                let nameList = recodeData?.map { (name: $0.name, id: $0.id) }
 
                 // 뽑아온 3개의 데이터중 첫번째 데이터의 복용 시간을 마지막 복용 시간으로 지정
                 guard let lastTime = recodeData?.first?.date,
@@ -100,6 +111,22 @@ public class TakenMedicineDataSourceImpl: TakenMedicineDataSource {
                 )
                 single(.success(result))
             } catch { single(.failure(error)) }
+            return Disposables.create()
+        }
+    }
+
+    public func deleteTakenMedicine(rowIDs: [Int64]) -> Completable {
+        return Completable.create { [weak self] completable in
+            guard let self else { return Disposables.create() }
+            guard !rowIDs.isEmpty else {
+                completable(.completed)
+                return Disposables.create()
+            }
+            let targetRows = takenMedicineTable.filter(rowIDs.contains(TakenMedicineTable.timeRowID))
+            do {
+                try dbManager.db?.run(targetRows.delete())
+                completable(.completed)
+            } catch { completable(.error(error)) }
             return Disposables.create()
         }
     }

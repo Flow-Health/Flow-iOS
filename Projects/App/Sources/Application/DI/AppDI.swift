@@ -11,6 +11,7 @@ struct AppDI {
     let medicineDetailViewModel: MedicineDetailViewModel
     let bookMarkDetailViewModel: BookMarkDetailViewModel
     let timeLineDetailViewModel: TimeLineDetailViewModel
+    let timeLineSettingViewModel: TimeLineSettingViewModel
     let appInfoViewModel: AppInfoViewModel
     let medicineRegisterViewModel: MedicineRegisterViewModel
 }
@@ -48,6 +49,10 @@ extension AppDI {
         let timeLineDetailViewModelInject = TimeLineDetailViewModel(
             fetchTakenMedicineListUseCase: serviceDI.fetchTakenMedicineListUseCase
         )
+        let timeLineSettingViewModelInject = TimeLineSettingViewModel(
+            fetchTakenMedicineListUseCase: serviceDI.fetchTakenMedicineListUseCase,
+            deleteTakenMedicineUseCase: serviceDI.deleteTakenMedicineUseCase
+        )
         let appInfoViewModelInject = AppInfoViewModel()
         let medicineRegisterViewModelInject = MedicineRegisterViewModel(
             registerMyMedicineUseCase: serviceDI.registerMyMedicineUseCase
@@ -62,6 +67,7 @@ extension AppDI {
             medicineDetailViewModel: medicineDetailViewModelInject,
             bookMarkDetailViewModel: bookMarkDetailViewModelInject,
             timeLineDetailViewModel: timeLineDetailViewModelInject,
+            timeLineSettingViewModel: timeLineSettingViewModelInject,
             appInfoViewModel: appInfoViewModelInject,
             medicineRegisterViewModel: medicineRegisterViewModelInject
         )

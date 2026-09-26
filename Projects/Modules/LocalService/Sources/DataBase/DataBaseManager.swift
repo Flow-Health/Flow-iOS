@@ -35,6 +35,7 @@ struct BookMarkMedicineTable: DataBaseTable {
 struct TakenMedicineTable: DataBaseTable {
     static var table = Table("taken_medicine")
 
+    static let timeRowID =  SQLiteExpression<Int64>("rowid")
     static let medicineTakenTime =  SQLiteExpression<Date>("medicineTakenTime")
     static let itemCode = SQLiteExpression<String>("medicineCode")
 }

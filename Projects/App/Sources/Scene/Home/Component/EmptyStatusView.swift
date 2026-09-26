@@ -58,9 +58,7 @@ class EmptyStatusView: BaseView {
         subTitleLabel.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(8)
             $0.leading.trailing.equalToSuperview().inset(20)
-        }
-        self.snp.makeConstraints {
-            $0.bottom.equalTo(subTitleLabel).offset(10)
+            $0.bottom.equalToSuperview().inset(10)
         }
     }
 }

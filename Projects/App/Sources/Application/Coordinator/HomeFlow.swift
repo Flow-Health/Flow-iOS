@@ -90,7 +90,7 @@ final class HomeFlow: Flow {
     }
 
     private func navigateToAppInfoVC() -> FlowContributors {
-        let appInfoVC = AppInfoViewController(viewModel: appDI.appInfoViewModel)
+        let appInfoVC = AppInfoViewController(viewModel: appDI.makeAppInfoViewModel())
         presentable.pushViewController(appInfoVC, animated: true)
         return .one(flowContributor: .contribute(
             withNextPresentable: appInfoVC,

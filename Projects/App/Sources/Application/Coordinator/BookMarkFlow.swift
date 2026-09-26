@@ -14,7 +14,7 @@ final class BookMarkFlow: Flow {
 
     init(appDI: AppDI) {
         self.appDI = appDI
-        self.presentable = BookMarkDetailViewController(viewModel: appDI.bookMarkDetailViewModel)
+        self.presentable = BookMarkDetailViewController(viewModel: appDI.makeBookMarkDetailViewModel())
     }
     
     func navigate(to step: Step) -> FlowContributors {
@@ -39,7 +39,7 @@ final class BookMarkFlow: Flow {
     }
 
     private func navigateToMedicineDetailVC(_ entity: MedicineInfoEntity) -> FlowContributors {
-        let medicineDetailVC = MedicineDetailViewController(viewModel: appDI.medicineDetailViewModel)
+        let medicineDetailVC = MedicineDetailViewController(viewModel: appDI.makeMedicineDetailViewModel())
         medicineDetailVC.setUp(with: entity)
         presentable.navigationController?.pushViewController(medicineDetailVC, animated: true)
         return .one(flowContributor: .contribute(
@@ -49,7 +49,7 @@ final class BookMarkFlow: Flow {
     }
     
     private func presentMedicineRegister() -> FlowContributors {
-        let medicineRegisterVC = MedicineRegisterViewController(viewModel: appDI.medicineRegisterViewModel)
+        let medicineRegisterVC = MedicineRegisterViewController(viewModel: appDI.makeMedicineRegisterViewModel())
         medicineRegisterVC.modalPresentationStyle = .fullScreen
 
         presentable.present(medicineRegisterVC, animated: true)

@@ -14,7 +14,7 @@ final class SearchFlow: Flow {
 
     init(appDI: AppDI) {
         self.appDI = appDI
-        self.presentable = SearchViewController(viewModel: appDI.searchViewModel)
+        self.presentable = SearchViewController(viewModel: appDI.makeSearchViewModel())
     }
     
     func navigate(to step: Step) -> FlowContributors {
@@ -39,7 +39,7 @@ final class SearchFlow: Flow {
     }
 
     private func navigateToMedicineDetailVC(_ entity: MedicineInfoEntity) -> FlowContributors {
-        let medicineDetailVC = MedicineDetailViewController(viewModel: appDI.medicineDetailViewModel)
+        let medicineDetailVC = MedicineDetailViewController(viewModel: appDI.makeMedicineDetailViewModel())
         medicineDetailVC.setUp(with: entity)
         presentable.navigationController?.pushViewController(medicineDetailVC, animated: true)
 
@@ -50,7 +50,7 @@ final class SearchFlow: Flow {
     }
     
     private func presentMedicineRegister() -> FlowContributors {
-        let medicineRegisterVC = MedicineRegisterViewController(viewModel: appDI.medicineRegisterViewModel)
+        let medicineRegisterVC = MedicineRegisterViewController(viewModel: appDI.makeMedicineRegisterViewModel())
         medicineRegisterVC.modalPresentationStyle = .fullScreen
 
         presentable.present(medicineRegisterVC, animated: true)

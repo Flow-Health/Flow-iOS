@@ -31,6 +31,7 @@ class HomeViewController: BaseVC<HomeViewModel> {
     private let reciptButtonView = ReceiptOcrButtonView()
     private let bookMarkMedicineView = BookMarkMedicineView()
     private let timeLineView = TimeLineView()
+    private let widgetTutorialButton = WidgetTutorialButton()
 
     override func attribute() {
         view.backgroundColor = .blue5
@@ -52,6 +53,7 @@ class HomeViewController: BaseVC<HomeViewModel> {
         homeVStaek.addArrangedSubviews(
             LastTakenBannerView,
             appendButtonBundle,
+            widgetTutorialButton,
             bookMarkMedicineView,
             timeLineView
         )
@@ -78,7 +80,8 @@ class HomeViewController: BaseVC<HomeViewModel> {
             tapOcrButton: reciptButtonView.rx.tap.asObservable(),
             tapBookMarkNavigationButton: bookMarkMedicineView.rx.tapGesture().when(.ended).map { _ in }.asObservable(),
             tapTimeLineNavigationButton: timeLineView.rx.tapGesture().when(.ended).map { _ in }.asObservable(),
-            tapAppInfoButton: infoNavigateButton.tap.asObservable()
+            tapAppInfoButton: infoNavigateButton.tap.asObservable(),
+            tapWidgetTutorialButton: widgetTutorialButton.rx.tap.asObservable()
         )
         let output = viewModel.transform(input: input)
 

@@ -79,6 +79,10 @@ extension AppDI {
         AppInfoViewModel()
     }
 
+    func makeWidgetTutorialViewModel() -> WidgetTutorialViewModel {
+        WidgetTutorialViewModel()
+    }
+
     func makeMedicineRegisterViewModel() -> MedicineRegisterViewModel {
         MedicineRegisterViewModel(
             registerMyMedicineUseCase: serviceDI.registerMyMedicineUseCase

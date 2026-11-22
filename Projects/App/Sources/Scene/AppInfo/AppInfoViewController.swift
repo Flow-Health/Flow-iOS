@@ -10,6 +10,7 @@ import RxCocoa
 enum AppInfoType: String, CaseIterable {
 
     case tutorial = "사용방법"
+    case widgetTutorial = "위젯 추가 방법"
     case inquiry = "문의하기"
     case privacyPolicy = "개인정보처리방침"
     case sourcesOfMedicineInfo = "의약품 정보 출처"
@@ -24,6 +25,8 @@ enum AppInfoType: String, CaseIterable {
         switch self {
         case .tutorial:
             return .withURL(url: "https://flow-application.notion.site/Flow-34c9f1e510684bd5bff15f1203db76c1?pvs=4")
+        case .widgetTutorial:
+            return .withNavigate(step: .widgetTutorialIsRequired)
         case .inquiry:
             return .withURL(url: "mailto:bjcho1503@naver.com")
         case .privacyPolicy:
@@ -66,7 +69,7 @@ class AppInfoViewController: BaseVC<AppInfoViewModel> {
         appInfoTableView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(appInfoTableView.snp.contentHuggingVerticalPriority)
+            $0.height.equalTo(appInfoTableView.rowHeight * CGFloat(AppInfoType.allCases.count))
         }
         versionLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(16)

@@ -17,4 +17,6 @@ enum FlowStep: Step {
     case appInfoIsRequired
     case createMyMedicineIsRequired
     case timeLineSettingIsRequired(date: Date)
+    case widgetTutorialIsRequired
+    case widgetTutorialIsCompleted
 }

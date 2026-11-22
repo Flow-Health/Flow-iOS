@@ -23,6 +23,7 @@ class HomeViewModel: ViewModelType, Stepper {
         let tapBookMarkNavigationButton: Observable<Void>
         let tapTimeLineNavigationButton: Observable<Void>
         let tapAppInfoButton: Observable<Void>
+        let tapWidgetTutorialButton: Observable<Void>
     }
 
     struct Output {
@@ -85,6 +86,11 @@ class HomeViewModel: ViewModelType, Stepper {
 
         input.tapAppInfoButton
             .map { FlowStep.appInfoIsRequired }
+            .bind(to: steps)
+            .disposed(by: disposeBag)
+
+        input.tapWidgetTutorialButton
+            .map { FlowStep.widgetTutorialIsRequired }
             .bind(to: steps)
             .disposed(by: disposeBag)
 

@@ -31,6 +31,10 @@ final class HomeFlow: Flow {
             return navigateToTimeLineVC()
         case .appInfoIsRequired:
             return navigateToAppInfoVC()
+        case .widgetTutorialIsRequired:
+            return navigateToWidgetTutorialVC()
+        case .widgetTutorialIsCompleted:
+            return popWidgetTutorialVC()
         default:
             return .none
         }
@@ -96,5 +100,19 @@ final class HomeFlow: Flow {
             withNextPresentable: appInfoVC,
             withNextStepper: appInfoVC.viewModel
         ))
+    }
+
+    private func navigateToWidgetTutorialVC() -> FlowContributors {
+        let widgetTutorialVC = WidgetTutorialViewController(viewModel: appDI.makeWidgetTutorialViewModel())
+        presentable.pushViewController(widgetTutorialVC, animated: true)
+        return .one(flowContributor: .contribute(
+            withNextPresentable: widgetTutorialVC,
+            withNextStepper: widgetTutorialVC.viewModel
+        ))
+    }
+
+    private func popWidgetTutorialVC() -> FlowContributors {
+        presentable.popViewController(animated: true)
+        return .none
     }
 }

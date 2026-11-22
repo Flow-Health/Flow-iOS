@@ -1,6 +1,7 @@
 // Copyright © 2026 com.flow-health. All rights reserved.
 
 import UIKit
+import FlowKit
 
 enum WidgetTutorialStep: Int, CaseIterable {
     case longPressHome
@@ -39,22 +40,22 @@ enum WidgetTutorialStep: Int, CaseIterable {
         }
     }
 
-    var image: UIImage? {
+    var image: UIImage {
         switch self {
         case .longPressHome:
-            UIImage(named: "WidgetTutorialStep1")
+            FlowKitAsset.widgetTutorialStep1.image
         case .openWidgetGallery:
             if #available(iOS 18.0, *) {
-                UIImage(named: "WidgetTutorialStep2")
+                FlowKitAsset.widgetTutorialStep2.image
             } else {
-                UIImage(named: "WidgetTutorialStep2Legacy")
+                FlowKitAsset.widgetTutorialStep2Legacy.image
             }
         case .searchFlow:
-            UIImage(named: "WidgetTutorialStep3")
+            FlowKitAsset.widgetTutorialStep3.image
         case .addWidget:
-            UIImage(named: "WidgetTutorialStep4")
+            FlowKitAsset.widgetTutorialStep4.image
         case .selectMedicine:
-            UIImage(named: "WidgetTutorialStep5")
+            FlowKitAsset.widgetTutorialStep5.image
         }
     }
 }
